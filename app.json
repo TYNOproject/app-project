@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "newapp",
-    "slug": "newapp",
+    "name": "app-project",
+    "slug": "app-project",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -18,16 +18,23 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.omrichen70.appproject"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.omrichen70.appproject"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "dd9b2307-5fad-4f36-870b-8c15f6f56c6d"
+      }
     }
   }
 }
