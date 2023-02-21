@@ -1,14 +1,17 @@
 import React from "react";
-import { Text, StyleSheet } from "react-native";
+import { Stack, Button } from "@react-native-material/core";
 
-const HomeScreen = () => {
-  return <Text style={styles.text}>HomeScreen</Text>;
-};
-
-const styles = StyleSheet.create({
-  text: {
-    fontSize: 30,
-  },
-});
+const HomeScreen = ({navigation}) => (
+  <Stack fill center spacing={10}>
+  <Button title="go to CoursePage" onPress={() => navigation.navigate('CoursePage')}/>
+  <Button title="go to Entrance" onPress={() => navigation.navigate('Entrance')}/>
+  <Button title="go to Main Profile" onPress={() => navigation.navigate('MainProfile')}/>
+  <Button title="go to Sign Up" onPress={() => navigation.navigate('SignUp')}/>
+  <Button title="go to Teacher Page" onPress={() => navigation.navigate('TeacherPage')}/>
+  <Button title="go to Teacher profile page" onPress={() => navigation.navigate('TeacherProfile')}/>
+  <Button title="go to Teacher Sign up" onPress={() => navigation.navigate('TeacherSignUp')}/>
+  <Button title="button for Noam" onPress={() => alert("noam ya wanka")}/>
+  </Stack>
+);
 
 export default HomeScreen;
