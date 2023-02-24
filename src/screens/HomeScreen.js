@@ -33,13 +33,10 @@ const HomeScreen = ({ navigation }) => (
       onPress={() => navigation.navigate("TeacherSignUp")}
     />
     <Button title="button for Noam" onPress={() => alert("noam ya wanka")} />
-    <Text>fetch('https://app-db-service.azurewebsites.net/api/test/omri',
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      });
-      </Text>
+    <Button
+      title="go to Student Sign up"
+      onPress={() => navigation.navigate("StudentSignUp")}
+    />
   </Stack>
 );
 
