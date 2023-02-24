@@ -8,16 +8,20 @@ const HomeScreen = ({ navigation }) => (
       onPress={() => navigation.navigate("CoursePage")}
     />
     <Button
-      title="go to Entrance"
-      onPress={() => navigation.navigate("Entrance")}
+      title="go to LogIn"
+      onPress={() => navigation.navigate("LogIn")}
+    />
+    <Button
+      title="go to GoogleLogIn"
+      onPress={() => navigation.navigate("GoogleLogIn")}
     />
     <Button
       title="go to Main Profile"
       onPress={() => navigation.navigate("MainProfile")}
     />
     <Button
-      title="go to Sign Up"
-      onPress={() => navigation.navigate("SignUp")}
+      title="go to Register"
+      onPress={() => navigation.navigate("Register")}
     />
     <Button
       title="go to Teacher Page"
