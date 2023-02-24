@@ -1,5 +1,6 @@
 import React from "react";
 import { Stack, Button } from "@react-native-material/core";
+import { FetchResult } from "react-native";
 
 const HomeScreen = ({ navigation }) => (
   <Stack fill center spacing={10}>
@@ -32,6 +33,13 @@ const HomeScreen = ({ navigation }) => (
       onPress={() => navigation.navigate("TeacherSignUp")}
     />
     <Button title="button for Noam" onPress={() => alert("noam ya wanka")} />
+    <Text>fetch('https://app-db-service.azurewebsites.net/api/test/omri',
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      });
+      </Text>
   </Stack>
 );
 
