@@ -1,8 +1,11 @@
 import React from "react";
 import { Button } from "@react-native-material/core";
+import { AntDesign } from "@expo/vector-icons";
+
 import { StyleSheet, View, Text } from "react-native";
 import { useFonts } from "expo-font";
-import AppLoading from "expo-app-loading";
+import SelectOption from "../components/SelectOption";
+import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 
 export default function StudentSignUpScreen() {
   let [fontsLoaded] = useFonts({
@@ -17,30 +20,67 @@ export default function StudentSignUpScreen() {
     "Heebo-ExtraLight": require("../../assets/fonts/Heebo-ExtraLight.ttf"),
   });
 
-  if (!fontsLoaded) {
-    return <AppLoading />;
-  }
+  if (!fontsLoaded)
+    return (
+      <View>
+        <Text>loading</Text>
+      </View>
+    );
+
   return (
-    <View>
-      <Button title="Click Me" onPress={() => alert("StudentSignUpScreen")} />
-      <Text style={styles.header}>
-        היי נועם, {"\n"}
-        נעים להכיר!
-      </Text>
+    <View style={styles.whole}>
+      <View style={styles.topPart}>
+        <Text style={styles.header}>
+          היי נועם, {"\n"}
+          נעים להכיר! {"\n"}
+        </Text>
+        <Text style={styles.subheader}>נשאר לך רק לספר לנו על התואר שלך</Text>
+      </View>
+      <View style={styles.dropdown}>
+        <SelectOption options={["Op1", "Op2", "Op3"]} defaultText="פקולטה" />
+        <SelectOption options={["Op1", "Op2", "Op3"]} defaultText="מחלקה" />
+        <SelectOption options={["Op1", "Op2", "Op3"]} defaultText="תואר" />
+        <SelectOption options={["Op1", "Op2", "Op3"]} defaultText="שנה" />
+        <Button
+          leading={() => <AntDesign name="left" size={24} color="white" />}
+          title="זהו, סיימנו"
+          style={{ position: "relative", top: 10 }}
+        />
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  header: {
+  whole: {
+    flexDirection: "column",
+    alignItems: "center",
+  },
+  topPart: {
     position: "absolute",
-    left: 115,
-    top: 155,
+    left: "10%",
+    top: 20,
+    width: 320,
+    direction: "rtl",
+    paddingTop: 50,
+  },
+  header: {
     fontFamily: "Heebo-Bold",
     fontWeight: "bold",
     fontSize: 30,
-    lineHeight: 36,
     textAlign: "center",
-    direction: "rtl",
+  },
+  subheader: {
+    fontFamily: "Heebo-Regular",
+    fontWeight: "normal",
+    textAlign: "center",
+    fontSize: 20,
+  },
+  dropdown: {
+    position: "relative",
+    top: 290,
+    height: 300,
+    alignItems: "center",
+    justifyContent: "space-between",
   },
 });
