@@ -1,9 +1,13 @@
 import React from "react";
+import { Button } from "@react-native-material/core";
+import { AntDesign } from "@expo/vector-icons";
+
 import { StyleSheet, View, Text } from "react-native";
 import { useFonts } from "expo-font";
-import FileUploader from "../components/FileUploader";
+import SelectOption from "../components/SelectOption";
+import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 
-export default function TeacherSignUpScreen() {
+export default function StudentSignUpScreen() {
   let [fontsLoaded] = useFonts({
     "Heebo-Bold": require("../../assets/fonts/Heebo-Bold.ttf"),
     "Heebo-Light": require("../../assets/fonts/Heebo-Light.ttf"),
@@ -27,15 +31,23 @@ export default function TeacherSignUpScreen() {
     <View style={styles.whole}>
       <View style={styles.topPart}>
         <Text style={styles.header}>
-          היי מורה, {"\n"}
+          היי נועם, {"\n"}
           נעים להכיר! {"\n"}
         </Text>
-        <Text style={styles.subheader}>
-          על מנת להירשם כמורה, עליך להעלות גליון ציונים
-        </Text>
+        <Text style={styles.subheader}>נשאר לך רק לספר לנו על התואר שלך</Text>
       </View>
       <View style={styles.dropdown}>
-        <FileUploader />
+        <SelectOption options={["Op1", "Op2", "Op3"]} defaultText="פקולטה" />
+        <SelectOption options={["Op1", "Op2", "Op3"]} defaultText="מחלקה" />
+        <SelectOption options={["Op1", "Op2", "Op3"]} defaultText="תואר" />
+        <SelectOption options={["Op1", "Op2", "Op3"]} defaultText="שנה" />
+        <Button
+          leading={() => <AntDesign name="left" size={24} />}
+          title="זהו, סיימנו"
+          variant="outlined"
+          color="black"
+          style={{ position: "relative", top: 10 }}
+        />
       </View>
     </View>
   );

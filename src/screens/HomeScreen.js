@@ -1,5 +1,6 @@
 import React from "react";
 import { Stack, Button } from "@react-native-material/core";
+import { FetchResult } from "react-native";
 
 const HomeScreen = ({ navigation }) => (
   <Stack fill center spacing={10}>
@@ -32,6 +33,10 @@ const HomeScreen = ({ navigation }) => (
       onPress={() => navigation.navigate("TeacherSignUp")}
     />
     <Button title="button for Noam" onPress={() => alert("noam ya wanka")} />
+    <Button
+      title="go to Student Sign up"
+      onPress={() => navigation.navigate("StudentSignUp")}
+    />
   </Stack>
 );
 
