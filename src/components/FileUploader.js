@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { Text, View } from "react-native";
-import { Button } from "@react-native-material/core";
-import { Feather } from "@expo/vector-icons";
+import { Text, View, StyleSheet } from "react-native";
 import * as DocumentPicker from "expo-document-picker";
 import * as MailComposer from "expo-mail-composer";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default function App() {
   const [pdfUri, setPdfUri] = useState(null);
@@ -42,11 +41,11 @@ export default function App() {
   };
 
   return (
-    <View>
-      <FontAwesome.Button
+    <View style={styles.container}>
+      <FontAwesome
         name="upload"
-        size={24}
-        color="black"
+        size={!pdfUri ? 100 : 50}
+        color={!pdfUri ? "black" : "grey"}
         onPress={pickDocument}
       />
       {pdfName && (
@@ -55,13 +54,22 @@ export default function App() {
           {pdfName}
         </Text>
       )}
-      <FontAwesome.Button
-        name="send"
-        size={24}
-        color="black"
+      <MaterialCommunityIcons
+        name="email-send"
+        size={!pdfUri ? 50 : 100}
+        color={!pdfUri ? "grey" : "black"}
         onPress={sendEmail}
         disabled={!pdfUri}
       />
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    alignItems: "center",
+    padding: 30,
+    height: 200,
+    justifyContent: "space-between",
+  },
+});
