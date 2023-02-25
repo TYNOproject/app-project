@@ -1,46 +1,37 @@
-import React from "react";
-import { Stack, Button } from "@react-native-material/core";
+import React, { useState } from "react";
+import { Stack, Button, Text } from "@react-native-material/core";
+import PopUpMenu from "../components/PopUpMenu";
 
-const HomeScreen = ({ navigation }) => (
-  <Stack fill center spacing={10}>
+const HomeScreen = ({ navigation }) => {
+  const [showMenu, setShowMenu] = useState(false);
+
+  const handleMenuToggle = () => {
+    setShowMenu(!showMenu);
+  };
+
+  return (
+    <Stack fill center spacing={10}>
     <Button
-      title="go to CoursePage"
-      onPress={() => navigation.navigate("CoursePage")}
+      title={<Text style={{ color: "black", fontSize: 40 }}>≡</Text>}
+      onPress={handleMenuToggle}
+      style={{
+        position: "absolute",
+        top: 0,
+        left: 315,
+        height: 60,
+        width: 100
+      }}
     />
-    <Button
-      title="go to LogIn"
-      onPress={() => navigation.navigate("LogIn")}
-    />
-    <Button
-      title="go to GoogleLogIn"
-      onPress={() => navigation.navigate("GoogleLogIn")}
-    />
-    <Button
-      title="go to Main Profile"
-      onPress={() => navigation.navigate("MainProfile")}
-    />
-    <Button
-      title="go to Register"
-      onPress={() => navigation.navigate("Register")}
-    />
-    <Button
-      title="go to AfterRegistration"
-      onPress={() => navigation.navigate("AfterRegistartion")}
-    />
-    <Button
-      title="go to Teacher Page"
-      onPress={() => navigation.navigate("TeacherPage")}
-    />
-    <Button
-      title="go to Teacher profile page"
-      onPress={() => navigation.navigate("TeacherProfile")}
-    />
-    <Button
-      title="go to Teacher Sign up"
-      onPress={() => navigation.navigate("TeacherSignUp")}
-    />
-    <Button title="button for Noam" onPress={() => alert("noam ya wanka")} />
-  </Stack>
-);
+
+
+      {showMenu && (
+        <PopUpMenu
+          navigation={navigation}
+          hideMenu={handleMenuToggle}
+        />
+      )}
+    </Stack>
+  );
+};
 
 export default HomeScreen;
