@@ -15,6 +15,8 @@ const LoginScreen = ({ navigation }) => {
     } else {
       alert("הרשמה נכשלה");
     }
+    navigation.navigate("Home");
+
   };
   
   const handleRegister = () => {
@@ -49,7 +51,6 @@ const LoginScreen = ({ navigation }) => {
       height: 51,
       width: 327,
       borderRadius: 5,
-      padding: "16px 20px 16px 20px",
       borderWidth: 1,
       marginBottom: 8,
       textAlign: "center",
@@ -63,7 +64,6 @@ const LoginScreen = ({ navigation }) => {
       height: 51,
       width: 327,
       borderRadius: 5,
-      padding: "16px 20px 16px 20px",
       borderWidth: 1,
       marginBottom: 8,
       textAlign: "center",

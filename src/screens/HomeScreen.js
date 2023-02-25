@@ -24,6 +24,10 @@ const HomeScreen = ({ navigation }) => (
       onPress={() => navigation.navigate("Register")}
     />
     <Button
+      title="go to AfterRegistration"
+      onPress={() => navigation.navigate("AfterRegistartion")}
+    />
+    <Button
       title="go to Teacher Page"
       onPress={() => navigation.navigate("TeacherPage")}
     />
