@@ -3,7 +3,8 @@ import { StyleSheet, View, Text } from "react-native";
 import { useFonts } from "expo-font";
 import FileUploader from "../components/FileUploader";
 
-export default function TeacherSignUpScreen() {
+export default function TeacherSignUpScreen({ navigation }) {
+  const name = navigation.getParam("name");
   let [fontsLoaded] = useFonts({
     "Heebo-Bold": require("../../assets/fonts/Heebo-Bold.ttf"),
     "Heebo-Light": require("../../assets/fonts/Heebo-Light.ttf"),
@@ -27,7 +28,7 @@ export default function TeacherSignUpScreen() {
     <View style={styles.whole}>
       <View style={styles.topPart}>
         <Text style={styles.header}>
-          היי מורה, {"\n"}
+          היי {name}, {"\n"}
           נעים להכיר! {"\n"}
         </Text>
         <Text style={styles.subheader}>
