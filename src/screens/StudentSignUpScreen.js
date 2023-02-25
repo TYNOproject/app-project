@@ -42,8 +42,10 @@ export default function StudentSignUpScreen() {
         <SelectOption options={["Op1", "Op2", "Op3"]} defaultText="תואר" />
         <SelectOption options={["Op1", "Op2", "Op3"]} defaultText="שנה" />
         <Button
-          leading={() => <AntDesign name="left" size={24} color="white" />}
+          leading={() => <AntDesign name="left" size={24} />}
           title="זהו, סיימנו"
+          variant="outlined"
+          color="black"
           style={{ position: "relative", top: 10 }}
         />
       </View>

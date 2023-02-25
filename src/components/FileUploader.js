@@ -29,8 +29,8 @@ export default function App() {
   const sendEmail = async () => {
     try {
       const options = {
-        recipients: ["michalnkedar@gmail.com"],
-        subject: "PDF file from Expo app",
+        recipients: ["chenom@post.bgu.ac.il"],
+        subject: "PDF file TYNOproject app",
         body: "Please see the attached PDF file",
         attachments: [pdfUri],
       };
