@@ -11,6 +11,7 @@ import TeacherPageScreen from "./src/screens/TeacherPageScreen";
 import TeacherSignUpScreen from "./src/screens/TeacherSignUpScreen";
 import AfterRegistrationScreen from "./src/screens/AfterRegistrationScreen";
 import StudentSignUpScreen from "./src/screens/StudentSignUpScreen";
+import ReviewScreen from "./src/screens/ReviewScreen";
 
 const navigator = createStackNavigator(
   {
@@ -24,7 +25,8 @@ const navigator = createStackNavigator(
     TeacherPage: TeacherPageScreen,
     TeacherSignUp: TeacherSignUpScreen,
     StudentSignUp: StudentSignUpScreen,
-    AfterRegistration: AfterRegistrationScreen
+    AfterRegistration: AfterRegistrationScreen,
+    Review: ReviewScreen
   },
   {
     initialRouteName: "Home",
