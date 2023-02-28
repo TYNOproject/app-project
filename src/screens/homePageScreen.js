@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, FlatList } from "react-native";
 import { ListItem, SearchBar,Card } from "react-native-elements";
 import { useFonts } from "expo-font";
 import SelectOption from "../components/SelectOption";
-import { width } from "@mui/system";
+import CoursesList from "../components/CoursesList";
 
 
 
@@ -13,6 +13,46 @@ export default function homePageScreen({ navigation })
   // const name = navigation.getParam("name");
 
   const name = "משה";
+
+  //need to take from the DB
+  const courses = [
+    {
+      name: "Introduction to Computer Science",
+      description:
+        "This course covers the fundamentals of computer programming and software development. Students will learn programming concepts such as data types, control structures, functions, and object-oriented programming.",
+    },
+    {
+      name: "Calculus I",
+      description:
+        "This course covers the basics of calculus, including limits, derivatives, and integrals. Topics include differentiation and integration of functions, optimization problems, and applications of calculus to physics and engineering.",
+    },
+    {
+      name: "English Composition",
+      description:
+        "This course focuses on developing writing skills through critical reading and analysis of texts. Students will learn how to write effective essays, research papers, and other types of academic writing.",
+    },
+    {
+      name: "History of Western Civilization",
+      description:
+        "This course covers the major events and ideas of Western civilization from ancient Greece to the present. Topics include the rise of democracy, the Renaissance, the Enlightenment, and the World Wars.",
+    },
+    {
+      name: "History of Western Civilization",
+      description:
+        "This course covers the major events and ideas of Western civilization from ancient Greece to the present. Topics include the rise of democracy, the Renaissance, the Enlightenment, and the World Wars.",
+    },
+    {
+      name: "History of Western Civilization",
+      description:
+        "This course covers the major events and ideas of Western civilization from ancient Greece to the present. Topics include the rise of democracy, the Renaissance, the Enlightenment, and the World Wars.",
+    },
+    {
+      name: "History of Western Civilization",
+      description:
+        "This course covers the major events and ideas of Western civilization from ancient Greece to the present. Topics include the rise of democracy, the Renaissance, the Enlightenment, and the World Wars.",
+    },
+  ];
+
 
   let [fontsLoaded] = useFonts({
     "Heebo-Bold": require("../../assets/fonts/Heebo-Bold.ttf"),
@@ -33,7 +73,8 @@ if (!fontsLoaded)
     </View>
   );
 
-return (<View style={styles.whole}>
+return (
+ <View style={styles.container}>
           <View style={styles.topPart}>
         <Text style={styles.header}>
           היי {name}, {"\n"}
@@ -57,19 +98,23 @@ return (<View style={styles.whole}>
         <SelectOption options={["Op1", "Op2", "Op3"]} defaultText="מחלקה" buttonStyle= {styles.dropdownButtonStyle} />
         <SelectOption options={["Op1", "Op2", "Op3"]} defaultText="תואר" buttonStyle= {styles.dropdownButtonStyle} />
       </View>
-      </View>);
+      <View style={styles.spacer} />
+        <View style={styles.bottomHalf}>
+            <CoursesList courses={courses} />
+        </View>
+      </View>); 
 }
-  
 
 const styles = StyleSheet.create({
-  whole: {
-    flexDirection: "row",
-    alignItems: "center"
+  container: {
+    alignItems:"center",
+    flexDirection: "column",
+    flex: 1,
   },
   searchBar: {
       position: "absolute",
       direction: "rtl",
-      top: 200,
+      top: 150,
       left: 60,
       height: 60,
       width: 300
@@ -91,14 +136,22 @@ const styles = StyleSheet.create({
   },
   dropdown: {
     flexDirection:"row",
-    position: "relative",
-    top: 290,
-    left : 60,
+    top: 250,
     justifyContent: "space-between",
+    alignItems: "center"
   },
   dropdownButtonStyle: {
     flexDirection:"row",
     justifyContent : "center",
-    width:100,
+    width:110,
+  },
+
+  spacer: {
+    flex: 1,
+  },
+  bottomHalf: {
+    alignSelf: "flex-end",
+    width: '100%',
+    flex: 2,
   },
 });
