@@ -65,10 +65,26 @@ export default function StudentSignUpScreen({ navigation }) {
         <Text style={styles.subheader}>נשאר לך רק לספר לנו על התואר שלך</Text>
       </View>
       <View style={styles.dropdown}>
-        <SelectOption options={["Op1", "Op2", "Op3"]} defaultText="פקולטה" />
-        <SelectOption options={["Op1", "Op2", "Op3"]} defaultText="מחלקה" />
-        <SelectOption options={["Op1", "Op2", "Op3"]} defaultText="תואר" />
-        <SelectOption options={["Op1", "Op2", "Op3"]} defaultText="שנה" />
+        <SelectOption
+          options={["Op1", "Op2", "Op3"]}
+          defaultText="פקולטה"
+          buttonStyle={styles.selectOptionStyle}
+        />
+        <SelectOption
+          options={["Op1", "Op2", "Op3"]}
+          defaultText="מחלקה"
+          buttonStyle={styles.selectOptionStyle}
+        />
+        <SelectOption
+          options={["Op1", "Op2", "Op3"]}
+          defaultText="תואר"
+          buttonStyle={styles.selectOptionStyle}
+        />
+        <SelectOption
+          options={["Op1", "Op2", "Op3"]}
+          defaultText="שנה"
+          buttonStyle={styles.selectOptionStyle}
+        />
         <Button
           leading={() => <AntDesign name="left" size={24} />}
           title="זהו, סיימנו"
@@ -113,5 +129,11 @@ const styles = StyleSheet.create({
     height: 300,
     alignItems: "center",
     justifyContent: "space-between",
+  },
+  selectOptionStyle: {
+    borderWidth: 1,
+    borderRadius: 8,
+    borderColor: "#444",
+    width: 250,
   },
 });
