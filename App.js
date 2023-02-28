@@ -11,7 +11,7 @@ import TeacherPageScreen from "./src/screens/TeacherPageScreen";
 import TeacherSignUpScreen from "./src/screens/TeacherSignUpScreen";
 import AfterRegistrationScreen from "./src/screens/AfterRegistrationScreen";
 import StudentSignUpScreen from "./src/screens/StudentSignUpScreen";
-import HomePageScreen from "./src/screens/homePageScreen";
+import HomePageScreen from "./src/screens/HomePageScreen";
 
 
 const navigator = createStackNavigator(
