@@ -37,7 +37,6 @@ const LoginScreen = ({ navigation }) => {
       >
         <Text
           style={{
-            fontFamily: "Rubik",
             fontSize: 20,
             fontWeight: "400",
             lineHeight: 36,
@@ -90,7 +89,6 @@ const LoginScreen = ({ navigation }) => {
       >
         <Text
           style={{
-            fontFamily: "Rubik",
             fontSize: 24,
             fontWeight: "400",
             lineHeight: 28,
@@ -106,7 +104,6 @@ const LoginScreen = ({ navigation }) => {
       <TouchableOpacity onPress={handleRegister}>
         <Text
           style={{
-            fontFamily: "Rubik",
             position: "absolute",
             width: "100%",
             fontSize: 24,

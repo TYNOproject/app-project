@@ -18,7 +18,6 @@ const AfterRegistrationScreen = ({ navigation }) => {
     <View style={{ alignItems: "center" }}>
       <Text
         style={{
-          fontFamily: "Rubik",
           fontSize: 35,
           fontWeight: "400",
           lineHeight: 36,
@@ -32,7 +31,6 @@ const AfterRegistrationScreen = ({ navigation }) => {
       </Text>
       <Text
         style={{
-          fontFamily: "Rubik",
           fontSize: 18,
           fontWeight: "400",
           lineHeight: 24,
@@ -62,7 +60,6 @@ const AfterRegistrationScreen = ({ navigation }) => {
       >
         <Text
           style={{
-            fontFamily: "Rubik",
             fontSize: 20,
             fontWeight: "400",
             lineHeight: 24,
@@ -75,7 +72,6 @@ const AfterRegistrationScreen = ({ navigation }) => {
       </TouchableOpacity>
       <Text
         style={{
-          fontFamily: "Rubik",
           fontSize: 18,
           fontWeight: "400",
           lineHeight: 24,
@@ -105,7 +101,6 @@ const AfterRegistrationScreen = ({ navigation }) => {
       >
         <Text
           style={{
-            fontFamily: "Rubik",
             fontSize: 20,
             fontWeight: "400",
             lineHeight: 24,
