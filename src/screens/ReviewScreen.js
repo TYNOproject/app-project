@@ -8,15 +8,15 @@
 // export default ReviewScreen;
 
 import React, { useState,Component } from "react";
-import { View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView,
+import { Stack, View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView,
   Platform,Keyboard ,StyleSheet,ScrollView} from "react-native";
 import { withNavigation } from "react-navigation";
-// import StarRating from "../components/GeneralStarRating";
+import PopUpMenu from "../components/PopUpMenu";
 
 import { Button } from "@react-native-material/core";
 
 const ReviewScreen = ({ navigation }) => {
-  const name = navigation.getParam("name");
+  const name = navigation.getParam("username");
   const teacherName = navigation.getParam("teacherName");
   const [numReview, setNumReview] = useState("");
   const [wordReview, setWordReview] = useState("");
@@ -43,47 +43,26 @@ navigation.navigate("HomeScreen", {name});
             alignItems: "center",
           }}
         >
-        <Text style={{ fontSize: 30, marginBottom: 10, right: 35 }}>
-            כל הכבוד!
+        <Text style={{ fontSize: 30, justifyContent: "center", marginBottom: 10, right: 40}}>
+            כל הכבוד {name}!
           </Text>
         <Text style={{ fontSize: 20, marginBottom: 20, right: 15 }}>
-             סיימת שיעור עם {JSON.stringify(teacherName)}
+             סיימת שיעור עם {teacherName}
           </Text>
         </View>
+        
         <View style={{ marginBottom: 16 }}>
-
-          <Text style={{ fontSize: 16, marginBottom: 20, right: -100 }}>
-            איך הייתה החוויה שלך?
+          <Text style={{ fontSize: 20, marginBottom: 8, right: -50,top: -100 }}>
+            נשמח שתספר לנו איך היה השיעור עם {teacherName} 
           </Text>
-          {/* <View style={styles.dropdown}>
-        <StarRating />
-        </View> */}
-          <TextInput
-            style={{
-              height: 51,
-              width: 327,
-              borderRadius: 5,
-              borderWidth: 1,
-              marginBottom: 100,
-              textAlign: "center",
-              textAlignVertical: "center",
-            }}
-            placeholder="החוויה שלך"
-            onChangeText={setNumReview}
-            value={numReview} />
-        </View>
-        <View style={{ marginBottom: 16 }}>
-          <Text style={{ fontSize: 16, marginBottom: 8, right: -100,top: -100 }}>
-            יש לך משהו להוסיף?
-          </Text>
-          <Text style={{ fontSize: 16, marginBottom: 4, right: -60,top: -100 }}>
-            זה יכול לעזור ל{JSON.stringify(teacherName)} ולסטודנטים הבאים
+          <Text style={{ fontSize: 20, marginBottom: 4, right: -60,top: -100 }}>
+            זה יכול לעזור ל{teacherName} ולסטודנטים הבאים
           </Text>
           <TextInput multiline
             style={{
               height: 100,
               width: 327,
-              top: -100,
+              top: -50,
               borderRadius: 5,
               borderWidth: 1,
               marginBottom: 8,
