@@ -11,10 +11,13 @@ import TeacherPageScreen from "./src/screens/TeacherPageScreen";
 import TeacherSignUpScreen from "./src/screens/TeacherSignUpScreen";
 import AfterRegistrationScreen from "./src/screens/AfterRegistrationScreen";
 import StudentSignUpScreen from "./src/screens/StudentSignUpScreen";
+import HomePageScreen from "./src/screens/homePageScreen";
+
 
 const navigator = createStackNavigator(
   {
     Home: HomeScreen,
+    HomePage: HomePageScreen,
     LogIn: LogInScreen,
     GoogleLogIn: GoogleLogInScreen,
     Register: RegisterScreen,
@@ -27,7 +30,7 @@ const navigator = createStackNavigator(
     AfterRegistration: AfterRegistrationScreen
   },
   {
-    initialRouteName: "Home",
+    initialRouteName: "HomePage",
     defaultNavigationOptions: {
       title: "BGU",
     },

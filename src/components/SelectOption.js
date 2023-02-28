@@ -2,10 +2,11 @@ import React from "react";
 import { View, StyleSheet } from "react-native";
 import SelectDropdown from "react-native-select-dropdown";
 
-const SelectOption = ({ options, defaultText }) => {
+const SelectOption = ({ options, defaultText ,buttonStyle}) => {
   return (
     <View>
       <SelectDropdown
+      buttonStyle = {buttonStyle}
         data={options}
         onSelect={(selectedItem, index) => {
           console.log(selectedItem, index);
