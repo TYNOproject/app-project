@@ -73,16 +73,17 @@ navigation.navigate("HomeScreen", {name});
             value={numReview} />
         </View>
         <View style={{ marginBottom: 16 }}>
-          <Text style={{ fontSize: 16, marginBottom: 8, right: -100 }}>
+          <Text style={{ fontSize: 16, marginBottom: 8, right: -100,top: -100 }}>
             יש לך משהו להוסיף?
           </Text>
-          <Text style={{ fontSize: 16, marginBottom: 4, right: -60 }}>
+          <Text style={{ fontSize: 16, marginBottom: 4, right: -60,top: -100 }}>
             זה יכול לעזור ל{JSON.stringify(teacherName)} ולסטודנטים הבאים
           </Text>
-          <TextInput
+          <TextInput multiline
             style={{
               height: 100,
               width: 327,
+              top: -100,
               borderRadius: 5,
               borderWidth: 1,
               marginBottom: 8,
