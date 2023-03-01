@@ -1,6 +1,7 @@
 import { createAppContainer } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
 import HomeScreen from "./src/screens/HomeScreen";
+import HomePageScreen from "./src/screens/HomePageScreen";
 import RegisterScreen from "./src/screens/RegisterScreen";
 import LogInScreen from "./src/screens/LogInScreen";
 import GoogleLogInScreen from "./src/screens/GoogleLogInScreen";
@@ -28,7 +29,7 @@ const navigator = createStackNavigator(
     Review: ReviewScreen
   },
   {
-    initialRouteName: "Home",
+    initialRouteName: "TeacherProfile",
     defaultNavigationOptions: {
       title: "BGU",
     },

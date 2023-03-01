@@ -5,7 +5,7 @@ import { useFonts } from "expo-font";
 import SelectOption from "../components/SelectOption";
 import CoursesList from "../components/CoursesList";
 
-export default function homePageScreen({ navigation }) {
+export default function HomePageScreen({ navigation }) {
   const [search, setSearch] = useState("");
   // const name = navigation.getParam("name");
 

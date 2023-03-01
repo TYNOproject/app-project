@@ -5,4 +5,4 @@ const StudentProfileScreen = () => (
   <Button title="Click Me" onPress={() => alert("StudentProfileScreen")} />
 );
 
-export default MainProfileScreen;
+export default StudentProfileScreen;

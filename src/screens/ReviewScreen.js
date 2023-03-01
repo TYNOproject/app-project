@@ -1,21 +1,11 @@
-// import React from "react";
-// import { Button } from "@react-native-material/core";
-
-// const ReviewScreen = () => (
-//     <Button title="Click Me" onPress={() => alert("Review")}/>
-//   );
-
-// export default ReviewScreen;
-
-import React, { useState,Component } from "react";
-import { Stack, View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView,
-  Platform,Keyboard ,StyleSheet,ScrollView} from "react-native";
-import { withNavigation } from "react-navigation";
-import PopUpMenu from "../components/PopUpMenu";
-
+import React, { useState } from "react";
+import { View, Text, TextInput } from "react-native";
+import { StyleSheet } from "react-native";
 import { Button } from "@react-native-material/core";
+import { AntDesign } from "@expo/vector-icons";
+import { useFonts } from "expo-font";
 
-const ReviewScreen = ({ navigation }) => {
+export default function ReviewScreen ({ navigation }){
   const name = navigation.getParam("username");
   const teacherName = navigation.getParam("teacherName");
   const [numReview, setNumReview] = useState("");
@@ -26,55 +16,86 @@ const handleReview = () => {
 navigation.navigate("HomeScreen", {name});
 };
 
+let [fontsLoaded] = useFonts({
+  "Heebo-Bold": require("../../assets/fonts/Heebo-Bold.ttf"),
+  "Heebo-Light": require("../../assets/fonts/Heebo-Light.ttf"),
+  "Heebo-Medium": require("../../assets/fonts/Heebo-Medium.ttf"),
+  "Heebo-Regular": require("../../assets/fonts/Heebo-Regular.ttf"),
+  "Heebo-SemiBold": require("../../assets/fonts/Heebo-SemiBold.ttf"),
+  "Heebo-Thin": require("../../assets/fonts/Heebo-Thin.ttf"),
+  "Heebo-Black": require("../../assets/fonts/Heebo-Black.ttf"),
+  "Heebo-ExtraBold": require("../../assets/fonts/Heebo-ExtraBold.ttf"),
+  "Heebo-ExtraLight": require("../../assets/fonts/Heebo-ExtraLight.ttf"),
+});
+
+if (!fontsLoaded)
+  return (
+    <View>
+      <Text>loading</Text>
+    </View>
+  );
 
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <View
-          style={{
-            height: 72,
-            width: 300,
-            left: 0,
-            position: "absolute",
-            top: 70,
-            left: "50%",
-            marginLeft: -106.5,
-            borderRadius: 0,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-        <Text style={{ fontSize: 30, justifyContent: "center", marginBottom: 10, right: 40}}>
-            כל הכבוד {name}!
-          </Text>
-        <Text style={{ fontSize: 20, marginBottom: 20, right: 15 }}>
-             סיימת שיעור עם {teacherName}
-          </Text>
-        </View>
-        
-        <View style={{ marginBottom: 16 }}>
-          <Text style={{ fontSize: 20, marginBottom: 8, right: -50,top: -100 }}>
-            נשמח שתספר לנו איך היה השיעור עם {teacherName} 
-          </Text>
-          <Text style={{ fontSize: 20, marginBottom: 4, right: -60,top: -100 }}>
-            זה יכול לעזור ל{teacherName} ולסטודנטים הבאים
-          </Text>
-          <TextInput multiline
-            style={{
-              height: 100,
-              width: 327,
-              top: -50,
-              borderRadius: 5,
-              borderWidth: 1,
-              marginBottom: 8,
-              textAlign: "center",
-              textAlignVertical: "center",
-            }}
-            placeholder="הוסף הערה"
-            onChangeText={setWordReview}
-            value={wordReview} />
-        </View>
-      </View>
+    <View style={styles.container}>
+      <Text style={styles.header1}>
+        כל הכבוד {name} !
+      </Text>
+      <Text style={styles.header2}>
+        סיימת שיעור עם {teacherName}
+      </Text>
+      <Text style={styles.content}>
+        נשמח שתספר לנו איך היה השיעור עם {teacherName} {"\n"}
+        זה יכול לעזור ל{teacherName} ולסטודנטים הבאים
+      </Text>
+      <TextInput multiline
+        style={styles.inputField}
+        placeholder="הוסף הערה"
+        onChangeText={setWordReview}
+        value={wordReview}
+      />
+    </View>
   );
 };
 
-export default ReviewScreen;
+const styles = StyleSheet.create({
+  container: {
+    top: 20,
+    alignItems: "center",
+    justifyContent: "center",
+    height: "40%",
+  },
+  header1: {
+    marginBottom: 20,
+    fontSize: 30,
+    top: 20,
+    fontFamily: "Heebo-Bold",
+    textAlign: "center",
+  },
+  header2: {
+    fontSize: 20,
+    top: 20,
+    fontFamily: "Heebo-Bold",
+    textAlign: "center",
+  },
+  content: {
+    fontSize: 16,
+    top: 100,
+    fontFamily: "Heebo-Bold",
+    textAlign: "center",
+  },
+  inputField: {
+    width: 300,
+    height: 90,
+    top: 120,
+    backgroundColor: "#fff",
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderColor: "#ccc",
+    borderWidth: 1,
+    borderRadius: 15,
+    fontSize: 16,
+    direction: "rtl",
+    textAlign: "right",
+    fontFamily: "Heebo-Regular",
+  },
+});

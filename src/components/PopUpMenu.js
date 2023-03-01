@@ -19,14 +19,11 @@ const PopupMenu = ({ navigation, hideMenu }) => {
       <TouchableOpacity onPress={() => handleNavigation("GoogleLogIn")}>
         <Text style={styles.popupItem}>Google Log In</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => handleNavigation("MainProfile")}>
-        <Text style={styles.popupItem}>Main Profile</Text>
+      <TouchableOpacity onPress={() => handleNavigation("StudentProfile")}>
+        <Text style={styles.popupItem}>StudentProfile</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => handleNavigation("Register")}>
         <Text style={styles.popupItem}>Register</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => handleNavigation("AfterRegistration")}>
-        <Text style={styles.popupItem}>After Registration</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => handleNavigation("TeacherPage")}>
         <Text style={styles.popupItem}>Teacher Page</Text>
