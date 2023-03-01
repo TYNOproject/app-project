@@ -1,8 +1,11 @@
 import React from "react";
+import { View, Text, StyleSheet } from "react-native";
 import { Button } from "@react-native-material/core";
 
-const StudentProfileScreen = () => (
-  <Button title="Click Me" onPress={() => alert("StudentProfileScreen")} />
-);
+export default function StudentProfileScreen() {
+  return (
+    <Button title="Click Me" onPress={() => alert("StudentProfileScreen")} />
+  );
+}
 
-export default MainProfileScreen;
+const styles = StyleSheet.create({});
