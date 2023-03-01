@@ -80,48 +80,15 @@ export default function LoginScreen({ navigation }) {
         color="black"
         style={{ position: "relative", top: 10 }}
         onPress={handleLogin}
-        style={{
-          backgroundColor: "#006699",
-          borderRadius: 8,
-          paddingVertical: 10,
-          paddingHorizontal: 20,
-          marginTop: 20,
-        }}
-      >
-        <Text
-          style={{
-            fontSize: 24,
-            fontWeight: "400",
-            lineHeight: 28,
-            letterSpacing: 0,
-            textAlign: "center",
-            color: "#fff",
-          }}
-        >
-          התחבר
-        </Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity onPress={handleRegister}>
-        <Text
-          style={{
-            position: "absolute",
-            width: "100%",
-            fontSize: 24,
-            bottom: -200,
-            left: -200,
-            fontWeight: "400",
-            lineHeight: 28,
-            letterSpacing: 0,
-            textAlign: "center",
-            allignSelf: "flex-start",
-            textDecorationLine: "underline",
-            color: "#006699",
-          }}
-        >
-          לא רשום עדיין? תרשם לאתר פה
-        </Text>
-      </TouchableOpacity>
+      />
+      <Button
+        leading={() => <AntDesign name="left" size={24} />}
+        title="לא רשום? לחץ כאן"
+        variant="outlined"
+        color="black"
+        style={{ position: "relative", top: 10 }}
+        onPress={handleRegister}
+      />
     </View>
   );
 }
