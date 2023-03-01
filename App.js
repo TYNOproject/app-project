@@ -27,7 +27,7 @@ const navigator = createStackNavigator(
     StudentSignUp: StudentSignUpScreen,
   },
   {
-    initialRouteName: "Home",
+    initialRouteName: "HomePage",
     defaultNavigationOptions: {
       title: "BGU",
     },

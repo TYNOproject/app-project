@@ -2,15 +2,13 @@ import React, { useState } from "react";
 import { Text, View, StyleSheet } from "react-native";
 import { Card } from "react-native-elements";
 
-const CourseCard = ({ course }) => {
+const ClassCard = ({ classDetails }) => {
   return (
     <Card containerStyle={styles.cardContainer}>
-      <Card.Title style={styles.name}>{course.courseName}</Card.Title>
+      <Card.Title style={styles.name}>{classDetails.name}</Card.Title>
       <Card.Divider />
-      <Text style={styles.description} numberOfLines={3}>
-        {course.year}"שנה:"
-        {"\n"}
-        {course.departmentId}"מחלקה:"
+      <Text style={styles.date} numberOfLines={2}>
+        {classDetails.date}
       </Text>
     </Card>
   );
@@ -20,17 +18,16 @@ const styles = StyleSheet.create({
   cardContainer: {
     borderRadius: 10,
     marginBottom: 10,
-    height: 200,
-    width: 150,
+    width: "80%",
   },
   name: {
     fontSize: 14,
     fontWeight: "bold",
   },
-  description: {
+  date: {
     fontSize: 10,
     flex: 0,
   },
 });
 
-export default CourseCard;
+export default ClassCard;
