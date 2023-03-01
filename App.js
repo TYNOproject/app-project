@@ -10,11 +10,7 @@ import TeacherProfileScreen from "./src/screens/TeacherProfileScreen";
 import TeacherPageScreen from "./src/screens/TeacherPageScreen";
 import TeacherSignUpScreen from "./src/screens/TeacherSignUpScreen";
 import StudentSignUpScreen from "./src/screens/StudentSignUpScreen";
-<<<<<<< HEAD
 import ReviewScreen from "./src/screens/ReviewScreen";
-=======
-import ReviewScreen from "./src/screens/ReviewScreen";
->>>>>>> 944b3da80fe4dbad1c89d7a669d17eae3ba8d795
 
 const navigator = createStackNavigator(
   {
