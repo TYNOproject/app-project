@@ -10,9 +10,9 @@ import CoursesList from "../components/CoursesList";
 export default function homePageScreen({ navigation })
 {
   const [search, setSearch] = useState("");
-  // const name = navigation.getParam("name");
+  const name = navigation.getParam("username");
 
-  const name = "משה";
+  // const name = "משה";
 
   //need to take from the DB
   const courses = [
@@ -100,7 +100,7 @@ return (
       </View>
       <View style={styles.spacer} />
         <View style={styles.bottomHalf}>
-            <CoursesList courses={courses} />
+          <CoursesList courses={courses} />
         </View>
       </View>); 
 }

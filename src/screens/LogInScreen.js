@@ -12,7 +12,7 @@ const LoginScreen = ({ navigation }) => {
     } else {
       alert("הרשמה נכשלה");
     }
-    navigation.navigate("Home");
+    navigation.navigate("HomePage", { username });
   };
 
   const handleRegister = () => {

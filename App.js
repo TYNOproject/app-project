@@ -13,7 +13,6 @@ import AfterRegistrationScreen from "./src/screens/AfterRegistrationScreen";
 import StudentSignUpScreen from "./src/screens/StudentSignUpScreen";
 import HomePageScreen from "./src/screens/HomePageScreen";
 
-
 const navigator = createStackNavigator(
   {
     Home: HomeScreen,
@@ -30,7 +29,7 @@ const navigator = createStackNavigator(
     AfterRegistration: AfterRegistrationScreen
   },
   {
-    initialRouteName: "HomePage",
+    initialRouteName: "TeacherPage",
     defaultNavigationOptions: {
       title: "BGU",
     },
