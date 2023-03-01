@@ -32,7 +32,7 @@ export default function RegisterScreen({ navigation }) {
 
   const handleRegister = () => {
     // handle register logic here
-    navigation.navigate("StudentSignUp", { name });
+    navigation.navigate("StudentSignUp", {name});
   };
 
   return (

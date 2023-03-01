@@ -7,7 +7,7 @@ import CoursesList from "../components/CoursesList";
 
 
 
-export default function homePageScreen({ navigation })
+export default function HomePageScreen({ navigation })
 {
   const [search, setSearch] = useState("");
   // const name = navigation.getParam("name");

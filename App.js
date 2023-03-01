@@ -1,38 +1,32 @@
-import { createAppContainer } from "react-navigation";
-import { createStackNavigator } from "react-navigation-stack";
-import HomeScreen from "./src/screens/HomeScreen";
-import RegisterScreen from "./src/screens/RegisterScreen";
-import LogInScreen from "./src/screens/LogInScreen";
-import GoogleLogInScreen from "./src/screens/GoogleLogInScreen";
-import CoursePageScreen from "./src/screens/CoursePageScreen";
-import MainProfileScreen from "./src/screens/MainProfileScreen";
-import TeacherProfileScreen from "./src/screens/TeacherProfileScreen";
-import TeacherPageScreen from "./src/screens/TeacherPageScreen";
-import TeacherSignUpScreen from "./src/screens/TeacherSignUpScreen";
-import StudentSignUpScreen from "./src/screens/StudentSignUpScreen";
-import HomePageScreen from "./src/screens/homePageScreen";
+import * as React from 'react';
+import { Pressable, View, Text } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import LoginScreen from './src/screens/LogInScreen';
+import HomePageScreen from './src/screens/HomePageScreen';
+import RegisterScreen from './src/screens/RegisterScreen';
+import StudentSignUpScreen from './src/screens/StudentSignUpScreen';
 
+const Drawer = createDrawerNavigator();
 
-const navigator = createStackNavigator(
-  {
-    Home: HomeScreen,
-    HomePage: HomePageScreen,
-    LogIn: LogInScreen,
-    GoogleLogIn: GoogleLogInScreen,
-    Register: RegisterScreen,
-    CoursePage: CoursePageScreen,
-    MainProfile: MainProfileScreen,
-    TeacherProfile: TeacherProfileScreen,
-    TeacherPage: TeacherPageScreen,
-    TeacherSignUp: TeacherSignUpScreen,
-    StudentSignUp: StudentSignUpScreen,
-  },
-  {
-    initialRouteName: "HomePage",
-    defaultNavigationOptions: {
-      title: "BGU",
-    },
-  }
-);
+function App() {
+  return (
+     <NavigationContainer>
+      <Drawer.Navigator initialRouteName="LogIn">
+        <Drawer.Screen name="HomePage" component={HomePageScreen} />
+        <Drawer.Screen name="StudentSignUp" component={StudentSignUpScreen} />
+        <Drawer.Screen name="LogIn" component={LoginScreen} 
+          options={{ headerShown: false, drawerLockMode: 'locked-closed' }} 
+        />
+        <Drawer.Screen name="Register" component={RegisterScreen}           
+            options={{ 
+            drawerLabel: () => null,
+            drawerItemStyle: { display: 'none' }
+          }}  />
+          
+      </Drawer.Navigator>
+    </NavigationContainer>
+  );
+}
 
-export default createAppContainer(navigator);
+export default App;
