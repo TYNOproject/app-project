@@ -5,13 +5,10 @@ import { useFonts } from "expo-font";
 import SelectOption from "../components/SelectOption";
 import CoursesList from "../components/CoursesList";
 
-export default function homePageScreen({ navigation }) {
+export default function HomePageScreen({ navigation }) {
   const [search, setSearch] = useState("");
   // const name = navigation.getParam("name");
-
   const name = "משה";
-
-  //need to take from the DB
   const courses = [
     {
       name: "Introduction to Computer Science",
@@ -49,17 +46,10 @@ export default function homePageScreen({ navigation }) {
         "This course covers the major events and ideas of Western civilization from ancient Greece to the present. Topics include the rise of democracy, the Renaissance, the Enlightenment, and the World Wars.",
     },
   ];
-
+  //need to take from the DB
   let [fontsLoaded] = useFonts({
     "Heebo-Bold": require("../../assets/fonts/Heebo-Bold.ttf"),
-    "Heebo-Light": require("../../assets/fonts/Heebo-Light.ttf"),
-    "Heebo-Medium": require("../../assets/fonts/Heebo-Medium.ttf"),
     "Heebo-Regular": require("../../assets/fonts/Heebo-Regular.ttf"),
-    "Heebo-SemiBold": require("../../assets/fonts/Heebo-SemiBold.ttf"),
-    "Heebo-Thin": require("../../assets/fonts/Heebo-Thin.ttf"),
-    "Heebo-Black": require("../../assets/fonts/Heebo-Black.ttf"),
-    "Heebo-ExtraBold": require("../../assets/fonts/Heebo-ExtraBold.ttf"),
-    "Heebo-ExtraLight": require("../../assets/fonts/Heebo-ExtraLight.ttf"),
   });
 
   if (!fontsLoaded)

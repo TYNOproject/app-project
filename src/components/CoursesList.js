@@ -3,18 +3,19 @@ import { View, StyleSheet, ScrollView } from "react-native";
 import CourseCard from "./CourseCard";
 
 const HalfScreenCourses = ({ courses }) => {
+  console.log("data" + courses.data);
   const coursesLeft = courses.slice(0, Math.ceil(courses.length / 2));
   const coursesRight = courses.slice(Math.ceil(courses.length / 2));
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.column}>
         {coursesLeft.map((course) => (
-          <CourseCard course={course} />
+          <CourseCard course={course} key={course.courseName} />
         ))}
       </View>
       <View style={styles.column}>
         {coursesRight.map((course) => (
-          <CourseCard course={course} />
+          <CourseCard course={course} key={course.courseName} />
         ))}
       </View>
     </ScrollView>
