@@ -3,7 +3,6 @@ import { View, StyleSheet, ScrollView } from "react-native";
 import CourseCard from "./CourseCard";
 
 const HalfScreenCourses = ({ courses }) => {
-  console.log("data" + courses.data);
   const coursesLeft = courses.slice(0, Math.ceil(courses.length / 2));
   const coursesRight = courses.slice(Math.ceil(courses.length / 2));
   return (

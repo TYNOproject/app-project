@@ -5,31 +5,12 @@ import { StyleSheet, View, Text } from "react-native";
 import { useFonts } from "expo-font";
 import SelectOption from "../components/SelectOption";
 import Service from "../api/Service";
-
-const sendToServer = async (studentDetails) => {
-  try {
-    console.log(studentDetails);
-    const response = await Service.post("/add", {
-      name: studentDetails.name,
-      email: studentDetails.email,
-      password: studentDetails.password,
-      degree: 1,
-      departmentId: 1,
-      year: 1,
-      isTeacher: false,
-      price: 0.0,
-      description: "",
-    });
-    console.log(response);
-  } catch (err) {
-    console.log(err);
-  }
-};
+import { addNewUser } from "../api/serviceCalls";
 
 export default function StudentSignUpScreen({ navigation }) {
-  const [degree, setDegree] = useState("");
-  const [departmentId, setDepartmentId] = useState("");
-  const [year, setYear] = useState("");
+  const [degreeInput, setDegree] = useState("");
+  const [departmentIdInput, setDepartmentId] = useState(0);
+  const [yearInput, setYear] = useState(0);
   const studentDetails = navigation.getParam("studentDetails");
   let [fontsLoaded] = useFonts({
     "Heebo-Bold": require("../../assets/fonts/Heebo-Bold.ttf"),
@@ -62,19 +43,28 @@ export default function StudentSignUpScreen({ navigation }) {
           options={["1", "2", "3"]}
           defaultText="מחלקה"
           buttonStyle={styles.selectOptionStyle}
-          onSelect={(selectedItem) => setDepartmentId(selectedItem)}
+          onSelectOption={(selectedItem) => {
+            console.log("i selected: " + selectedItem);
+            setDepartmentId(selectedItem);
+          }}
         />
         <SelectOption
           options={["1", "2", "3"]}
           defaultText="תואר"
           buttonStyle={styles.selectOptionStyle}
-          onSelect={(selectedItem) => setDegree(selectedItem)}
+          onSelectOption={(selectedItem) => {
+            console.log("i selected: " + selectedItem);
+            setDegree(selectedItem);
+          }}
         />
         <SelectOption
           options={["1", "2", "3"]}
           defaultText="שנה"
           buttonStyle={styles.selectOptionStyle}
-          onSelect={(selectedItem) => setYear(selectedItem)}
+          onSelectOption={(selectedItem) => {
+            console.log("i selected: " + selectedItem);
+            setYear(selectedItem);
+          }}
         />
         <Button
           leading={() => <AntDesign name="left" size={24} />}
@@ -82,14 +72,25 @@ export default function StudentSignUpScreen({ navigation }) {
           variant="outlined"
           color="black"
           style={{ position: "relative", top: 10 }}
-          onPress={() =>
-            sendToServer({
+          onPress={async () => {
+            const allDetails = {
               ...studentDetails,
-              degree,
-              departmentId,
-              year,
-            })
-          }
+              degree: degreeInput,
+              departmentId: departmentIdInput,
+              year: yearInput,
+            };
+
+            try {
+              const response = await addNewUser(allDetails);
+              if (response.status === 200) {
+                navigation.navigate("HomePage", { name: studentDetails.name });
+              } else {
+                console.log("error signing up. status is: " + response.status);
+              }
+            } catch (err) {
+              console.log("got this error when sending post request: " + err);
+            }
+          }}
         />
       </View>
     </View>

@@ -4,48 +4,25 @@ import { ListItem, SearchBar, Card } from "react-native-elements";
 import { useFonts } from "expo-font";
 import SelectOption from "../components/SelectOption";
 import CoursesList from "../components/CoursesList";
+import Service from "../api/Service";
 
 export default function HomePageScreen({ navigation }) {
   const [search, setSearch] = useState("");
-  // const name = navigation.getParam("name");
-  const name = "משה";
-  const courses = [
-    {
-      name: "Introduction to Computer Science",
-      description:
-        "This course covers the fundamentals of computer programming and software development. Students will learn programming concepts such as data types, control structures, functions, and object-oriented programming.",
-    },
-    {
-      name: "Calculus I",
-      description:
-        "This course covers the basics of calculus, including limits, derivatives, and integrals. Topics include differentiation and integration of functions, optimization problems, and applications of calculus to physics and engineering.",
-    },
-    {
-      name: "English Composition",
-      description:
-        "This course focuses on developing writing skills through critical reading and analysis of texts. Students will learn how to write effective essays, research papers, and other types of academic writing.",
-    },
-    {
-      name: "History of Western Civilization",
-      description:
-        "This course covers the major events and ideas of Western civilization from ancient Greece to the present. Topics include the rise of democracy, the Renaissance, the Enlightenment, and the World Wars.",
-    },
-    {
-      name: "History of Western Civilization",
-      description:
-        "This course covers the major events and ideas of Western civilization from ancient Greece to the present. Topics include the rise of democracy, the Renaissance, the Enlightenment, and the World Wars.",
-    },
-    {
-      name: "History of Western Civilization",
-      description:
-        "This course covers the major events and ideas of Western civilization from ancient Greece to the present. Topics include the rise of democracy, the Renaissance, the Enlightenment, and the World Wars.",
-    },
-    {
-      name: "History of Western Civilization",
-      description:
-        "This course covers the major events and ideas of Western civilization from ancient Greece to the present. Topics include the rise of democracy, the Renaissance, the Enlightenment, and the World Wars.",
-    },
-  ];
+  const [listOfCourses, setListOfCourses] = useState([]);
+
+  const getCoursesByDepartment = async (depId) => {
+    try {
+      const response = await Service.post("/getCoursesByDepartment", {
+        departmentId: depId,
+      });
+      setListOfCourses(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  getCoursesByDepartment(3);
+
+  const name = navigation.getParam("name");
   //need to take from the DB
   let [fontsLoaded] = useFonts({
     "Heebo-Bold": require("../../assets/fonts/Heebo-Bold.ttf"),
@@ -96,7 +73,7 @@ export default function HomePageScreen({ navigation }) {
       </View>
       <View style={styles.spacer} />
       <View style={styles.bottomHalf}>
-        <CoursesList courses={courses} />
+        <CoursesList courses={listOfCourses} />
       </View>
     </View>
   );
