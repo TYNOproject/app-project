@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { View, Text, TextInput } from "react-native";
 import { StyleSheet } from "react-native";
 import { Button } from "@react-native-material/core";
 import { AntDesign } from "@expo/vector-icons";
 import { useFonts } from "expo-font";
+import  StudentContext from "../../StudentContext";
 
 export default function RegisterScreen({ navigation }) {
+
+  const {addToStudent} = useContext(StudentContext)
+  const { clearItems } = useContext(StudentContext);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -23,10 +27,7 @@ export default function RegisterScreen({ navigation }) {
     );
 
   const handleRegister = () => {
-    // handle register logic here
-    navigation.navigate("StudentSignUp", {
-      studentDetails: { name, email, password },
-    });
+    navigation.navigate("StudentSignUp", { name });
   };
 
   return (
@@ -60,7 +61,11 @@ export default function RegisterScreen({ navigation }) {
         variant="outlined"
         color="black"
         style={{ position: "relative", top: 10 }}
-        onPress={handleRegister}
+        onPress={() => {
+          clearItems();
+          addToStudent('name', name);
+          handleRegister();
+        }}
       />
     </View>
   );

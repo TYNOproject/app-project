@@ -24,11 +24,10 @@ export default function LoginScreen({ navigation }) {
     } else {
       alert("הרשמה נכשלה");
     }
-    navigation.navigate("Home");
+    navigation.navigate("HomePage");
   };
 
   const handleRegister = () => {
-    // handle register logic here
     navigation.navigate("Register");
   };
 
@@ -56,7 +55,7 @@ export default function LoginScreen({ navigation }) {
         title="התחבר"
         variant="outlined"
         color="black"
-        style={{ position: "relative", top: 10 }}
+        style={{ position: "relative", top: 80 }}
         onPress={handleLogin}
       />
       <Button
@@ -64,7 +63,7 @@ export default function LoginScreen({ navigation }) {
         title="לא רשום? לחץ כאן"
         variant="outlined"
         color="black"
-        style={{ position: "relative", top: 10 }}
+        style={{ position: "relative", top: 70 }}
         onPress={handleRegister}
       />
     </View>
@@ -80,12 +79,13 @@ const styles = StyleSheet.create({
   },
   header: {
     fontSize: 30,
-    top: 20,
+    top: 90,
     fontFamily: "Heebo-Bold",
     textAlign: "center",
   },
   inputField: {
     width: 300,
+    top:100,
     height: 40,
     backgroundColor: "#fff",
     paddingVertical: 10,

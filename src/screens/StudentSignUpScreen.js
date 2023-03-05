@@ -1,4 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
+import { useContext , useState} from "react";
+import StudentContext from "../../StudentContext";
+
 import { Button } from "@react-native-material/core";
 import { AntDesign } from "@expo/vector-icons";
 import { StyleSheet, View, Text } from "react-native";
@@ -12,6 +15,10 @@ export default function StudentSignUpScreen({ navigation }) {
   const [departmentIdInput, setDepartmentId] = useState(0);
   const [yearInput, setYear] = useState(0);
   const studentDetails = navigation.getParam("studentDetails");
+   const {items} = useContext(StudentContext);
+   const {getVal} = useContext(StudentContext)
+   const name = getVal(items,"name")
+
   let [fontsLoaded] = useFonts({
     "Heebo-Bold": require("../../assets/fonts/Heebo-Bold.ttf"),
     "Heebo-Regular": require("../../assets/fonts/Heebo-Regular.ttf"),
@@ -72,25 +79,8 @@ export default function StudentSignUpScreen({ navigation }) {
           variant="outlined"
           color="black"
           style={{ position: "relative", top: 10 }}
-          onPress={async () => {
-            const allDetails = {
-              ...studentDetails,
-              degree: degreeInput,
-              departmentId: departmentIdInput,
-              year: yearInput,
-            };
-
-            try {
-              const response = await addNewUser(allDetails);
-              if (response.status === 200) {
-                navigation.navigate("HomePage", { name: studentDetails.name });
-              } else {
-                console.log("error signing up. status is: " + response.status);
-              }
-            } catch (err) {
-              console.log("got this error when sending post request: " + err);
-            }
-          }}
+          onPress={() => navigation.navigate('HomePage')}
+          //onPress={sendToServer}
         />
       </View>
     </View>

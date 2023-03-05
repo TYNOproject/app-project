@@ -1,14 +1,13 @@
-
 import React from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
-import ClassCard from "./ClassCard";
+import TeacherCard from "./TeacherCard";
 
-const HalfScreenClasses = ({ classes }) => {
+const TeachersList = ({ teachers }) => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.column}>
-        {classes.map((classDetails) => (
-          <ClassCard classDetails={classDetails} key={classDetails.name} />
+        {teachers.map((teacher) => (
+          <TeacherCard teacher={teacher} />
         ))}
       </View>
     </ScrollView>
@@ -26,4 +25,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HalfScreenClasses;
+export default TeachersList;
