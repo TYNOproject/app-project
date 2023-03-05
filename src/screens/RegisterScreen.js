@@ -1,154 +1,101 @@
-  import React, { useState,Component } from "react";
-  import { View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView,
-    Platform,Keyboard ,StyleSheet,ScrollView} from "react-native";
-  import { withNavigation } from "react-navigation";
+import React, { useState, useContext } from "react";
+import { View, Text, TextInput } from "react-native";
+import { StyleSheet } from "react-native";
+import { Button } from "@react-native-material/core";
+import { AntDesign } from "@expo/vector-icons";
+import { useFonts } from "expo-font";
+import  StudentContext from "../../StudentContext";
 
-  import { Button } from "@react-native-material/core";
+export default function RegisterScreen({ navigation }) {
 
-  const RegisterScreen = ({ navigation }) => {
-    const [name, setName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+  const {addToStudent} = useContext(StudentContext)
+  const { clearItems } = useContext(StudentContext);
+  const [name, setName] = useState("");
+  const [lastName, setLastName] = useState("");
 
-const handleRegister = () => {
-  // handle register logic here
-  navigation.navigate("AfterRegistration", { name });
-};
+  let [fontsLoaded] = useFonts({
+    "Heebo-Bold": require("../../assets/fonts/Heebo-Bold.ttf"),
+    "Heebo-Light": require("../../assets/fonts/Heebo-Light.ttf"),
+    "Heebo-Medium": require("../../assets/fonts/Heebo-Medium.ttf"),
+    "Heebo-Regular": require("../../assets/fonts/Heebo-Regular.ttf"),
+    "Heebo-SemiBold": require("../../assets/fonts/Heebo-SemiBold.ttf"),
+    "Heebo-Thin": require("../../assets/fonts/Heebo-Thin.ttf"),
+    "Heebo-Black": require("../../assets/fonts/Heebo-Black.ttf"),
+    "Heebo-ExtraBold": require("../../assets/fonts/Heebo-ExtraBold.ttf"),
+    "Heebo-ExtraLight": require("../../assets/fonts/Heebo-ExtraLight.ttf"),
+  });
 
-
+  if (!fontsLoaded)
     return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <View
-          style={{
-            height: 72,
-            width: 300,
-            left:0,
-            position: "absolute",
-            top: 70,
-            left: "50%",
-            marginLeft: -106.5,
-            borderRadius: 0,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Text
-            style={{
-              fontFamily: "Rubik",
-              fontSize: 30,
-              left:-36,
-              fontWeight: "400",
-              lineHeight: 36,
-              letterSpacing: 0,
-              textAlign: "center",
-            }}
-          >
-            כמה פרטים וסיימנו
-          </Text>
-        </View>
-        <View style={{marginBottom: 16}}>
-    <Text style={{fontSize: 16, marginBottom: 8, right: -265}}>
-      השם שלך
-    </Text>
-    <TextInput
-      style={{
-        height: 51,
-        width: 327,
-        borderRadius: 5,
-        borderWidth: 1,
-        marginBottom: 8,
-        textAlign: "center",
-        textAlignVertical: "center",
-      }}
-      placeholder="השם שלך"
-      onChangeText={setName}
-      value={name}
-    />
-  </View>
-  <View style={{marginBottom: 16}}>
-  <Text style={{fontSize: 16, marginBottom: 8, right: -212}}>
-      שם המשפחה שלך
-    </Text>
-    <TextInput
-      style={{
-        height: 51,
-        width: 327,
-        borderRadius: 5,
-        borderWidth: 1,
-        marginBottom: 8,
-        textAlign: "center",
-        textAlignVertical: "center",
-      }}
-      placeholder="שם המשפחה שלך"
-      onChangeText={setLastName}
-      value={lastName}
-    />
-  </View>
-  <View style={{marginBottom: 16}}>
-  <Text style={{fontSize: 16, marginBottom: 8, right: -220}}>
-      מייל אוניברסיטאי
-    </Text>
-    <TextInput
-      style={{
-        height: 51,
-        width: 327,
-        borderRadius: 5,
-        borderWidth: 1,
-        marginBottom: 8,
-        textAlign: "center",
-        textAlignVertical: "center",
-      }}
-      placeholder="מייל אוניברסיטאי"
-      onChangeText={setEmail}
-      value={email}
-    />
-  </View>
-  <View style={{marginBottom: 16}}>
-  <Text style={{fontSize: 16, marginBottom: 8, right: -285}}>
-      סיסמא
-    </Text>
-    <TextInput
-      style={{
-        height: 51,
-        width: 327,
-        borderRadius: 5,
-        borderWidth: 1,
-        marginBottom: 8,
-        textAlign: "center",
-        textAlignVertical: "center",
-      }}
-      placeholder="סיסמא"
-      onChangeText={setPassword}
-      value={password}
-      secureTextEntry
-    />
-  </View>
-  <TouchableOpacity onPress={handleRegister} style={{
-  height: 53,
-  width: 326,
-  left: 0,
-  top: 65,
-  borderRadius: 5,
-  padding: 16,
-  backgroundColor: "#006699",
-  justifyContent: "center",
-  alignItems: "center"
-  }}>
-  <Text style={{
-  fontFamily: "Rubik",
-  fontSize: 24,
-  fontWeight: "400",
-  lineHeight: 28,
-  letterSpacing: 0,
-  textAlign: "center",
-  color: "#FFFFFF",
-  }}>
-  אפשר להמשיך
-  </Text>
-  </TouchableOpacity>
+      <View>
+        <Text>loading</Text>
       </View>
     );
+
+  const handleRegister = () => {
+    navigation.navigate("StudentSignUp", { name });
   };
 
-  export default RegisterScreen;
+  return (
+    <View style={styles.container}>
+      <Text style={styles.header}>
+        טוב שבאת! {"\n"}
+        כמה פרטים וסיימנו
+      </Text>
+      <TextInput
+        style={styles.inputField}
+        placeholder="השם שלך"
+        onChangeText={setName}
+        value={name}
+      />
+      <TextInput
+        style={styles.inputField}
+        placeholder="שם המשפחה שלך"
+        onChangeText={setLastName}
+        value={lastName}
+      />
+      <Button
+        leading={() => <AntDesign name="left" size={24} />}
+        title="אפשר להמשיך"
+        variant="outlined"
+        color="black"
+        style={{ position: "relative", top: 10 }}
+        onPress={() => {
+          clearItems();
+          addToStudent('name', name);
+          addToStudent('lastname',lastName);
+          handleRegister();
+        }}
+      />
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "space-between",
+    height: "80%",
+  },
+  header: {
+    fontSize: 30,
+    top: 20,
+    fontFamily: "Heebo-Bold",
+    textAlign: "center",
+  },
+  inputField: {
+    width: 300,
+    height: 40,
+    backgroundColor: "#fff",
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderColor: "#ccc",
+    borderWidth: 1,
+    borderRadius: 15,
+    fontSize: 16,
+    direction: "rtl",
+    textAlign: "right",
+    fontFamily: "Heebo-Regular",
+  },
+});
