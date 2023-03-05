@@ -5,10 +5,12 @@ import { Card } from "react-native-elements";
 const CourseCard = ({ course }) => {
   return (
     <Card containerStyle={styles.cardContainer}>
-      <Card.Title style={styles.name}>{course.name}</Card.Title>
+      <Card.Title style={styles.name}>{course.courseName}</Card.Title>
       <Card.Divider />
-      <Text style={styles.description} numberOfLines={6}>
-        {course.description}
+      <Text style={styles.description} numberOfLines={3}>
+        {course.year}"שנה:"
+        {"\n"}
+        {course.departmentId}"מחלקה:"
       </Text>
     </Card>
   );

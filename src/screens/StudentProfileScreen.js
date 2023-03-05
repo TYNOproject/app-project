@@ -1,4 +1,5 @@
 
+
 import React from "react";
 import { useContext } from "react";
 import { View, Text, StyleSheet } from "react-native";
@@ -57,6 +58,7 @@ export default function StudentProfileScreen({ navigation }) {
         <Text style={styles.header}>
           פרופיל אישי{"\n"}
           {name} {lastName}
+          {name}
         </Text>
         <Button
           leading={() => (
@@ -70,6 +72,7 @@ export default function StudentProfileScreen({ navigation }) {
           variant="outlined"
           color="black"
           onPress={handleRegisterPress}
+
         />
         <Button
           leading={() => (
@@ -80,6 +83,7 @@ export default function StudentProfileScreen({ navigation }) {
           color="black"
           style={{ position: "relative", top: 10 }}
           onPress={handleTeacherPress}
+
 
         />
       </View>
@@ -117,5 +121,6 @@ const styles = StyleSheet.create({
     flex: 4,
     top:-120,
     right:-20
+
   },
 });
