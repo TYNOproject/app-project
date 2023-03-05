@@ -1,10 +1,15 @@
+
+
 import React from "react";
+import { useContext } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Button } from "@react-native-material/core";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useFonts } from "expo-font";
 import ClassesList from "../components/ClassesList";
+import StudentContext from "../../StudentContext";
+
 
 const classes = [
   {
@@ -22,11 +27,24 @@ const classes = [
 ];
 
 export default function StudentProfileScreen({ navigation }) {
-  const name = navigation.getParam("name");
+
+    const {items} = useContext(StudentContext);
+    const {getVal} = useContext(StudentContext)
+    const name = getVal(items,"name")
+    const lastName = getVal(items,"lastname")
+
   let [fontsLoaded] = useFonts({
     "Heebo-Bold": require("../../assets/fonts/Heebo-Bold.ttf"),
     "Heebo-Regular": require("../../assets/fonts/Heebo-Regular.ttf"),
   });
+
+  function handleRegisterPress() {
+    navigation.navigate('Register');
+  }
+
+  function handleTeacherPress() {
+    navigation.navigate('TeacherProfile');
+  }
 
   if (!fontsLoaded)
     return (
@@ -39,6 +57,7 @@ export default function StudentProfileScreen({ navigation }) {
       <View style={styles.topContainer}>
         <Text style={styles.header}>
           פרופיל אישי{"\n"}
+          {name} {lastName}
           {name}
         </Text>
         <Button
@@ -52,6 +71,8 @@ export default function StudentProfileScreen({ navigation }) {
           title="עריכת פרטים אישיים"
           variant="outlined"
           color="black"
+          onPress={handleRegisterPress}
+
         />
         <Button
           leading={() => (
@@ -61,6 +82,9 @@ export default function StudentProfileScreen({ navigation }) {
           variant="outlined"
           color="black"
           style={{ position: "relative", top: 10 }}
+          onPress={handleTeacherPress}
+
+
         />
       </View>
       <View style={styles.spacer} />
@@ -73,7 +97,7 @@ export default function StudentProfileScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    top: 10,
+    top: 90,
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "space-between",
@@ -95,5 +119,8 @@ const styles = StyleSheet.create({
     alignSelf: "flex-end",
     width: "100%",
     flex: 4,
+    top:-120,
+    right:-20
+
   },
 });
