@@ -11,15 +11,20 @@ WebBrowser.maybeCompleteAuthSession();
 export default function GoogleLogInScreen() {
   const [accessToken, setAccessToken] = React.useState(null);
   const [user, setUser] = React.useState(null);
-  const [request, response, promptAsync] = Google.useAuthRequest({
-    clientId:
-      "689467618406-scpe9ik85l7uom2kelebldu2oh4uhpa2.apps.googleusercontent.com",
-    iosClientId:
-      "689467618406-a57tfca7b8d947s7e56amua171iuakhs.apps.googleusercontent.com",
-    androidClientId:
-      "689467618406-5gbdh27531bd255eo0tvoder1nl3dg3m.apps.googleusercontent.com",
-    scopes: ["profile", "email"],
-  });
+  const [request, response, promptAsync] = Google.useAuthRequest(
+    {
+      clientId:
+        "689467618406-scpe9ik85l7uom2kelebldu2oh4uhpa2.apps.googleusercontent.com",
+      iosClientId:
+        "689467618406-a57tfca7b8d947s7e56amua171iuakhs.apps.googleusercontent.com",
+      androidClientId:
+        "689467618406-5gbdh27531bd255eo0tvoder1nl3dg3m.apps.googleusercontent.com",
+      scopes: ["profile", "email"],
+      responseType: ResponseType.token,
+      redirectUri: makeRedirectUri({ useProxy: true }),
+    },
+    { useProxy: true }
+  );
 
   React.useEffect(() => {
     if (response?.type === "success") {
