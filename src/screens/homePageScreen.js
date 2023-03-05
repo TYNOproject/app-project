@@ -7,7 +7,6 @@
   import StudentContext from "../../StudentContext";
 
 
-
   export default function HomePageScreen({ navigation })
   {
     const [search, setSearch] = useState("");
@@ -16,7 +15,6 @@
     const {items} = useContext(StudentContext);
     const {getVal} = useContext(StudentContext)
     const name = getVal(items,"name")
-
     
     //need to take from the DB
     const courses = [
