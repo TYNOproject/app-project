@@ -1,9 +1,14 @@
 import React, { Component,useState } from "react";
 import { StyleSheet, Text, View, FlatList } from "react-native";
-import { ListItem, SearchBar,Card,Avatar } from "react-native-elements";
+import { ListItem, SearchBar,Card,Avatar,Icon, Button } from "react-native-elements";
 import { useFonts } from "expo-font";
 import SelectOption from "../components/SelectOption";
 import CoursesList from "../components/CoursesList";
+import TeacherCourseBar from "../components/TeacherCourseBar";
+import ReviewBar from "../components/ReviewBar";
+import { Chip } from '@rneui/themed';
+
+
 
 
 
@@ -12,46 +17,51 @@ export default function TeacherPageScreen({ navigation })
   const [search, setSearch] = useState("");
   // const name = navigation.getParam("username");
   // const year = navigation.getParam("year");
+  // const rate = navigation.getParam("rate");
+  // const money = navigation.getParam("money");
+
 
   const name = "משה בן חמו";
   const year = "שנה ד'";
+  const rate = "4";
+  const money = "120";
 
   //need to take from the DB
   const courses = [
     {
-      name: "Introduction to Computer Science",
+      name: "קומפילציה",
       description:
         "This course covers the fundamentals of computer programming and software development. Students will learn programming concepts such as data types, control structures, functions, and object-oriented programming.",
     },
     {
-      name: "Calculus I",
+      name: "מבנה נתונים",
       description:
         "This course covers the basics of calculus, including limits, derivatives, and integrals. Topics include differentiation and integration of functions, optimization problems, and applications of calculus to physics and engineering.",
     },
     {
-      name: "English Composition",
+      name: "תולדות היופי",
       description:
         "This course focuses on developing writing skills through critical reading and analysis of texts. Students will learn how to write effective essays, research papers, and other types of academic writing.",
     },
+  ];
+
+  const reviews = [
     {
-      name: "History of Western Civilization",
+      reat: "2",
+      name: "ישראל ישראלי",
       description:
-        "This course covers the major events and ideas of Western civilization from ancient Greece to the present. Topics include the rise of democracy, the Renaissance, the Enlightenment, and the World Wars.",
+    "מורה בןזונה"},
+    {
+      reat: "4",
+      name: "אני נוסבאום",
+      description:
+        " מורה נהדר לקורס נהדר!",
     },
     {
-      name: "History of Western Civilization",
+      reat: "4",
+      name: "מנש אליהו",
       description:
-        "This course covers the major events and ideas of Western civilization from ancient Greece to the present. Topics include the rise of democracy, the Renaissance, the Enlightenment, and the World Wars.",
-    },
-    {
-      name: "History of Western Civilization",
-      description:
-        "This course covers the major events and ideas of Western civilization from ancient Greece to the present. Topics include the rise of democracy, the Renaissance, the Enlightenment, and the World Wars.",
-    },
-    {
-      name: "History of Western Civilization",
-      description:
-        "This course covers the major events and ideas of Western civilization from ancient Greece to the present. Topics include the rise of democracy, the Renaissance, the Enlightenment, and the World Wars.",
+        "יותם מרצה מעולה הגעתי לשיעור הראשון איתו לחוצה מאד מהחומר ויותם הרגיע אותי הוא מעביר את החומר בצורה נעימה וברורה....",
     },
   ];
 
@@ -85,26 +95,31 @@ return (
           size={"large"}
     rounded
     source={avatarImage}
-    containerStyle={styles.avatarContainer}
-    />
+    containerStyle={styles.avatarContainer}/>
         <Text style={styles.header}>
            {name} {"\n"}
           {year}
         </Text>
       </View>
-    <View style={
-      styles.searchBar
-    }>
-      </View>
       <View style={styles.dropdown}>
-        <SelectOption options={["Op1", "Op2", "Op3"]} defaultText="פקולטה" buttonStyle= {styles.dropdownButtonStyle} />
-        <SelectOption options={["Op1", "Op2", "Op3"]} defaultText="מחלקה" buttonStyle= {styles.dropdownButtonStyle} />
-        <SelectOption options={["Op1", "Op2", "Op3"]} defaultText="תואר" buttonStyle= {styles.dropdownButtonStyle} />
+        <TeacherCourseBar teacherCourses = {courses} style={styles.dropdown}></TeacherCourseBar>
+      </View>
+      <View style={styles.reatingLocatioin}>
+      <Icon
+              name="star"
+              type="font-awesome"
+              color="#FFD700"
+              containerStyle={styles.starContainer}/>
+      <Text style={styles.starRatingText}>{rate}/5</Text>
+      </View>
+      <View style={styles.moneyLocatioin}>
+      <Text style={styles.starRatingText}>{money} ש"ח לשעה</Text>
       </View>
       <View style={styles.spacer} />
         <View style={styles.bottomHalf}>
-            <CoursesList courses={courses} />
+            <ReviewBar reviews={reviews} />
         </View>
+        <Button title= {<Text style={styles.starRatingText}> לקביעת שיעור עם {name}</Text>} onPress={() => alert("move to nexxt page")} style = {styles.button}/>
       </View>); 
 }
 
@@ -115,6 +130,23 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     flex: 1,
   },
+  starContainer: {
+    position: 'relative',
+    },
+    starRatingText: {
+      position: 'relative',
+      fontSize: 16,
+    },
+    reatingLocatioin: {
+      position: 'relative',
+      left:150,
+      top:250,
+    },
+    moneyLocatioin: {
+      position: 'relative',
+      left:-100,
+      top:220,
+    },
   avatarContainer: {
     position: 'absolute',
     top: 20,
@@ -139,22 +171,33 @@ const styles = StyleSheet.create({
   },
   dropdown: {
     flexDirection:"row",
-    top: 250,
+    top: 200,
     justifyContent: "space-between",
     alignItems: "center"
   },
-  dropdownButtonStyle: {
-    flexDirection:"row",
-    justifyContent : "center",
-    width:110,
+  reviewBar: {
+    position: "absolute",
+    top:100
   },
-
   spacer: {
     flex: 1,
   },
   bottomHalf: {
-    alignSelf: "flex-end",
-    width: '100%',
-    flex: 2,
+    flex: 1.5,
   },
+  ReviewBar: {
+    alignSelf: "flex-end",
+    flex: 2.5,
+  },
+  button: {
+    backgroundColor: '#2196F3',
+    borderRadius: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    marginVertical: 10,
+    minWidth: 100,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  
 });

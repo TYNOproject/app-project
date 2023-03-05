@@ -1,32 +1,21 @@
 import React, { useState } from "react";
 import { Text, View, StyleSheet,ScrollView } from "react-native";
-import { Card,Icon,Avatar  } from "react-native-elements";
+import { Card,Icon,Avatar,Button  } from "react-native-elements";
+import { Chip } from '@rneui/themed';
 
-const TeacherCourseBar = ({ teacher }) => {
+
+const TeacherCourseBar = ({ teacherCourses }) => {
     const avatarImage = require('../../assets/pics/avatarPic.png' );
 
   return (
     <View style={styles.viewcardContainer}>
-    <Avatar
-    rounded
-    source={{uri: 'https://via.placeholder.com/150'}}
-    containerStyle={styles.avatarContainer}
-    />
-  <Icon
-    name="star"
-    type="font-awesome"
-    color="#FFD700"
-    containerStyle={styles.starContainer}/>
-        <Card containerStyle={styles.cardContainer}>
-      <Card.Title style={styles.name}>{teacher.name}, {"\n"}
-          {teacher.year} </Card.Title>
-          <Text style={styles.starRatingText}>{teacher.rate}/5</Text>
-
-      <Card.Divider style={styles.cardDivider}/>
-      <Text style={styles.description} numberOfLines={6}>
-        {teacher.description}
-      </Text>
-    </Card>
+        <ScrollView  horizontal={true} >
+            <View style={styles.buttonContainer}>
+        {teacherCourses.map((course) => (
+            <Chip title={course.name} containerStyle={ styles.chipStyle} />
+        ))}
+        </View>
+        </ScrollView>
     </View>
   );
 };
@@ -37,6 +26,16 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     height: 150,
     width: 370,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    height: 50,
+    justifyContent: "space-between",
+  },
+  chipStyle: {
+    flexDirection: 'row',
+    height: 50,
+    marginHorizontal:10
   },
   viewcardContainer: {
     position: 'relative',
@@ -51,8 +50,9 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   description: {
-    fontSize: 10,
+    fontSize: 20,
     flex: 0,
+    alignSelf: 'flex-start',
   },
   starContainer: {
     position: 'absolute',
