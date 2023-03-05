@@ -1,15 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { View, Text, TextInput } from "react-native";
 import { StyleSheet } from "react-native";
 import { Button } from "@react-native-material/core";
 import { AntDesign } from "@expo/vector-icons";
 import { useFonts } from "expo-font";
+import  StudentContext from "../../StudentContext";
 
 export default function RegisterScreen({ navigation }) {
+
+  const {addToStudent} = useContext(StudentContext)
+  const { clearItems } = useContext(StudentContext);
   const [name, setName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
 
   let [fontsLoaded] = useFonts({
     "Heebo-Bold": require("../../assets/fonts/Heebo-Bold.ttf"),
@@ -31,8 +33,7 @@ export default function RegisterScreen({ navigation }) {
     );
 
   const handleRegister = () => {
-    // handle register logic here
-    navigation.navigate("StudentSignUp", {name});
+    navigation.navigate("StudentSignUp", { name });
   };
 
   return (
@@ -53,26 +54,18 @@ export default function RegisterScreen({ navigation }) {
         onChangeText={setLastName}
         value={lastName}
       />
-      <TextInput
-        style={styles.inputField}
-        placeholder="מייל אוניברסיטאי"
-        onChangeText={setEmail}
-        value={email}
-      />
-      <TextInput
-        style={styles.inputField}
-        placeholder="סיסמא"
-        onChangeText={setPassword}
-        value={password}
-        secureTextEntry
-      />
       <Button
         leading={() => <AntDesign name="left" size={24} />}
         title="אפשר להמשיך"
         variant="outlined"
         color="black"
         style={{ position: "relative", top: 10 }}
-        onPress={handleRegister}
+        onPress={() => {
+          clearItems();
+          addToStudent('name', name);
+          addToStudent('lastname',lastName);
+          handleRegister();
+        }}
       />
     </View>
   );
