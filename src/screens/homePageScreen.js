@@ -5,7 +5,7 @@ import { useFonts } from "expo-font";
 import SelectOption from "../components/SelectOption";
 import CoursesList from "../components/CoursesList";
 import Service from "../api/Service";
-  import StudentContext from "../../StudentContext";
+import StudentContext from "../../StudentContext";
 
 
 export default function HomePageScreen({ navigation }) {
