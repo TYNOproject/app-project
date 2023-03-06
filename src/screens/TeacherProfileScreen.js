@@ -1,10 +1,13 @@
-import React, { Component, useState } from "react";
+import React, {Component, useState } from "react";
+import { Button } from "@react-native-material/core";
 import { StyleSheet, Text, View, FlatList } from "react-native";
 import { ListItem, SearchBar, Card } from "react-native-elements";
 import { useFonts } from "expo-font";
+import { AntDesign } from "@expo/vector-icons";
 import SelectOption from "../components/SelectOption";
 import CoursesList from "../components/CoursesList";
 import LessonsList from "../components/LessonsList";
+import TeacherCoursesList from "../components/TeacherCoursesList";
 
 export default function TeacherProfileScreen({ navigation }) {
   const name = navigation.getParam("name");
@@ -12,28 +15,72 @@ export default function TeacherProfileScreen({ navigation }) {
   //need to take from the DB
   const lessons = [
     {
-      name: "קורס קומפליציה",
+      name: "קומפליציה",
       studentName: "עמרי חן",
       date: "1/1/22",
-      type: "שיעור דיגיטלי",
       time: "17:30-19:00"
     },
     {
-      name: "קורס מודלים חישוביים",
+      name: "מודלים חישוביים",
       studentName:"יובל ים",
       date: "1/1/22",
-      type: "שיעור פרונטלי",
       time: "17:30-19:00"
     },
     {
-      name: "קורס לוגיקה",
+      name: "לוגיקה",
       studentName: "נועם שטיין",
       date: "1/1/22",
-      type: "שיעור דיגיטלי",
       time: "17:30-19:00"
     },
-    
+    {
+      name: "קומפליציה",
+      studentName: "עמרי חן",
+      date: "1/1/22",
+      time: "17:30-19:00"
+    },
+    {
+      name: "מודלים חישוביים",
+      studentName:"יובל ים",
+      date: "1/1/22",
+      time: "17:30-19:00"
+    },
+    {
+      name: "לוגיקה",
+      studentName: "נועם שטיין",
+      date: "1/1/22",
+      time: "17:30-19:00"
+    },
   ];
+  const courses = [
+    {
+      name: "קומפליציה"
+    },
+    {
+      name: "לוגיקה"
+    },
+    {
+      name: "אלגברה 2"
+    }
+  ]
+  const price = "120"
+  const aviableClasses = [
+    {
+      name: "",
+      date: "1/1/22\n 17:00-19:00"
+    },
+    {
+      name: "",
+      date: "1/1/22\n 17:00-19:00"
+    },
+    {
+      name: "",
+      date: "1/1/22\n 17:00-19:00"
+    },
+    {
+      name: "",
+      date: "1/1/22\n 17:00-19:00"
+    }
+  ]
 
   let [fontsLoaded] = useFonts({
     "Heebo-Bold": require("../../assets/fonts/Heebo-Bold.ttf"),
@@ -54,18 +101,51 @@ export default function TeacherProfileScreen({ navigation }) {
       </View>
     );
 
-  return (
+    const handleLessonsConfermation = () => {
+      navigation.navigate("ConfirmLessons");
+    };
+
+    return (
     <View style={styles.container}>
         <Text style={styles.header}>
-          היי {name}, {"\n"}
+          היי {name}
         </Text>
-        <Text style= {styles.feutareClasses}>
+        <Text style= {styles.feutareLessons}>
         שיעורים קרובים
         </Text>
-      <View style={styles.spacer} />
-      <View style={styles.bottomHalf}>
+        <View style={styles.scrollView}>
         <LessonsList lessons = {lessons} />
-      </View>
+        </View>
+        <Text style= {styles.waitingLessons}>
+        שיעורים שמחכים לאישור
+        </Text>
+        <View style={styles.scrollView}>
+        <LessonsList lessons = {lessons} />
+        </View>
+        <Button style = {styles.ConfirmLessonsButton}
+        leading={() => <AntDesign name="left" size={24} />}
+        title="לאישור/דחיית שיעורים"
+        variant="outlined"
+        color="black"
+        onPress={handleLessonsConfermation}/>
+        <Text style= {styles.teacherCourses}>
+        קורסים שאני מלמד
+        </Text>
+        <View style={styles.scrollView}>
+        <TeacherCoursesList courses = {courses} />
+        </View>
+        <Text style= {styles.teacherCourses}>
+        המחיר שלי לשיעור
+        </Text>
+        <Card containerStyle={styles.CardContainer}>
+          <Text style={styles.price}>{price} ש"ח</Text>
+        </Card>
+        <Text style= {styles.aviableTimes}>
+        הזמנים הפנויים שלי
+        </Text>
+        {/* <View style={styles.scrollView}>
+        <HalfScreenClasses classes={aviableClasses} />
+        </View> */}
     </View>
   );
 }
@@ -75,56 +155,59 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "column",
     flex: 1,
+    verticalAlign: "top",
   },
   header: {
     fontFamily: "Heebo-Bold",
     fontWeight: "bold",
     fontSize: 30,
     textAlign: "center",
+    marginBottom: 10
   },
-  feutareClasses: {
-    flex:1,
+  feutareLessons: {
     fontSize: 16,
-    top: -30,
     fontFamily: "Heebo-Bold",
     right: 10,
-    alignSelf: "flex-end"
-  },
-  searchBar: {
-    position: "absolute",
-    direction: "rtl",
-    top: 150,
-    left: 60,
-    height: 60,
-    width: 300,
-  },
-
-  topPart: {
-    position: "absolute",
-    left: "10%",
-    top: 0,
-    width: 320,
-    direction: "rtl",
-    paddingTop: 50,
-  },
-  dropdown: {
-    flexDirection: "row",
-    top: 250,
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  dropdownButtonStyle: {
-    flexDirection: "row",
-    justifyContent: "center",
-    width: 110,
-  },
-
-  spacer: {
-    flex: 1,
-  },
-  bottomHalf: {
     alignSelf: "flex-end",
-    width: "100%",
-    flex: 2,
   },
+  scrollView: {
+    width: "100%",
+    marginBottom: 10
+  },
+  waitingLessons: {
+    fontSize: 16,
+    fontFamily: "Heebo-Bold",
+    right: 10,
+    alignSelf: "flex-end",
+  },
+  ConfirmLessonsButton: {
+    position: "relative",
+    marginBottom: 10
+  },
+  teacherCourses: {
+    fontSize: 16,
+    fontFamily: "Heebo-Bold",
+    right: 10,
+    alignSelf: "flex-end",
+    marginBottom: 5
+  },
+  CardContainer: {
+    borderRadius: 10,
+    width: "30%",
+    alignSelf: "flex-end",
+    top: -10
+  },
+  price: {
+    fontSize: 18,
+    fontWeight: "bold",
+    textAlign: "center"
+  },
+  aviableTimes: {
+    fontSize: 16,
+    fontFamily: "Heebo-Bold",
+    right: 10,
+    alignSelf: "flex-end",
+    marginBottom: 10
+  },
+  
 });

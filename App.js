@@ -12,6 +12,7 @@ import TeacherPageScreen from "./src/screens/TeacherPageScreen";
 import TeacherSignUpScreen from "./src/screens/TeacherSignUpScreen";
 import StudentSignUpScreen from "./src/screens/StudentSignUpScreen";
 import ReviewScreen from "./src/screens/ReviewScreen";
+import ConfirmLessonsScreen from "./src/screens/ConfirmLessonsScreen";
 
 const navigator = createStackNavigator(
   {
@@ -23,6 +24,7 @@ const navigator = createStackNavigator(
     CoursePage: CoursePageScreen,
     StudentProfile: StudentProfileScreen,
     TeacherProfile: TeacherProfileScreen,
+    ConfirmLessons: ConfirmLessonsScreen,
     TeacherPage: TeacherPageScreen,
     TeacherSignUp: TeacherSignUpScreen,
     StudentSignUp: StudentSignUpScreen,

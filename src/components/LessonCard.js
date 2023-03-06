@@ -19,9 +19,6 @@ const LessonCard = ({ lesson }) => {
       <Text style={styles.time}>
         {lesson.time}
       </Text>
-      <Text style={styles.type}>
-        {lesson.type}
-      </Text>
       </View>
     </Card>
   );
@@ -51,11 +48,6 @@ const styles = StyleSheet.create({
     fontSize: 10,
     flex: 1,
     textAlign: "left"
-  },
-  type: {
-    fontSize: 10,
-    flex: 1,
-    textAlign: "right"
   },
   time: {
     fontSize: 10,
