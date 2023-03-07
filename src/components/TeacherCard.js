@@ -1,11 +1,22 @@
-import React, { useState } from "react";
-import { Text, View, StyleSheet } from "react-native";
+import React, { useState ,useContext } from "react";
+import { Text, View, StyleSheet ,TouchableOpacity} from "react-native";
 import { Card,Icon,Avatar  } from "react-native-elements";
+import StudentContext from "../../StudentContext";
 
-const TeacherCard = ({ teacher }) => {
+const TeacherCard = ({ teacher,navigation }) => {
     const avatarImage = require('../../assets/pics/avatarPic.png' );
+    const {addToStudent} = useContext(StudentContext);
+
+
+    const handlePress = () => {
+      alert(teacher.name);
+      addToStudent('teacherName',teacher.name);
+      // addToStudent('courseId',teacher.id);
+      navigation.navigate("Schedule");
+    }
 
   return (
+    <TouchableOpacity onPress={handlePress}>
     <View style={styles.viewcardContainer}>
     <Avatar
     rounded
@@ -28,6 +39,7 @@ const TeacherCard = ({ teacher }) => {
       </Text>
     </Card>
     </View>
+    </TouchableOpacity>
   );
 };
 

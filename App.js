@@ -7,10 +7,14 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import { StudentProvider } from './StudentContext'; // Import StudentProvider from StudentContext file
 import LoginScreen from './src/screens/LogInScreen';
-import HomePageScreen from './src/screens/homePageScreen';
+import RegisterScreen from './src/screens/RegisterScreen';
+import HomePageScreen from './src/screens/HomePageScreen';
 import StudentProfileScreen from './src/screens/StudentProfileScreen';
 import StudentSignUpScreen from './src/screens/StudentSignUpScreen';
 import TeacherProfileScreen from './src/screens/TeacherProfileScreen';
+import CoursePageScreen from './src/screens/CoursePageScreen';
+import ScheduleScreen from './src/screens/ScheduleScreen';
+
 
 const Tab = createBottomTabNavigator();
 
@@ -99,8 +103,23 @@ function App() {
             }}
           />
           <Tab.Screen
+            name="Schedule"
+            component={ScheduleScreen}
+            options={{
+              tabBarButton: () => null, // hides the button
+            }}
+          />
+          <Tab.Screen
             name="TeacherProfile"
             component={TeacherProfileScreen}
+            options={{
+              tabBarButton: () => null, // hides the button
+              tabBarVisibilityAnimationConfig: () => null, 
+            }}
+          />
+          <Tab.Screen
+            name="CoursePage"
+            component={CoursePageScreen}
             options={{
               tabBarButton: () => null, // hides the button
               tabBarVisibilityAnimationConfig: () => null, 

@@ -1,10 +1,12 @@
-import React from "react";
+import React,{ useContext, useState } from "react";
 import { View, Text, TextInput, StyleSheet } from "react-native";
 import { Button } from "@react-native-material/core";
 import { AntDesign } from "@expo/vector-icons";
 import { useFonts } from "expo-font";
+import StudentContext from "../../StudentContext.js"
 
 export default function LoginScreen({ navigation }) {
+  const { addToStudent } = useContext(StudentContext);
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
   let [fontsLoaded] = useFonts({
@@ -24,6 +26,8 @@ export default function LoginScreen({ navigation }) {
     } else {
       alert("הרשמה נכשלה");
     }
+    addToStudent("username",username);
+    addToStudent("password",password);
     navigation.navigate("HomePage");
   };
 
