@@ -63,7 +63,7 @@ export default function RegisterScreen({ navigation }) {
         style={{ position: "relative", top: 10 }}
         onPress={() => {
           clearItems();
-          addToStudent('name', name);
+          addToStudent('username', name);
           handleRegister();
         }}
       />

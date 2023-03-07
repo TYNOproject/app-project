@@ -1,4 +1,4 @@
-import React, { Component,useState } from "react";
+import React, { Component,useState ,useContext} from "react";
 import { StyleSheet, Text, View, FlatList } from "react-native";
 import { ListItem, SearchBar,Card } from "react-native-elements";
 import { useFonts } from "expo-font";
@@ -6,6 +6,7 @@ import SelectOption from "../components/SelectOption";
 import CoursesList from "../components/CoursesList";
 import TeacherCard from "../components/TeacherCard";
 import TeachersList from "../components/TeachersList";
+import StudentContext from "../../StudentContext";
 
 
 
@@ -15,7 +16,9 @@ export default function CoursePageScreen({ navigation })
   const [search, setSearch] = useState("");
   // const course = navigation.getParam("course");
 
-  const course = "קומפילציה";
+  const {items} = useContext(StudentContext);
+  const {getVal} = useContext(StudentContext)
+  const course = getVal(items,'courseName');
 
   const teachers = [
     {
@@ -96,7 +99,7 @@ return (
       </View>
       <View style={styles.spacer} />
         <View style={styles.bottomHalf}>
-            <TeachersList teachers={teachers} />
+            <TeachersList teachers={teachers} navigation={navigation} />
         </View>
       </View>); 
 }
