@@ -34,15 +34,15 @@ function App() {
         <Tab.Navigator
           initialRouteName="LogIn"
           screenOptions={{
-            tabBarActiveTintColor: 'orange',
-            tabBarInactiveTintColor: 'gray',
+            tabBarActiveTintColor: "orange",
+            tabBarInactiveTintColor: "gray",
             tabBarShowLabel: false,
-            tabBarStyle:[
+            tabBarStyle: [
               {
-                display: 'flex'
+                display: "flex",
               },
-              null
-            ]
+              null,
+            ],
           }}
         >
           <Tab.Screen
@@ -69,7 +69,11 @@ function App() {
             component={StudentProfileScreen}
             options={{
               tabBarIcon: ({ color, size }) => (
-                <Ionicons name="person-circle-outline" size={40} color={color} />
+                <Ionicons
+                  name="person-circle-outline"
+                  size={40}
+                  color={color}
+                />
               ),
             }}
           />
@@ -86,7 +90,6 @@ function App() {
             component={RegisterScreen}
             options={{
               tabBarButton: () => null, // hides the button
-
             }}
           />
           <Tab.Screen
@@ -115,7 +118,7 @@ function App() {
             component={TeacherProfileScreen}
             options={{
               tabBarButton: () => null, // hides the button
-              tabBarVisibilityAnimationConfig: () => null, 
+              tabBarVisibilityAnimationConfig: () => null,
             }}
           />
           <Tab.Screen
@@ -123,7 +126,7 @@ function App() {
             component={CoursePageScreen}
             options={{
               tabBarButton: () => null, // hides the button
-              tabBarVisibilityAnimationConfig: () => null, 
+              tabBarVisibilityAnimationConfig: () => null,
             }}
           />
           <Tab.Screen
