@@ -1,5 +1,3 @@
-
-
 import React from "react";
 import { useContext } from "react";
 import { View, Text, StyleSheet } from "react-native";
@@ -8,8 +6,7 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useFonts } from "expo-font";
 import ClassesList from "../components/ClassesList";
-import StudentContext from "../../StudentContext";
-
+import StudentContext from "../contexts/StudentContext";
 
 const classes = [
   {
@@ -27,11 +24,10 @@ const classes = [
 ];
 
 export default function StudentProfileScreen({ navigation }) {
-
-    const {items} = useContext(StudentContext);
-    const {getVal} = useContext(StudentContext)
-    const name = getVal(items,"name")
-    const lastName = getVal(items,"lastname")
+  const { items } = useContext(StudentContext);
+  const { getVal } = useContext(StudentContext);
+  const name = getVal(items, "name");
+  const lastName = getVal(items, "lastname");
 
   let [fontsLoaded] = useFonts({
     "Heebo-Bold": require("../../assets/fonts/Heebo-Bold.ttf"),
@@ -39,11 +35,11 @@ export default function StudentProfileScreen({ navigation }) {
   });
 
   function handleRegisterPress() {
-    navigation.navigate('Register');
+    navigation.navigate("Register");
   }
 
   function handleTeacherPress() {
-    navigation.navigate('TeacherProfile');
+    navigation.navigate("TeacherProfile");
   }
 
   if (!fontsLoaded)
@@ -72,7 +68,6 @@ export default function StudentProfileScreen({ navigation }) {
           variant="outlined"
           color="black"
           onPress={handleRegisterPress}
-
         />
         <Button
           leading={() => (
@@ -83,8 +78,6 @@ export default function StudentProfileScreen({ navigation }) {
           color="black"
           style={{ position: "relative", top: 10 }}
           onPress={handleTeacherPress}
-
-
         />
       </View>
       <View style={styles.spacer} />
@@ -119,8 +112,7 @@ const styles = StyleSheet.create({
     alignSelf: "flex-end",
     width: "100%",
     flex: 4,
-    top:-120,
-    right:-20
-
+    top: -120,
+    right: -20,
   },
 });

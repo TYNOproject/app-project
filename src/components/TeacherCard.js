@@ -1,44 +1,46 @@
-import React, { useState ,useContext } from "react";
-import { Text, View, StyleSheet ,TouchableOpacity} from "react-native";
-import { Card,Icon,Avatar  } from "react-native-elements";
-import StudentContext from "../../StudentContext";
+import React, { useState, useContext } from "react";
+import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
+import { Card, Icon, Avatar } from "react-native-elements";
+import StudentContext from "../contexts/StudentContext";
 
-const TeacherCard = ({ teacher,navigation }) => {
-    const avatarImage = require('../../assets/pics/avatarPic.png' );
-    const {addToStudent} = useContext(StudentContext);
+const TeacherCard = ({ teacher, navigation }) => {
+  const avatarImage = require("../../assets/pics/avatarPic.png");
+  const { addToStudent } = useContext(StudentContext);
 
-
-    const handlePress = () => {
-      alert(teacher.name);
-      addToStudent('teacherName',teacher.name);
-      // addToStudent('courseId',teacher.id);
-      navigation.navigate("Schedule");
-    }
+  const handlePress = () => {
+    alert(teacher.name);
+    addToStudent("teacherName", teacher.name);
+    // addToStudent('courseId',teacher.id);
+    navigation.navigate("Schedule");
+  };
 
   return (
     <TouchableOpacity onPress={handlePress}>
-    <View style={styles.viewcardContainer}>
-    <Avatar
-    rounded
-    source={{uri: 'https://via.placeholder.com/150'}}
-    containerStyle={styles.avatarContainer}
-    />
-  <Icon
-    name="star"
-    type="font-awesome"
-    color="#FFD700"
-    containerStyle={styles.starContainer}/>
+      <View style={styles.viewcardContainer}>
+        <Avatar
+          rounded
+          source={{ uri: "https://via.placeholder.com/150" }}
+          containerStyle={styles.avatarContainer}
+        />
+        <Icon
+          name="star"
+          type="font-awesome"
+          color="#FFD700"
+          containerStyle={styles.starContainer}
+        />
         <Card containerStyle={styles.cardContainer}>
-      <Card.Title style={styles.name}>{teacher.name}, {"\n"}
-          {teacher.year} </Card.Title>
+          <Card.Title style={styles.name}>
+            {teacher.name}, {"\n"}
+            {teacher.year}{" "}
+          </Card.Title>
           <Text style={styles.starRatingText}>{teacher.rate}/5</Text>
 
-      <Card.Divider style={styles.cardDivider}/>
-      <Text style={styles.description} numberOfLines={6}>
-        {teacher.description}
-      </Text>
-    </Card>
-    </View>
+          <Card.Divider style={styles.cardDivider} />
+          <Text style={styles.description} numberOfLines={6}>
+            {teacher.description}
+          </Text>
+        </Card>
+      </View>
     </TouchableOpacity>
   );
 };
@@ -51,14 +53,14 @@ const styles = StyleSheet.create({
     width: 370,
   },
   viewcardContainer: {
-    position: 'relative',
+    position: "relative",
   },
   cardDivider: {
     marginHorizontal: 10,
-    orientation:"vertical"
+    orientation: "vertical",
   },
   name: {
-    left:100,
+    left: 100,
     fontSize: 14,
     fontWeight: "bold",
   },
@@ -67,27 +69,26 @@ const styles = StyleSheet.create({
     flex: 0,
   },
   starContainer: {
-    position: 'absolute',
+    position: "absolute",
     top: 30,
     left: 40,
-    backgroundColor: 'transparent',
+    backgroundColor: "transparent",
     zIndex: 1,
   },
   avatarContainer: {
-    position: 'absolute',
+    position: "absolute",
     top: 30,
-    left: '60%',
+    left: "60%",
     transform: [{ translateX: -25 }],
     zIndex: 1,
   },
   starRatingText: {
-    position: 'absolute',
-    top:0,
-    left:40,
+    position: "absolute",
+    top: 0,
+    left: 40,
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
-  
 });
 
 export default TeacherCard;
