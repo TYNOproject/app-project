@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     alignSelf: "flex-end",
     width: "100%",
     flex: 4,
-    top: -120,
+    top: -80,
     right: -20,
   },
 });
