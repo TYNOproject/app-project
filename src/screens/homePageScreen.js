@@ -4,8 +4,7 @@ import { ListItem, SearchBar,Card } from "react-native-elements";
 import { useFonts } from "expo-font";
 import SelectOption from "../components/SelectOption";
 import CoursesList from "../components/CoursesList";
-import StudentContext from "../../StudentContext";
-
+import StudentContext from "../contexts/StudentContext";
 
 
 export default function HomePageScreen({ navigation })
@@ -67,14 +66,7 @@ export default function HomePageScreen({ navigation })
 
   let [fontsLoaded] = useFonts({
     "Heebo-Bold": require("../../assets/fonts/Heebo-Bold.ttf"),
-    "Heebo-Light": require("../../assets/fonts/Heebo-Light.ttf"),
-    "Heebo-Medium": require("../../assets/fonts/Heebo-Medium.ttf"),
     "Heebo-Regular": require("../../assets/fonts/Heebo-Regular.ttf"),
-    "Heebo-SemiBold": require("../../assets/fonts/Heebo-SemiBold.ttf"),
-    "Heebo-Thin": require("../../assets/fonts/Heebo-Thin.ttf"),
-    "Heebo-Black": require("../../assets/fonts/Heebo-Black.ttf"),
-    "Heebo-ExtraBold": require("../../assets/fonts/Heebo-ExtraBold.ttf"),
-    "Heebo-ExtraLight": require("../../assets/fonts/Heebo-ExtraLight.ttf"),
   });
 
 if (!fontsLoaded)
@@ -88,6 +80,7 @@ return (
 <View style={styles.container}>
           <View style={styles.topPart}>
         <Text style={styles.header}>
+          היי {username}, {"\n"}
           היי {username}, {"\n"}
           מה נלמד הפעם? {"\n"}
         </Text>

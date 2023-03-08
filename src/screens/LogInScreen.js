@@ -3,7 +3,7 @@ import { View, Text, TextInput, StyleSheet } from "react-native";
 import { Button } from "@react-native-material/core";
 import { AntDesign } from "@expo/vector-icons";
 import { useFonts } from "expo-font";
-import StudentContext from "../../StudentContext.js"
+import StudentContext from "../contexts/StudentContext";
 
 export default function LoginScreen({ navigation }) {
   const { addToStudent } = useContext(StudentContext);
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
   },
   inputField: {
     width: 300,
-    top:100,
+    top: 100,
     height: 40,
     backgroundColor: "#fff",
     paddingVertical: 10,

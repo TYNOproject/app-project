@@ -4,7 +4,7 @@ import { ListItem, SearchBar,Card, Button,ButtonGroup } from "react-native-eleme
 import { useFonts } from "expo-font";
 import { Calendar,CalendarList,Agenda  } from 'react-native-calendars';
 import TimeScrollBar from "../components/TimeScrollBar";
-import StudentContext from "../../StudentContext";
+import StudentContext from "../contexts/StudentContext";
 
 
 
@@ -15,7 +15,7 @@ export default function ScheduleScreen({ navigation })
   const {addToStudent} = useContext(StudentContext);
   const {items} = useContext(StudentContext);
   const {getVal} = useContext(StudentContext)
-  
+
   const name = getVal(items,'teacherName');
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [markedDates, setMarkedDates] = useState({});
@@ -29,7 +29,6 @@ export default function ScheduleScreen({ navigation })
       navigation.navigate("AfterSchedule");
       };
 
-    //const name = navigation.getParam("name");
 
     // const name = "מנש";
 

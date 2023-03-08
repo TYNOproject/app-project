@@ -1,7 +1,7 @@
 import React, { useState,useContext } from "react";
 import { Text, View, StyleSheet,TouchableOpacity  } from "react-native";
 import { Card } from "react-native-elements";
-import StudentContext from "../../StudentContext";
+import StudentContext from "../contexts/StudentContext";
 
 
 const CourseCard = ({course,navigation }) => {

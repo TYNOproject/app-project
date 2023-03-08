@@ -4,11 +4,10 @@ import { StyleSheet } from "react-native";
 import { Button } from "@react-native-material/core";
 import { AntDesign } from "@expo/vector-icons";
 import { useFonts } from "expo-font";
-import  StudentContext from "../../StudentContext";
+import StudentContext from "../contexts/StudentContext";
 
 export default function RegisterScreen({ navigation }) {
-
-  const {addToStudent} = useContext(StudentContext)
+  const { addToStudent } = useContext(StudentContext);
   const { clearItems } = useContext(StudentContext);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");

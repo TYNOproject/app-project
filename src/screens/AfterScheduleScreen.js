@@ -6,7 +6,7 @@ import SelectOption from "../components/SelectOption";
 import CoursesList from "../components/CoursesList";
 import TeacherCard from "../components/TeacherCard";
 import TeachersList from "../components/TeachersList";
-import StudentContext from "../../StudentContext";
+import StudentContext from "../contexts/StudentContext";
 
 
 

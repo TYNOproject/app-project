@@ -1,6 +1,6 @@
 import React from "react";
 import { useContext , useState} from "react";
-import StudentContext from "../../StudentContext";
+import StudentContext from "../contexts/StudentContext";
 import { Button } from "@react-native-material/core";
 import { AntDesign } from "@expo/vector-icons";
 import { StyleSheet, View, Text } from "react-native";
@@ -35,6 +35,7 @@ export default function StudentSignUpScreen({ navigation }) {
       <View style={styles.topPart}>
         <Text style={styles.header}>
           היי {name}, {"\n"}
+          היי {name}, {"\n"}
           נעים להכיר! {"\n"}
         </Text>
         <Text style={styles.subheader}>נשאר לך רק לספר לנו על התואר שלך</Text>
@@ -44,6 +45,10 @@ export default function StudentSignUpScreen({ navigation }) {
           options={["1", "2", "3"]}
           defaultText="פקולטה"
           buttonStyle={styles.selectOptionStyle}
+          onSelectOption={(selectedItem) => {
+            console.log("i selected: " + selectedItem);
+            setFaculty(selectedItem);
+          }}
         />
         <SelectOption
           options={["1", "2", "3"]}
@@ -78,7 +83,7 @@ export default function StudentSignUpScreen({ navigation }) {
           variant="outlined"
           color="black"
           style={{ position: "relative", top: 10 }}
-          onPress={() => navigation.navigate('HomePage')}
+          onPress={() => navigation.navigate("HomePage")}
           //onPress={sendToServer}
         />
       </View>
