@@ -13,7 +13,7 @@ export default function ReviewScreen ({ navigation }){
 
 const handleReview = () => {
 // handle review logic here
-navigation.navigate("HomeScreen", {name});
+navigation.navigate("HomePage", {name});
 };
 
 let [fontsLoaded] = useFonts({
@@ -52,6 +52,13 @@ if (!fontsLoaded)
         placeholder="הוסף הערה"
         onChangeText={setWordReview}
         value={wordReview}
+      />
+      <Button style = {styles.button}
+        leading={() => <AntDesign name="left" size={24} />}
+        title="שלח הערה"
+        variant="outlined"
+        color="black"
+        onPress={handleReview}
       />
     </View>
   );
@@ -98,4 +105,9 @@ const styles = StyleSheet.create({
     textAlign: "right",
     fontFamily: "Heebo-Regular",
   },
+  button: {
+    position: "relative",
+    top: 130
+
+  }
 });

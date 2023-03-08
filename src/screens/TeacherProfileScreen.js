@@ -60,6 +60,9 @@ export default function TeacherProfileScreen({ navigation }) {
     },
     {
       name: "אלגברה 2"
+    },
+    {
+      name: "מודלים חיישובים"
     }
   ]
   const price = "120"
@@ -105,6 +108,10 @@ export default function TeacherProfileScreen({ navigation }) {
       navigation.navigate("ConfirmLessons");
     };
 
+    const handleEditTeacher = () => {
+      navigation.navigate("EditTeacher");
+    };
+
     return (
     <View style={styles.container}>
         <Text style={styles.header}>
@@ -128,24 +135,31 @@ export default function TeacherProfileScreen({ navigation }) {
         variant="outlined"
         color="black"
         onPress={handleLessonsConfermation}/>
+        <View style = {styles.row}>
+        <Button style = {styles.editButton}
+        title="עריכה"
+        variant="outlined"
+        color="black"
+        onPress={handleEditTeacher}/>
         <Text style= {styles.teacherCourses}>
         קורסים שאני מלמד
+        </Text>
+        </View>
+        <View style={styles.scrollView}>
+        <TeacherCoursesList courses = {courses} />
+        </View>
+        <Text style= {styles.aviableTimes}>
+        הזמנים הפנויים שלי
         </Text>
         <View style={styles.scrollView}>
         <TeacherCoursesList courses = {courses} />
         </View>
-        <Text style= {styles.teacherCourses}>
+        <Text style= {styles.teacherPrice}>
         המחיר שלי לשיעור
         </Text>
         <Card containerStyle={styles.CardContainer}>
           <Text style={styles.price}>{price} ש"ח</Text>
         </Card>
-        <Text style= {styles.aviableTimes}>
-        הזמנים הפנויים שלי
-        </Text>
-        {/* <View style={styles.scrollView}>
-        <HalfScreenClasses classes={aviableClasses} />
-        </View> */}
     </View>
   );
 }
@@ -162,52 +176,73 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 30,
     textAlign: "center",
-    marginBottom: 10
   },
   feutareLessons: {
     fontSize: 16,
     fontFamily: "Heebo-Bold",
     right: 10,
     alignSelf: "flex-end",
+    marginBottom: -10
   },
   scrollView: {
+    alignSelf: "flex-end",
     width: "100%",
-    marginBottom: 10
+    marginBottom: -10
   },
   waitingLessons: {
     fontSize: 16,
     fontFamily: "Heebo-Bold",
     right: 10,
     alignSelf: "flex-end",
+    marginBottom: -10
   },
   ConfirmLessonsButton: {
     position: "relative",
     marginBottom: 10
   },
+  row: {
+    flexDirection: "row",
+    marginBottom: -10
+  },
+  editButton: {
+    position: "relative",
+    alignSelf: "flex-start",
+    left: 10,
+    },
   teacherCourses: {
+    fontSize: 16,
+    fontFamily: "Heebo-Bold",
+    flex: 1,
+    textAlign: "right",
+    right: 10
+    },
+  aviableTimes: {
+      fontSize: 16,
+      fontFamily: "Heebo-Bold",
+      right: 10,
+      alignSelf: "flex-end",
+      marginBottom: -10
+    },
+  teacherPrice: {
     fontSize: 16,
     fontFamily: "Heebo-Bold",
     right: 10,
     alignSelf: "flex-end",
-    marginBottom: 5
+    marginBottom:-5,
+    top: -5
   },
   CardContainer: {
     borderRadius: 10,
     width: "30%",
-    alignSelf: "flex-end",
-    top: -10
-  },
-  price: {
-    fontSize: 18,
-    fontWeight: "bold",
-    textAlign: "center"
-  },
-  aviableTimes: {
-    fontSize: 16,
-    fontFamily: "Heebo-Bold",
-    right: 10,
+    height: "7%",
     alignSelf: "flex-end",
     marginBottom: 10
   },
+  price: {
+    fontSize: 16,
+    fontWeight: "bold",
+    textAlign: "center"
+  },
+
   
 });
