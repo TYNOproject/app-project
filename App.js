@@ -1,21 +1,19 @@
-
-import * as React from 'react';
-import { useContext } from 'react';
-import { View, Text } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Ionicons } from '@expo/vector-icons';
-import { StudentProvider } from './StudentContext'; // Import StudentProvider from StudentContext file
-import LoginScreen from './src/screens/LogInScreen';
-import RegisterScreen from './src/screens/RegisterScreen';
-import HomePageScreen from './src/screens/homePageScreen';
-import StudentProfileScreen from './src/screens/StudentProfileScreen';
-import StudentSignUpScreen from './src/screens/StudentSignUpScreen';
-import TeacherProfileScreen from './src/screens/TeacherProfileScreen';
-import CoursePageScreen from './src/screens/CoursePageScreen';
-import ScheduleScreen from './src/screens/ScheduleScreen';
-import AfterScheduleScreen from './src/screens/AfterScheduleScreen';
-
+import * as React from "react";
+import { useContext } from "react";
+import { View, Text } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { Ionicons } from "@expo/vector-icons";
+import { StudentProvider } from "./src/contexts/StudentContext"; // Import StudentProvider from StudentContext file
+import LoginScreen from "./src/screens/LogInScreen";
+import RegisterScreen from "./src/screens/RegisterScreen";
+import HomePageScreen from "./src/screens/homePageScreen";
+import StudentProfileScreen from "./src/screens/StudentProfileScreen";
+import StudentSignUpScreen from "./src/screens/StudentSignUpScreen";
+import TeacherProfileScreen from "./src/screens/TeacherProfileScreen";
+import CoursePageScreen from "./src/screens/CoursePageScreen";
+import ScheduleScreen from "./src/screens/ScheduleScreen";
+import AfterScheduleScreen from "./src/screens/AfterScheduleScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -134,7 +132,7 @@ function App() {
             component={AfterScheduleScreen}
             options={{
               tabBarButton: () => null, // hides the button
-              tabBarVisibilityAnimationConfig: () => null, 
+              tabBarVisibilityAnimationConfig: () => null,
             }}
           />
         </Tab.Navigator>

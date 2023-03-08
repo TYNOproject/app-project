@@ -4,10 +4,11 @@ import { Button } from "@react-native-material/core";
 import { AntDesign } from "@expo/vector-icons";
 import { useFonts } from "expo-font";
 import StudentContext from "../contexts/StudentContext.js";
+import { signIn } from "../api/serviceCalls.js";
 
 export default function LoginScreen({ navigation }) {
-  const { addToStudent } = useContext(StudentContext);
-  const [username, setUsername] = React.useState("");
+  const { addToStudent, items, getVal } = useContext(StudentContext);
+  const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   let [fontsLoaded] = useFonts({
     "Heebo-Bold": require("../../assets/fonts/Heebo-Bold.ttf"),
@@ -20,18 +21,23 @@ export default function LoginScreen({ navigation }) {
         <Text>loading</Text>
       </View>
     );
-  const handleLogin = () => {
-    if (username.endsWith("@post.bgu.ac.il")) {
-      alert("הרשמה הצליחה");
-    } else {
-      alert("הרשמה נכשלה");
+  const handleLogin = async () => {
+    //check if the user exists in the database, if so -> nvaigate to home page
+    //else, pop up that says that he's not registered
+    signInResponse = await signIn({ email, password });
+    console.log(signInResponse.data);
+    if (signInResponse.status !== 200) {
+      alert("אירעה שגיאה, אנא נסה שנית");
+      return;
     }
-    addToStudent("username", username);
-    addToStudent("password", password);
-    navigation.navigate("HomePage");
+    if (signInResponse.status === 200) {
+      addToStudent("studentDetails", signInResponse.data);
+      console.log(getVal(items, "studentDetails"));
+      navigation.navigate("HomePage");
+    }
   };
 
-  const handleRegister = () => {
+  const handleRegister = async () => {
     navigation.navigate("Register");
   };
 
@@ -43,9 +49,9 @@ export default function LoginScreen({ navigation }) {
       </Text>
       <TextInput
         style={styles.inputField}
-        placeholder="שם משתמש"
-        onChangeText={setUsername}
-        value={username}
+        placeholder="כתובת מייל"
+        onChangeText={setEmail}
+        value={email}
       />
       <TextInput
         style={styles.inputField}
