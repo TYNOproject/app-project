@@ -1,5 +1,5 @@
 import React from "react";
-import { useContext, useState } from "react";
+import { useContext , useState} from "react";
 import StudentContext from "../contexts/StudentContext";
 import { Button } from "@react-native-material/core";
 import { AntDesign } from "@expo/vector-icons";
@@ -13,11 +13,10 @@ export default function StudentSignUpScreen({ navigation }) {
   const [degreeInput, setDegree] = useState("");
   const [departmentIdInput, setDepartmentId] = useState(0);
   const [yearInput, setYear] = useState(0);
-  const [facultyInput, setFaculty] = useState(0);
   // const studentDetails = navigation.getParam("studentDetails");
-  const { items } = useContext(StudentContext);
-  const { getVal } = useContext(StudentContext);
-  const name = getVal(items, "username");
+  const {items} = useContext(StudentContext);
+  const {getVal} = useContext(StudentContext);
+  const name = getVal(items,"username");
 
   let [fontsLoaded] = useFonts({
     "Heebo-Bold": require("../../assets/fonts/Heebo-Bold.ttf"),
@@ -35,6 +34,7 @@ export default function StudentSignUpScreen({ navigation }) {
     <View style={styles.whole}>
       <View style={styles.topPart}>
         <Text style={styles.header}>
+          היי {name}, {"\n"}
           היי {name}, {"\n"}
           נעים להכיר! {"\n"}
         </Text>

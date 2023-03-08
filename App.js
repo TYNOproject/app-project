@@ -5,7 +5,7 @@ import { View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
-import { StudentProvider } from './StudentContext'; // Import StudentProvider from StudentContext file
+import {StudentProvider} from './src/contexts/StudentContext';
 import LoginScreen from './src/screens/LogInScreen';
 import RegisterScreen from './src/screens/RegisterScreen';
 import HomePageScreen from './src/screens/homePageScreen';
@@ -114,6 +114,13 @@ function App() {
             }}
           />
           <Tab.Screen
+            name="AfterSchedule"
+            component={AfterScheduleScreen}
+            options={{
+              tabBarButton: () => null, // hides the button
+            }}
+          />
+          <Tab.Screen
             name="TeacherProfile"
             component={TeacherProfileScreen}
             options={{
@@ -124,14 +131,6 @@ function App() {
           <Tab.Screen
             name="CoursePage"
             component={CoursePageScreen}
-            options={{
-              tabBarButton: () => null, // hides the button
-              tabBarVisibilityAnimationConfig: () => null,
-            }}
-          />
-          <Tab.Screen
-            name="AfterSchedule"
-            component={AfterScheduleScreen}
             options={{
               tabBarButton: () => null, // hides the button
               tabBarVisibilityAnimationConfig: () => null, 
