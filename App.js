@@ -5,10 +5,10 @@ import { View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
-import { StudentProvider } from './StudentContext'; // Import StudentProvider from StudentContext file
+import { StudentProvider } from './src/contexts/StudentContext'; // Import StudentProvider from StudentContext file
 import LoginScreen from './src/screens/LogInScreen';
 import RegisterScreen from './src/screens/RegisterScreen';
-import HomePageScreen from './src/screens/homePageScreen';
+import HomePageScreen from './src/screens/HomePageScreen';
 import StudentProfileScreen from './src/screens/StudentProfileScreen';
 import StudentSignUpScreen from './src/screens/StudentSignUpScreen';
 import TeacherProfileScreen from './src/screens/TeacherProfileScreen';

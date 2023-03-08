@@ -4,7 +4,7 @@ import { ListItem, SearchBar,Card, Button } from "react-native-elements";
 import { useFonts } from "expo-font";
 import { Calendar,CalendarList,Agenda  } from 'react-native-calendars';
 import TimeScrollBar from "../components/TimeScrollBar";
-import StudentContext from "../../StudentContext";
+import StudentContext from '../contexts/StudentContext';
 
 
 
