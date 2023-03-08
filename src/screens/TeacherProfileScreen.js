@@ -4,13 +4,20 @@ import { StyleSheet, Text, View, FlatList } from "react-native";
 import { ListItem, SearchBar, Card } from "react-native-elements";
 import { useFonts } from "expo-font";
 import { AntDesign } from "@expo/vector-icons";
+import { useContext } from "react";
 import SelectOption from "../components/SelectOption";
 import CoursesList from "../components/CoursesList";
 import LessonsList from "../components/LessonsList";
 import TeacherCoursesList from "../components/TeacherCoursesList";
+import StudentContext from "../contexts/StudentContext";
+
+
 
 export default function TeacherProfileScreen({ navigation }) {
-  const name = navigation.getParam("name");
+  const { items } = useContext(StudentContext);
+  const { getVal } = useContext(StudentContext);
+  const name = getVal(items, "name");
+  const lastName = getVal(items, "lastname");
 
   //need to take from the DB
   const lessons = [
@@ -109,7 +116,7 @@ export default function TeacherProfileScreen({ navigation }) {
     };
 
     const handleEditTeacher = () => {
-      navigation.navigate("EditTeacher");
+      navigation.navigate("TeacherRegister");
     };
 
     return (
@@ -137,7 +144,7 @@ export default function TeacherProfileScreen({ navigation }) {
         onPress={handleLessonsConfermation}/>
         <View style = {styles.row}>
         <Button style = {styles.editButton}
-        title="עריכה"
+        title="עריכת פרטים אישיים"
         variant="outlined"
         color="black"
         onPress={handleEditTeacher}/>

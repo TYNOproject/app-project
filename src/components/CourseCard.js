@@ -8,10 +8,17 @@ const CourseCard = ({course,navigation }) => {
   const {addToStudent} = useContext(StudentContext);
 
   const handlePress = () => {
-    alert(course.courseName);
-    addToStudent('courseName',course.courseName);
-    addToStudent('courseId',course.id);
-    navigation.navigate("CoursePage");
+    if (navigation != null){
+      alert(course.courseName);
+      addToStudent('courseName',course.courseName);
+      addToStudent('courseId',course.id);
+      navigation.navigate("CoursePage");
+    }
+    else{
+      //need to send the data
+      //change color
+    }
+
   }
 
   return (
