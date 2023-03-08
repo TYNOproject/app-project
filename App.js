@@ -8,12 +8,13 @@ import { Ionicons } from '@expo/vector-icons';
 import { StudentProvider } from './StudentContext'; // Import StudentProvider from StudentContext file
 import LoginScreen from './src/screens/LogInScreen';
 import RegisterScreen from './src/screens/RegisterScreen';
-import HomePageScreen from './src/screens/HomePageScreen';
+import HomePageScreen from './src/screens/homePageScreen';
 import StudentProfileScreen from './src/screens/StudentProfileScreen';
 import StudentSignUpScreen from './src/screens/StudentSignUpScreen';
 import TeacherProfileScreen from './src/screens/TeacherProfileScreen';
 import CoursePageScreen from './src/screens/CoursePageScreen';
 import ScheduleScreen from './src/screens/ScheduleScreen';
+import AfterScheduleScreen from './src/screens/AfterScheduleScreen';
 
 
 const Tab = createBottomTabNavigator();
@@ -120,6 +121,14 @@ function App() {
           <Tab.Screen
             name="CoursePage"
             component={CoursePageScreen}
+            options={{
+              tabBarButton: () => null, // hides the button
+              tabBarVisibilityAnimationConfig: () => null, 
+            }}
+          />
+          <Tab.Screen
+            name="AfterSchedule"
+            component={AfterScheduleScreen}
             options={{
               tabBarButton: () => null, // hides the button
               tabBarVisibilityAnimationConfig: () => null, 
