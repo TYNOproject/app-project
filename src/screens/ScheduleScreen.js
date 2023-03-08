@@ -1,22 +1,36 @@
-import React, { Component,useState } from "react";
+import React, { Component,useState,useContext } from "react";
 import { StyleSheet, Text, View, FlatList,TouchableOpacity,ScrollView } from "react-native";
-import { ListItem, SearchBar,Card, Button } from "react-native-elements";
+import { ListItem, SearchBar,Card, Button,ButtonGroup } from "react-native-elements";
 import { useFonts } from "expo-font";
 import { Calendar,CalendarList,Agenda  } from 'react-native-calendars';
 import TimeScrollBar from "../components/TimeScrollBar";
-import StudentContext from '../contexts/StudentContext';
+import StudentContext from "../contexts/StudentContext";
 
 
 
 
 export default function ScheduleScreen({ navigation })
 {
+
+  const {addToStudent} = useContext(StudentContext);
+  const {items} = useContext(StudentContext);
+  const {getVal} = useContext(StudentContext)
+
+  const name = getVal(items,'teacherName');
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [markedDates, setMarkedDates] = useState({});
+  const [currday, setCurrday] = useState(1);
+  const [chosenTime, setchosenTime] = useState({});
+
     const handleScheduale = () => {
-        navigation.navigate("AfterSchedule");
+      addToStudent('selectedDate',chosenTime);
+      addToStudent('startTime',timeMap.get(currday)[selectedIndex]);
+
+      navigation.navigate("AfterSchedule");
       };
 
 
-    const name = "מנש";
+    // const name = "מנש";
 
     const availableDays = [1,3,5];
 
@@ -43,16 +57,17 @@ export default function ScheduleScreen({ navigation })
         "Heebo-ExtraLight": require("../../assets/fonts/Heebo-ExtraLight.ttf"),
       });
 
-      const [markedDates, setMarkedDates] = useState({});
-      const [currday, setCurrday] = useState(1);
-      const [chosenTime, setchosenTime] = useState({});
+   
 
 
       function handelPossibleTimes(day) {
         const selectedDay = new Date(day.dateString);
         const dayOfWeek = selectedDay.getUTCDay() + 1;
         setchosenTime(selectedDay);
-        setCurrday(dayOfWeek);   
+        setCurrday(dayOfWeek);  
+        alert(selectedDay);
+
+         
     }
     
 
@@ -100,7 +115,19 @@ export default function ScheduleScreen({ navigation })
                     onDayPress={handelPossibleTimes}
                 />
                             <View style={styles.TimeScrollBar}>
-                <TimeScrollBar times={timeMap.get(currday)} ></TimeScrollBar>
+                            <ScrollView contentContainerStyle={styles.containerTime} horizontal={true}>
+                              <View style={styles.row}>
+                              <ButtonGroup style={styles.timeButton}
+                                    buttons={timeMap.get(currday)}
+                                    selectedIndex={selectedIndex}
+                                    onPress={(value) => {
+                                        setSelectedIndex(value);
+                                    }}
+                                    containerStyle={{ marginBottom: 20 }}
+                                />
+                              </View>
+                          </ScrollView>
+                {/* <TimeScrollBar times={timeMap.get(currday)} ></TimeScrollBar> */}
             </View>
             </View>
             <View>
@@ -182,7 +209,7 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
       textstyle: {
-        fontFamily: "Rubik",
+        fontFamily: "Heebo-Bold",
         fontSize: 24,
         fontWeight: "400",
         lineHeight: 28,
@@ -190,4 +217,24 @@ const styles = StyleSheet.create({
         textAlign: "center",
         color: "#FFFFFF",
     },
+    containerTime: {
+      flexDirection: "row",
+      height:30,
+      position:"relative"
+    },
+    row: {
+      flexDirection: "row",
+      flex: 1,
+      padding: 10,
+      position:"relative",
+    },
+    timeButton: {
+        backgroundColor: 'lightgray',
+        borderRadius: 4,
+        padding: 8,
+        marginVertical: 4,
+        height:40,
+        marginHorizontal:10,
+        position:"relative"
+      },
 });

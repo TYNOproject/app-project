@@ -8,9 +8,19 @@ export function StudentProvider({children}){
         1. name
         2. lastname
     */
-    const addToStudent = (newKey, newValue) =>{
-        setItems((prevState) => [...prevState, {[newKey]: newValue}]);
+        const addToStudent = (newKey, newValue) => {
+          const existingIndex = items.findIndex(item => item[newKey] !== undefined);
+          if (existingIndex >= 0) {
+              setItems(prevState => {
+                  const updatedItems = [...prevState];
+                  updatedItems[existingIndex][newKey] = newValue;
+                  return updatedItems;
+              });
+          } else {
+              setItems(prevState => [...prevState, {[newKey]: newValue}]);
+          }
       };
+      
 
       const clearItems = () => {
         setItems([]);
