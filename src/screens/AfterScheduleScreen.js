@@ -1,4 +1,4 @@
-import React, { Component,useState } from "react";
+import React, { Component,useState, useContext } from "react";
 import { StyleSheet, Text, View, FlatList ,TouchableOpacity} from "react-native";
 import { ListItem, SearchBar,Card,Icon  } from "react-native-elements";
 import { useFonts } from "expo-font";
@@ -6,13 +6,12 @@ import SelectOption from "../components/SelectOption";
 import CoursesList from "../components/CoursesList";
 import TeacherCard from "../components/TeacherCard";
 import TeachersList from "../components/TeachersList";
+import StudentContext from "../../StudentContext";
 
 
 export default function AfterScheduleScreen({ navigation })
 {
   const [search, setSearch] = useState("");
-  // const name = navigation.getParam("name");
-  // const teacherName = navigation.getParam("teacherName");
 
   const name = "נועם";
   const teacherName = "יותם";

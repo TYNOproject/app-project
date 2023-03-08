@@ -4,6 +4,7 @@ import { ListItem, SearchBar,Card, Button } from "react-native-elements";
 import { useFonts } from "expo-font";
 import { Calendar,CalendarList,Agenda  } from 'react-native-calendars';
 import TimeScrollBar from "../components/TimeScrollBar";
+import StudentContext from "../../StudentContext";
 
 
 
@@ -11,11 +12,9 @@ import TimeScrollBar from "../components/TimeScrollBar";
 export default function ScheduleScreen({ navigation })
 {
     const handleScheduale = () => {
-        // handle register logic here
-        navigation.navigate("AfterRegistration", { name });
+        navigation.navigate("AfterSchedule");
       };
 
-    //const name = navigation.getParam("name");
 
     const name = "מנש";
 

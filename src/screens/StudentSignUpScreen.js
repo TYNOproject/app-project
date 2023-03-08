@@ -1,6 +1,6 @@
 import React from "react";
-import { useContext , useState} from "react";
-import StudentContext from "../../StudentContext";
+import { useContext, useState } from "react";
+import StudentContext from "../contexts/StudentContext";
 import { Button } from "@react-native-material/core";
 import { AntDesign } from "@expo/vector-icons";
 import { StyleSheet, View, Text } from "react-native";
@@ -13,10 +13,11 @@ export default function StudentSignUpScreen({ navigation }) {
   const [degreeInput, setDegree] = useState("");
   const [departmentIdInput, setDepartmentId] = useState(0);
   const [yearInput, setYear] = useState(0);
+  const [facultyInput, setFaculty] = useState(0);
   // const studentDetails = navigation.getParam("studentDetails");
-  const {items} = useContext(StudentContext);
-  const {getVal} = useContext(StudentContext);
-  const name = getVal(items,"username");
+  const { items } = useContext(StudentContext);
+  const { getVal } = useContext(StudentContext);
+  const name = getVal(items, "username");
 
   let [fontsLoaded] = useFonts({
     "Heebo-Bold": require("../../assets/fonts/Heebo-Bold.ttf"),
@@ -44,6 +45,10 @@ export default function StudentSignUpScreen({ navigation }) {
           options={["1", "2", "3"]}
           defaultText="פקולטה"
           buttonStyle={styles.selectOptionStyle}
+          onSelectOption={(selectedItem) => {
+            console.log("i selected: " + selectedItem);
+            setFaculty(selectedItem);
+          }}
         />
         <SelectOption
           options={["1", "2", "3"]}
@@ -78,7 +83,7 @@ export default function StudentSignUpScreen({ navigation }) {
           variant="outlined"
           color="black"
           style={{ position: "relative", top: 10 }}
-          onPress={() => navigation.navigate('HomePage')}
+          onPress={() => navigation.navigate("HomePage")}
           //onPress={sendToServer}
         />
       </View>

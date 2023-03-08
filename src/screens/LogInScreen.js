@@ -1,9 +1,9 @@
-import React,{ useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import { View, Text, TextInput, StyleSheet } from "react-native";
 import { Button } from "@react-native-material/core";
 import { AntDesign } from "@expo/vector-icons";
 import { useFonts } from "expo-font";
-import StudentContext from "../../StudentContext.js"
+import StudentContext from "../contexts/StudentContext.js";
 
 export default function LoginScreen({ navigation }) {
   const { addToStudent } = useContext(StudentContext);
@@ -26,8 +26,8 @@ export default function LoginScreen({ navigation }) {
     } else {
       alert("הרשמה נכשלה");
     }
-    addToStudent("username",username);
-    addToStudent("password",password);
+    addToStudent("username", username);
+    addToStudent("password", password);
     navigation.navigate("HomePage");
   };
 
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
   },
   inputField: {
     width: 300,
-    top:100,
+    top: 100,
     height: 40,
     backgroundColor: "#fff",
     paddingVertical: 10,
