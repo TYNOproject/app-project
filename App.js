@@ -14,6 +14,7 @@ import StudentSignUpScreen from './src/screens/StudentSignUpScreen';
 import TeacherProfileScreen from './src/screens/TeacherProfileScreen';
 import CoursePageScreen from './src/screens/CoursePageScreen';
 import ScheduleScreen from './src/screens/ScheduleScreen';
+import AfterScheduleScreen from './src/screens/AfterScheduleScreen';
 
 
 const Tab = createBottomTabNavigator();
@@ -105,6 +106,13 @@ function App() {
           <Tab.Screen
             name="Schedule"
             component={ScheduleScreen}
+            options={{
+              tabBarButton: () => null, // hides the button
+            }}
+          />
+          <Tab.Screen
+            name="AfterSchedule"
+            component={AfterScheduleScreen}
             options={{
               tabBarButton: () => null, // hides the button
             }}
