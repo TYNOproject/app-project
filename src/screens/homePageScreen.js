@@ -90,6 +90,7 @@ export default function HomePageScreen({ navigation }) {
       <View style={styles.searchBar}>
         <SearchBar
           placeholder="חיפוש לפי קורס\מורה..."
+          containerStyle={{ backgroundColor: "transparent" }}
           lightTheme
           round
           onChangeText={setSearch}
