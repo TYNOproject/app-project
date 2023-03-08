@@ -1,26 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { View, Text, TextInput } from "react-native";
 import { StyleSheet } from "react-native";
 import { Button } from "@react-native-material/core";
 import { AntDesign } from "@expo/vector-icons";
 import { useFonts } from "expo-font";
+import  StudentContext from "../../StudentContext";
 
 export default function RegisterScreen({ navigation }) {
+
+  const {addToStudent} = useContext(StudentContext)
+  const { clearItems } = useContext(StudentContext);
   const [name, setName] = useState("");
-  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   let [fontsLoaded] = useFonts({
     "Heebo-Bold": require("../../assets/fonts/Heebo-Bold.ttf"),
-    "Heebo-Light": require("../../assets/fonts/Heebo-Light.ttf"),
-    "Heebo-Medium": require("../../assets/fonts/Heebo-Medium.ttf"),
     "Heebo-Regular": require("../../assets/fonts/Heebo-Regular.ttf"),
-    "Heebo-SemiBold": require("../../assets/fonts/Heebo-SemiBold.ttf"),
-    "Heebo-Thin": require("../../assets/fonts/Heebo-Thin.ttf"),
-    "Heebo-Black": require("../../assets/fonts/Heebo-Black.ttf"),
-    "Heebo-ExtraBold": require("../../assets/fonts/Heebo-ExtraBold.ttf"),
-    "Heebo-ExtraLight": require("../../assets/fonts/Heebo-ExtraLight.ttf"),
   });
 
   if (!fontsLoaded)
@@ -31,7 +27,6 @@ export default function RegisterScreen({ navigation }) {
     );
 
   const handleRegister = () => {
-    // handle register logic here
     navigation.navigate("StudentSignUp", { name });
   };
 
@@ -46,12 +41,6 @@ export default function RegisterScreen({ navigation }) {
         placeholder="השם שלך"
         onChangeText={setName}
         value={name}
-      />
-      <TextInput
-        style={styles.inputField}
-        placeholder="שם המשפחה שלך"
-        onChangeText={setLastName}
-        value={lastName}
       />
       <TextInput
         style={styles.inputField}
@@ -72,7 +61,11 @@ export default function RegisterScreen({ navigation }) {
         variant="outlined"
         color="black"
         style={{ position: "relative", top: 10 }}
-        onPress={handleRegister}
+        onPress={() => {
+          clearItems();
+          addToStudent('username', name);
+          handleRegister();
+        }}
       />
     </View>
   );

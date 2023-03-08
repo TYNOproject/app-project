@@ -20,7 +20,7 @@ const PopupMenu = ({ navigation, hideMenu }) => {
         <Text style={styles.popupItem}>Google Log In</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => handleNavigation("StudentProfile")}>
-        <Text style={styles.popupItem}>StudentProfile</Text>
+        <Text style={styles.popupItem}>Student Profile</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => handleNavigation("Register")}>
         <Text style={styles.popupItem}>Register</Text>
@@ -50,13 +50,12 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 10,
     elevation: 5,
-    top:-132,
+    top: -132,
     left: 130,
   },
   popupItem: {
     fontSize: 16,
     padding: 10,
-    
   },
 });
 
