@@ -32,16 +32,16 @@ export default function HomePageScreen({ navigation }) {
     "Heebo-Regular": require("../../assets/fonts/Heebo-Regular.ttf"),
   });
 
-  if (!fontsLoaded)
-    return (
-      <View>
-        <Text>loading</Text>
-      </View>
-    );
-
+if (!fontsLoaded)
   return (
-    <View style={styles.container}>
-      <View style={styles.topPart}>
+    <View>
+      <Text>loading</Text>
+    </View>
+  );
+
+return (
+<View style={styles.container}>
+          <View style={styles.topPart}>
         <Text style={styles.header}>
           היי {name}, {"\n"}
           מה נלמד הפעם? {"\n"}

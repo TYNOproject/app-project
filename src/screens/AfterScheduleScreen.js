@@ -1,4 +1,4 @@
-import React, { Component, useState, useContext } from "react";
+import React, { Component, useState,useContext } from "react";
 import {
   StyleSheet,
   Text,
@@ -16,7 +16,6 @@ import StudentContext from "../contexts/StudentContext";
 import ClassContext from "../contexts/ClassContext";
 
 export default function AfterScheduleScreen({ navigation }) {
-  const [search, setSearch] = useState("");
 
   const { addToStudent, items, getVal } = useContext(StudentContext);
   const { addToClass, itemsClass, getValClass } = useContext(ClassContext);
@@ -25,7 +24,19 @@ export default function AfterScheduleScreen({ navigation }) {
   const teacherName = items.getValClass(itemsClass, "teacherName");
   const date = "18/01";
   const fromTime = "18:00";
-  const toTime = "19:00";
+  const toTime = addHourToTime(fromTime);
+
+  function addHourToTime(timeString) {
+    const [hours, minutes] = timeString.split(':'); // split the time string into hours and minutes
+    let hour = parseInt(hours); // convert hours to a number
+    let minute = parseInt(minutes); // convert minutes to a number
+    hour = (hour + 1) % 24; // add an hour and wrap around to the next day if needed
+    const newTimeString = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`; // format the new time as a string
+    return newTimeString;
+  }
+
+
+
 
   return (
     <View style={styles.container}>

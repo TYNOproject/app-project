@@ -1,11 +1,12 @@
 import React, { useState, useContext } from "react";
-import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
+import { Text, View, StyleSheet,TouchableOpacity  } from "react-native";
 import { Card } from "react-native-elements";
 import StudentContext from "../contexts/StudentContext";
 import ClassContext from "../contexts/ClassContext";
 
-const CourseCard = ({ course, callback, navigation }) => {
-  const { addToClass } = useContext(ClassContext);
+
+const CourseCard = ({course,callback, navigation }) => {
+  const { addToClass} = useContext(ClassContext);
 
   const handlePress = () => {
     alert(course.courseName);
@@ -16,15 +17,15 @@ const CourseCard = ({ course, callback, navigation }) => {
 
   return (
     <TouchableOpacity onPress={handlePress}>
-      <Card containerStyle={styles.cardContainer}>
-        <Card.Title style={styles.name}>{course.courseName}</Card.Title>
-        <Card.Divider />
-        <Text style={styles.description} numberOfLines={3}>
-          {course.year}"שנה:"
-          {"\n"}
-          {course.departmentId}"מחלקה:"
-        </Text>
-      </Card>
+    <Card containerStyle={styles.cardContainer}>
+      <Card.Title style={styles.name}>{course.courseName}</Card.Title>
+      <Card.Divider />
+      <Text style={styles.description} numberOfLines={3}>
+        {course.year}"שנה:"
+        {"\n"}
+        {course.departmentId}"מחלקה:"
+      </Text>
+    </Card>
     </TouchableOpacity>
   );
 };

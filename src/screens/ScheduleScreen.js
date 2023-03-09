@@ -1,6 +1,6 @@
-import React, { Component, useState, useContext } from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import { ListItem, SearchBar, Card, Button } from "react-native-elements";
+import React, { Component,useState,useContext } from "react";
+import { StyleSheet, Text, View, FlatList,TouchableOpacity,ScrollView } from "react-native";
+import { ListItem, SearchBar,Card, Button,ButtonGroup } from "react-native-elements";
 import { useFonts } from "expo-font";
 import { Calendar, CalendarList, Agenda } from "react-native-calendars";
 import TimeScrollBar from "../components/TimeScrollBar";
@@ -17,15 +17,14 @@ export default function ScheduleScreen({ navigation }) {
   const [currday, setCurrday] = useState(1);
   const [chosenTime, setchosenTime] = useState({});
 
+
   const handleSchedule = () => {
     addToClass("selectedDate", chosenTime);
     addToClass("startTime", timeMap.get(currday)[selectedIndex]);
     addToClass("endTime", timeMap.get(currday)[selectedIndex] + 1);
     navigation.navigate("AfterSchedule");
   };
-
   const availableDays = [1, 3, 5];
-
   const timeMap = new Map();
   timeMap.set(1, ["13:00", "14:30", "16:20"]);
   timeMap.set(2, ["11:00", "12:30", "15:20"]);
@@ -40,12 +39,16 @@ export default function ScheduleScreen({ navigation }) {
     "Heebo-Regular": require("../../assets/fonts/Heebo-Regular.ttf"),
   });
 
-  function handelPossibleTimes(day) {
-    const selectedDay = new Date(day.dateString);
-    const dayOfWeek = selectedDay.getUTCDay() + 1;
-    setchosenTime(selectedDay);
-    setCurrday(dayOfWeek);
-  }
+      function handelPossibleTimes(day) {
+        const selectedDay = new Date(day.dateString);
+        const dayOfWeek = selectedDay.getUTCDay() + 1;
+        setchosenTime(selectedDay);
+        setCurrday(dayOfWeek);
+        alert(selectedDay);
+
+
+    }
+
 
   // Function to mark all available Days for a given year
   const markDays = (year, availableDays) => {
@@ -78,104 +81,134 @@ export default function ScheduleScreen({ navigation }) {
       </View>
     );
 
-  return (
-    <View style={styles.container}>
-      <View style={styles.topPart}>
-        <Text style={styles.header}>למתי לתאם עם {name} ?</Text>
-      </View>
-      <View style={styles.bottomPart}>
-        <Calendar
-          style={styles.calenderStyle}
-          markedDates={markedDates}
-          markingType="simple"
-          onDayPress={handelPossibleTimes}
-        />
-        <View style={styles.TimeScrollBar}>
-          <TimeScrollBar times={timeMap.get(currday)}></TimeScrollBar>
+    return(
+        <View style={styles.container}>
+            <View style={styles.topPart}>
+                <Text style={styles.header}>
+                  למתי לתאם עם {name} ?
+                </Text>
+            </View>
+            <View style={styles.bottomPart}>
+                <Calendar style={styles.calenderStyle}
+                    markedDates={markedDates}
+                    markingType="simple"
+                    onDayPress={handelPossibleTimes}
+                />
+                            <View style={styles.TimeScrollBar}>
+                            <ScrollView contentContainerStyle={styles.containerTime} horizontal={true}>
+                              <View style={styles.row}>
+                              <ButtonGroup style={styles.timeButton}
+                                    buttons={timeMap.get(currday)}
+                                    selectedIndex={selectedIndex}
+                                    onPress={(value) => {
+                                        setSelectedIndex(value);
+                                    }}
+                                    containerStyle={{ marginBottom: 20 }}
+                                />
+                              </View>
+                          </ScrollView>
+                {/* <TimeScrollBar times={timeMap.get(currday)} ></TimeScrollBar> */}
+            </View>
+            </View>
+            <View>
+            <TouchableOpacity style={styles.submitButton} onPress={handleScheduale}>
+                <Text style={styles.textstyle}>
+                     לקביעת שיעור עם {name}
+                </Text>
+            </TouchableOpacity>
+            </View>
         </View>
-      </View>
-      <View>
-        <TouchableOpacity style={styles.submitButton} onPress={handleSchedule}>
-          <Text style={styles.textstyle}>לקביעת שיעור עם {name}</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
-  );
+    );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    alignItems: "center",
-    flexDirection: "column",
-    flex: 1,
-  },
-  calenderStyle: {
-    top: 150,
-    backgroundColor: "transparent",
-    backgroundCalender: "transparent",
-  },
-  topPart: {
-    alignItems: "center",
-    position: "absolute",
-    left: "10%",
-    top: 0,
-    width: 320,
-    direction: "rtl",
-    paddingTop: 50,
-  },
-  bottomPart: {
-    alignItems: "center",
-    position: "absolute",
-    left: "10%",
-    top: -50,
-    width: 320,
-    paddingTop: 50,
-    height: 100,
-  },
-  header: {
-    fontFamily: "Heebo-Bold",
-    fontWeight: "bold",
-    fontSize: 30,
-    top: 0,
-    textAlign: "center",
-  },
-  timeButtonContainer: {
-    maxHeight: 200,
-    backgroundColor: "white",
-    borderWidth: 1,
-    borderColor: "lightgray",
-    borderRadius: 4,
-    padding: 8,
-    top: 100,
-  },
-  timeButton: {
-    backgroundColor: "lightgray",
-    borderRadius: 4,
-    padding: 8,
-    marginVertical: 4,
-  },
-  TimeScrollBar: {
-    position: "relative",
-    top: 180,
-  },
-  submitButton: {
-    height: 53,
-    width: 326,
-    left: 0,
-    top: 600,
-    borderRadius: 5,
-    padding: 16,
-    backgroundColor: "#006699",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  textstyle: {
-    fontFamily: "Rubik",
-    fontSize: 24,
-    fontWeight: "400",
-    lineHeight: 28,
-    letterSpacing: 0,
-    textAlign: "center",
-    color: "#FFFFFF",
-  },
+    container: {
+      alignItems:"center",
+      flexDirection: "column",
+      flex: 1,
+      
+    },
+    calenderStyle: {
+        top:150,
+        backgroundColor:"transparent",
+        backgroundCalender:"transparent",
+      },
+    topPart: {
+        alignItems:"center",
+        position: "absolute",
+        left: "10%",
+        top: 0,
+        width: 320,
+        direction: "rtl",
+        paddingTop: 50,
+      },
+    bottomPart: {
+        alignItems:"center",
+        position: "absolute",
+        left: "10%",
+        top: -50,
+        width: 320,
+        paddingTop: 50,
+        height:100
+    },
+      header: {
+        fontFamily: "Heebo-Bold",
+        fontWeight: "bold",
+        fontSize: 30,
+        top: 0,
+        textAlign: "center",
+      },
+      timeButtonContainer: {
+        maxHeight: 200,
+        backgroundColor: 'white',
+        borderWidth: 1,
+        borderColor: 'lightgray',
+        borderRadius: 4,
+        padding: 8,
+        top:100,
+      },
+      TimeScrollBar: {
+        position:"relative",
+        top:180
+      },
+      submitButton: {
+        height: 53,
+        width: 326,
+        left: 0,
+        top: 600,
+        borderRadius: 5,
+        padding: 16,
+        backgroundColor: "#006699",
+        justifyContent: "center",
+        alignItems: "center"
+    },
+      textstyle: {
+        fontFamily: "Heebo-Bold",
+        fontSize: 24,
+        fontWeight: "400",
+        lineHeight: 28,
+        letterSpacing: 0,
+        textAlign: "center",
+        color: "#FFFFFF",
+    },
+    containerTime: {
+      flexDirection: "row",
+      height:30,
+      position:"relative"
+    },
+    row: {
+      flexDirection: "row",
+      flex: 1,
+      padding: 10,
+      position:"relative",
+    },
+    timeButton: {
+        backgroundColor: 'lightgray',
+        borderRadius: 4,
+        padding: 8,
+        marginVertical: 4,
+        height:40,
+        marginHorizontal:10,
+        position:"relative"
+      },
 });

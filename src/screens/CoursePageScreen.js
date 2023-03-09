@@ -1,4 +1,4 @@
-import React, { Component, useState, useContext } from "react";
+import React, { Component,useState ,useContext} from "react";
 import { StyleSheet, Text, View, FlatList } from "react-native";
 import { ListItem, SearchBar, Card } from "react-native-elements";
 import { useFonts } from "expo-font";
@@ -12,9 +12,9 @@ export default function CoursePageScreen({ navigation }) {
   const [search, setSearch] = useState("");
   // const course = navigation.getParam("course");
 
-  const { items } = useContext(StudentContext);
-  const { getVal } = useContext(StudentContext);
-  const course = getVal(items, "courseName");
+  const {items} = useContext(StudentContext);
+  const {getVal} = useContext(StudentContext)
+  const course = getVal(items,'courseName');
 
   const teachers = [
     {
@@ -88,11 +88,10 @@ export default function CoursePageScreen({ navigation }) {
         />
       </View>
       <View style={styles.spacer} />
-      <View style={styles.bottomHalf}>
-        <TeachersList teachers={teachers} navigation={navigation} />
-      </View>
-    </View>
-  );
+        <View style={styles.bottomHalf}>
+            <TeachersList teachers={teachers} navigation={navigation} />
+        </View>
+      </View>); 
 }
 
 const styles = StyleSheet.create({

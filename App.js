@@ -4,17 +4,20 @@ import { View, Text } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
-import { StudentProvider } from "./src/contexts/StudentContext"; // Import StudentProvider from StudentContext file
+import { StudentProvider } from "./src/contexts/StudentContext";
 import { ClassProvider } from "./src/contexts/ClassContext";
 import LoginScreen from "./src/screens/LogInScreen";
 import RegisterScreen from "./src/screens/RegisterScreen";
-import HomePageScreen from "./src/screens/homePageScreen";
+import HomePageScreen from "./src/screens/HomePageScreen";
 import StudentProfileScreen from "./src/screens/StudentProfileScreen";
 import StudentSignUpScreen from "./src/screens/StudentSignUpScreen";
 import TeacherProfileScreen from "./src/screens/TeacherProfileScreen";
 import CoursePageScreen from "./src/screens/CoursePageScreen";
 import ScheduleScreen from "./src/screens/ScheduleScreen";
 import AfterScheduleScreen from "./src/screens/AfterScheduleScreen";
+import ConfirmLessonsScreen from "./src/screens/ConfirmLessonsScreen";
+import EditTeacherScreen from "./src/screens/EditTeacherScreen";
+import TeacherRegisterScreen from "./src/screens/TeacherRegisterScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -85,6 +88,83 @@ function App() {
               }}
             />
 
+          <Tab.Screen
+            name="Register"
+            component={RegisterScreen}
+            options={{
+              tabBarButton: () => null, // hides the button
+            }}
+          />
+          <Tab.Screen
+            name="StudentSignUp"
+            component={StudentSignUpScreen}
+            options={{
+              tabBarButton: () => null, // hides the button
+            }}
+          />
+          <Tab.Screen
+            name="HomePage"
+            component={HomePageScreen}
+            options={{
+              tabBarButton: () => null, // hides the button
+            }}
+          />
+          <Tab.Screen
+            name="Schedule"
+            component={ScheduleScreen}
+            options={{
+              tabBarButton: () => null, // hides the button
+            }}
+          />
+          <Tab.Screen
+            name="AfterSchedule"
+            component={AfterScheduleScreen}
+            options={{
+              tabBarButton: () => null, // hides the button
+            }}
+          />
+          <Tab.Screen
+            name="TeacherProfile"
+            component={TeacherProfileScreen}
+            options={{
+              tabBarButton: () => null, // hides the button
+              tabBarVisibilityAnimationConfig: () => null,
+            }}
+          />
+          <Tab.Screen
+            name="ConfirmLessons"
+            component={ConfirmLessonsScreen}
+            options={{
+              tabBarButton: () => null, // hides the button
+              tabBarVisibilityAnimationConfig: () => null,
+            }}
+          />
+          <Tab.Screen
+            name="EditTeacher"
+            component={EditTeacherScreen}
+            options={{
+              tabBarButton: () => null, // hides the button
+              tabBarVisibilityAnimationConfig: () => null,
+            }}
+          />
+          <Tab.Screen
+            name="CoursePage"
+            component={CoursePageScreen}
+            options={{
+              tabBarButton: () => null, // hides the button
+              tabBarVisibilityAnimationConfig: () => null,
+            }}
+          />
+          <Tab.Screen
+            name="TeacherRegister"
+            component={TeacherRegisterScreen}
+            options={{
+              tabBarButton: () => null, // hides the button
+              tabBarVisibilityAnimationConfig: () => null,
+            }}
+          />
+        </Tab.Navigator>
+      </NavigationContainer>
             <Tab.Screen
               name="Register"
               component={RegisterScreen}
