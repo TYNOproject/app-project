@@ -20,7 +20,7 @@ export default function HomePageScreen({ navigation }) {
   const { items, getVal, addToStudent } = useContext(StudentContext);
   const name = getVal(items, "studentDetails").name;
   useEffect(() => {
-    getCoursesByDepartment(getVal(items, "studentDetails").departmentId)
+    getCoursesByDepartment(getVal(items, "studentDetails").department.id)
       .then((response) =>
         response !== undefined ? setCourses(response.data) : setCourses([])
       )
@@ -39,6 +39,7 @@ export default function HomePageScreen({ navigation }) {
       departmentId: department,
       year: year,
     };
+
     searchCourses(searchDetails)
       .then((response) => {
         response !== undefined ? setCourses(response.data) : setCourses([]);
