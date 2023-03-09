@@ -2,19 +2,29 @@ import React from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import CourseCard from "./CourseCard";
 
-const HalfScreenCourses = ({ courses,navigation}) => {
+const HalfScreenCourses = ({ courses, navigation, callback }) => {
   const coursesLeft = courses.slice(0, Math.ceil(courses.length / 2));
   const coursesRight = courses.slice(Math.ceil(courses.length / 2));
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.column}>
         {coursesLeft.map((course) => (
-          <CourseCard course={course} key={course.courseName} navigation ={navigation} />
+          <CourseCard
+            course={course}
+            key={course.courseName}
+            navigation={navigation}
+            callback={callback}
+          />
         ))}
       </View>
       <View style={styles.column}>
         {coursesRight.map((course) => (
-          <CourseCard course={course} key={course.courseName} />
+          <CourseCard
+            course={course}
+            key={course.courseName}
+            navigation={navigation}
+            callback={callback}
+          />
         ))}
       </View>
     </ScrollView>

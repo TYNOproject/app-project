@@ -1,4 +1,4 @@
-import React, { Component, useState, useContext } from "react";
+import React, { Component, useState, useContext, useEffect } from "react";
 import { StyleSheet, Text, View, FlatList } from "react-native";
 import { ListItem, SearchBar, Card } from "react-native-elements";
 import { useFonts } from "expo-font";
@@ -17,24 +17,19 @@ export default function HomePageScreen({ navigation }) {
   // const name = navigation.getParam("name");
 
   const { items, getVal, addToStudent } = useContext(StudentContext);
-  const name = getVal(items, "name");
-  getCoursesByDepartment(getVal(items, "studentDetails").departmentId)
-    .then((response) =>
-      response !== undefined ? setCourses(response.data) : setCourses([])
-    )
-    .catch((error) => console.log(error));
+  const name = getVal(items, "studentDetails").name;
+  useEffect(() => {
+    getCoursesByDepartment(getVal(items, "studentDetails").departmentId)
+      .then((response) =>
+        response !== undefined ? setCourses(response.data) : setCourses([])
+      )
+      .catch((error) => console.log(error));
+  }, []);
   //need to take from the DB
 
   let [fontsLoaded] = useFonts({
     "Heebo-Bold": require("../../assets/fonts/Heebo-Bold.ttf"),
-    "Heebo-Light": require("../../assets/fonts/Heebo-Light.ttf"),
-    "Heebo-Medium": require("../../assets/fonts/Heebo-Medium.ttf"),
     "Heebo-Regular": require("../../assets/fonts/Heebo-Regular.ttf"),
-    "Heebo-SemiBold": require("../../assets/fonts/Heebo-SemiBold.ttf"),
-    "Heebo-Thin": require("../../assets/fonts/Heebo-Thin.ttf"),
-    "Heebo-Black": require("../../assets/fonts/Heebo-Black.ttf"),
-    "Heebo-ExtraBold": require("../../assets/fonts/Heebo-ExtraBold.ttf"),
-    "Heebo-ExtraLight": require("../../assets/fonts/Heebo-ExtraLight.ttf"),
   });
 
   if (!fontsLoaded)
@@ -54,7 +49,7 @@ export default function HomePageScreen({ navigation }) {
       </View>
       <View style={styles.searchBar}>
         <SearchBar
-          placeholder="חיפוש לפי קורס\מורה..."
+          placeholder="חיפוש לפי קורס..."
           containerStyle={{ backgroundColor: "transparent" }}
           lightTheme
           round
@@ -87,7 +82,11 @@ export default function HomePageScreen({ navigation }) {
       </View>
       <View style={styles.spacer} />
       <View style={styles.bottomHalf}>
-        <CoursesList courses={courses} navigation={navigation} />
+        <CoursesList
+          courses={courses}
+          navigation={navigation}
+          callback={() => navigation.navigate("CoursePage")}
+        />
       </View>
     </View>
   );

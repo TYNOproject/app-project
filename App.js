@@ -5,6 +5,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 import { StudentProvider } from "./src/contexts/StudentContext"; // Import StudentProvider from StudentContext file
+import { ClassProvider } from "./src/contexts/ClassContext";
 import LoginScreen from "./src/screens/LogInScreen";
 import RegisterScreen from "./src/screens/RegisterScreen";
 import HomePageScreen from "./src/screens/homePageScreen";
@@ -28,115 +29,117 @@ function BellIcon() {
 function App() {
   return (
     <StudentProvider>
-      <NavigationContainer>
-        <Tab.Navigator
-          initialRouteName="LogIn"
-          screenOptions={{
-            tabBarActiveTintColor: "orange",
-            tabBarInactiveTintColor: "gray",
-            tabBarShowLabel: false,
-            tabBarStyle: [
-              {
-                display: "flex",
-              },
-              null,
-            ],
-          }}
-        >
-          <Tab.Screen
-            name="LogOut"
-            component={LoginScreen}
-            options={{
-              tabBarIcon: ({ color, size }) => (
-                <Ionicons name="log-out-outline" size={40} color={color} />
-              ),
+      <ClassProvider>
+        <NavigationContainer>
+          <Tab.Navigator
+            initialRouteName="LogIn"
+            screenOptions={{
+              tabBarActiveTintColor: "orange",
+              tabBarInactiveTintColor: "gray",
+              tabBarShowLabel: false,
+              tabBarStyle: [
+                {
+                  display: "flex",
+                },
+                null,
+              ],
             }}
-          />
-          <Tab.Screen
-            name="Home"
-            component={HomePageScreen}
-            options={{
-              tabBarIcon: ({ color, size }) => (
-                <Ionicons name="home-outline" size={40} color={color} />
-              ),
-              headerRight: () => <BellIcon />,
-            }}
-          />
-          <Tab.Screen
-            name="Profile"
-            component={StudentProfileScreen}
-            options={{
-              tabBarIcon: ({ color, size }) => (
-                <Ionicons
-                  name="person-circle-outline"
-                  size={40}
-                  color={color}
-                />
-              ),
-            }}
-          />
-          <Tab.Screen
-            name="LogIn"
-            component={LoginScreen}
-            options={{
-              tabBarButton: () => null, // hides the button
-            }}
-          />
+          >
+            <Tab.Screen
+              name="LogOut"
+              component={LoginScreen}
+              options={{
+                tabBarIcon: ({ color, size }) => (
+                  <Ionicons name="log-out-outline" size={40} color={color} />
+                ),
+              }}
+            />
+            <Tab.Screen
+              name="Home"
+              component={HomePageScreen}
+              options={{
+                tabBarIcon: ({ color, size }) => (
+                  <Ionicons name="home-outline" size={40} color={color} />
+                ),
+                headerRight: () => <BellIcon />,
+              }}
+            />
+            <Tab.Screen
+              name="Profile"
+              component={StudentProfileScreen}
+              options={{
+                tabBarIcon: ({ color, size }) => (
+                  <Ionicons
+                    name="person-circle-outline"
+                    size={40}
+                    color={color}
+                  />
+                ),
+              }}
+            />
+            <Tab.Screen
+              name="LogIn"
+              component={LoginScreen}
+              options={{
+                tabBarButton: () => null, // hides the button
+              }}
+            />
 
-          <Tab.Screen
-            name="Register"
-            component={RegisterScreen}
-            options={{
-              tabBarButton: () => null, // hides the button
-            }}
-          />
-          <Tab.Screen
-            name="StudentSignUp"
-            component={StudentSignUpScreen}
-            options={{
-              tabBarButton: () => null, // hides the button
-            }}
-          />
-          <Tab.Screen
-            name="HomePage"
-            component={HomePageScreen}
-            options={{
-              tabBarButton: () => null, // hides the button
-            }}
-          />
-          <Tab.Screen
-            name="Schedule"
-            component={ScheduleScreen}
-            options={{
-              tabBarButton: () => null, // hides the button
-            }}
-          />
-          <Tab.Screen
-            name="TeacherProfile"
-            component={TeacherProfileScreen}
-            options={{
-              tabBarButton: () => null, // hides the button
-              tabBarVisibilityAnimationConfig: () => null,
-            }}
-          />
-          <Tab.Screen
-            name="CoursePage"
-            component={CoursePageScreen}
-            options={{
-              tabBarButton: () => null, // hides the button
-              tabBarVisibilityAnimationConfig: () => null,
-            }}
-          />
-          <Tab.Screen
-            name="AfterSchedule"
-            component={AfterScheduleScreen}
-            options={{
-              tabBarButton: () => null, // hides the button
-              tabBarVisibilityAnimationConfig: () => null,
-            }}
-          />
-        </Tab.Navigator>
-      </NavigationContainer>
+            <Tab.Screen
+              name="Register"
+              component={RegisterScreen}
+              options={{
+                tabBarButton: () => null, // hides the button
+              }}
+            />
+            <Tab.Screen
+              name="StudentSignUp"
+              component={StudentSignUpScreen}
+              options={{
+                tabBarButton: () => null, // hides the button
+              }}
+            />
+            <Tab.Screen
+              name="HomePage"
+              component={HomePageScreen}
+              options={{
+                tabBarButton: () => null, // hides the button
+              }}
+            />
+            <Tab.Screen
+              name="Schedule"
+              component={ScheduleScreen}
+              options={{
+                tabBarButton: () => null, // hides the button
+              }}
+            />
+            <Tab.Screen
+              name="TeacherProfile"
+              component={TeacherProfileScreen}
+              options={{
+                tabBarButton: () => null, // hides the button
+                tabBarVisibilityAnimationConfig: () => null,
+              }}
+            />
+            <Tab.Screen
+              name="CoursePage"
+              component={CoursePageScreen}
+              options={{
+                tabBarButton: () => null, // hides the button
+                tabBarVisibilityAnimationConfig: () => null,
+              }}
+            />
+            <Tab.Screen
+              name="AfterSchedule"
+              component={AfterScheduleScreen}
+              options={{
+                tabBarButton: () => null, // hides the button
+                tabBarVisibilityAnimationConfig: () => null,
+              }}
+            />
+          </Tab.Navigator>
+        </NavigationContainer>
+      </ClassProvider>
     </StudentProvider>
   );
 }

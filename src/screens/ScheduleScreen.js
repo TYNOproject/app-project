@@ -1,24 +1,28 @@
-import React, { Component, useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  FlatList,
-  TouchableOpacity,
-  ScrollView,
-} from "react-native";
+import React, { Component, useState, useContext } from "react";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { ListItem, SearchBar, Card, Button } from "react-native-elements";
 import { useFonts } from "expo-font";
 import { Calendar, CalendarList, Agenda } from "react-native-calendars";
 import TimeScrollBar from "../components/TimeScrollBar";
 import StudentContext from "../contexts/StudentContext";
+import ClassContext from "../contexts/ClassContext";
 
 export default function ScheduleScreen({ navigation }) {
-  const handleScheduale = () => {
+  const { addToClass, itemsClass, getValClass } = useContext(ClassContext);
+  const { addToStudent, items, getVal } = useContext(StudentContext);
+
+  const name = getValClass(itemsClass, "teacherName");
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [markedDates, setMarkedDates] = useState({});
+  const [currday, setCurrday] = useState(1);
+  const [chosenTime, setchosenTime] = useState({});
+
+  const handleSchedule = () => {
+    addToClass("selectedDate", chosenTime);
+    addToClass("startTime", timeMap.get(currday)[selectedIndex]);
+    addToClass("endTime", timeMap.get(currday)[selectedIndex] + 1);
     navigation.navigate("AfterSchedule");
   };
-
-  const name = "מנש";
 
   const availableDays = [1, 3, 5];
 
@@ -33,19 +37,8 @@ export default function ScheduleScreen({ navigation }) {
 
   let [fontsLoaded] = useFonts({
     "Heebo-Bold": require("../../assets/fonts/Heebo-Bold.ttf"),
-    "Heebo-Light": require("../../assets/fonts/Heebo-Light.ttf"),
-    "Heebo-Medium": require("../../assets/fonts/Heebo-Medium.ttf"),
     "Heebo-Regular": require("../../assets/fonts/Heebo-Regular.ttf"),
-    "Heebo-SemiBold": require("../../assets/fonts/Heebo-SemiBold.ttf"),
-    "Heebo-Thin": require("../../assets/fonts/Heebo-Thin.ttf"),
-    "Heebo-Black": require("../../assets/fonts/Heebo-Black.ttf"),
-    "Heebo-ExtraBold": require("../../assets/fonts/Heebo-ExtraBold.ttf"),
-    "Heebo-ExtraLight": require("../../assets/fonts/Heebo-ExtraLight.ttf"),
   });
-
-  const [markedDates, setMarkedDates] = useState({});
-  const [currday, setCurrday] = useState(1);
-  const [chosenTime, setchosenTime] = useState({});
 
   function handelPossibleTimes(day) {
     const selectedDay = new Date(day.dateString);
@@ -102,7 +95,7 @@ export default function ScheduleScreen({ navigation }) {
         </View>
       </View>
       <View>
-        <TouchableOpacity style={styles.submitButton} onPress={handleScheduale}>
+        <TouchableOpacity style={styles.submitButton} onPress={handleSchedule}>
           <Text style={styles.textstyle}>לקביעת שיעור עם {name}</Text>
         </TouchableOpacity>
       </View>

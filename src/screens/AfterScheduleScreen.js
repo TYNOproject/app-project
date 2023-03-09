@@ -13,12 +13,16 @@ import CoursesList from "../components/CoursesList";
 import TeacherCard from "../components/TeacherCard";
 import TeachersList from "../components/TeachersList";
 import StudentContext from "../contexts/StudentContext";
+import ClassContext from "../contexts/ClassContext";
 
 export default function AfterScheduleScreen({ navigation }) {
   const [search, setSearch] = useState("");
 
-  const name = "נועם";
-  const teacherName = "יותם";
+  const { addToStudent, items, getVal } = useContext(StudentContext);
+  const { addToClass, itemsClass, getValClass } = useContext(ClassContext);
+
+  const name = getVal(items, "studentDetails").name;
+  const teacherName = items.getValClass(itemsClass, "teacherName");
   const date = "18/01";
   const fromTime = "18:00";
   const toTime = "19:00";
@@ -26,7 +30,7 @@ export default function AfterScheduleScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.topPart}>
-        <Text style={styles.header}>בהצלחה {name} !</Text>
+        <Text style={styles.header}>בהצלחה {name}!</Text>
         <View>
           <Text style={styles.subHeaderText}>קבעת שיעור עם {teacherName}</Text>
         </View>
