@@ -114,6 +114,7 @@ export default function HomePageScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
+    top: 20,
     alignItems: "center",
     flexDirection: "column",
     flex: 1,

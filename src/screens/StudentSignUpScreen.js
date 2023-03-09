@@ -11,7 +11,6 @@ import Service from "../api/Service";
 import { addNewUser } from "../api/serviceCalls";
 import { LinearGradient } from "expo-linear-gradient";
 
-
 const handleRegister = async (navigation, studentDetails) => {
   console.log(studentDetails);
   const response = await addNewUser(studentDetails);
@@ -108,14 +107,22 @@ export default function StudentSignUpScreen({ navigation }) {
             });
           }}
         />
-        
-        <Button title="אפשר להמשיך"
-        titleStyle={{ fontSize: 25, textAlign: 'center' }} // Add this line to center the title
-        leading={() => <AntDesign name="left" size={24} color="white" />}
-        style={{ width: 250, height: 50, top: 120, justifyContent: 'center', alignItems: 'center' }}
-        onPress={() =>
-          handleRegister(navigation, getVal(items, "studentDetails"))
-        } />
+
+        <Button
+          title="אפשר להמשיך"
+          titleStyle={{ fontSize: 18, textAlign: "center" }} // Add this line to center the title
+          leading={() => <AntDesign name="left" size={24} color="white" />}
+          style={{
+            width: 250,
+            height: 50,
+            top: 120,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+          onPress={() =>
+            handleRegister(navigation, getVal(items, "studentDetails"))
+          }
+        />
       </View>
     </View>
   );
@@ -152,7 +159,7 @@ const styles = StyleSheet.create({
     height: 300,
     alignItems: "center",
     justifyContent: "space-between",
-    paddingBottom: 0 // add some padding to the bottom
+    paddingBottom: 0, // add some padding to the bottom
   },
   selectOptionStyle: {
     borderWidth: 1,
@@ -162,6 +169,6 @@ const styles = StyleSheet.create({
     borderColor: "purple", // added purple border color
     borderWidth: 2, // increased border width for visibility
     top: 20,
-    paddingBottom:0
+    paddingBottom: 0,
   },
 });

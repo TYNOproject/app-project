@@ -7,7 +7,6 @@ import { useFonts } from "expo-font";
 import StudentContext from "../contexts/StudentContext";
 import { LinearGradient } from "expo-linear-gradient";
 
-
 export default function RegisterScreen({ navigation }) {
   const { addToStudent } = useContext(StudentContext);
   const { clearItems } = useContext(StudentContext);
@@ -56,15 +55,22 @@ export default function RegisterScreen({ navigation }) {
         value={password}
         secureTextEntry
       />
-      <Button title="אפשר להמשיך"
-        titleStyle={{ fontSize: 25, textAlign: 'center' }} // Add this line to center the title
+      <Button
+        title="אפשר להמשיך"
+        titleStyle={{ fontSize: 18, textAlign: "center" }} // Add this line to center the title
         leading={() => <AntDesign name="left" size={24} color="white" />}
-        style={{ width: 250, height: 50, top: 80, justifyContent: 'center', alignItems: 'center' }}
+        style={{
+          width: 250,
+          height: 50,
+          top: 80,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
         onPress={() => {
           addToStudent("studentDetails", { name, email, password });
           handleRegister();
-        }} />
-
+        }}
+      />
     </View>
   );
 }
@@ -75,17 +81,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     height: "75%",
-    top:10
+    top: 10,
   },
   header: {
     fontSize: 30,
-    top:85,
+    top: 85,
     fontFamily: "Heebo-Bold",
     textAlign: "center",
   },
   inputField: {
     width: 300,
-    top:40,
+    top: 40,
     height: 50,
     backgroundColor: "#fff",
     paddingVertical: 10,
