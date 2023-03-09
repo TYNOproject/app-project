@@ -1,25 +1,19 @@
-import React, { useState,useContext } from "react";
+import React, { useState, useContext } from "react";
 import { Text, View, StyleSheet,TouchableOpacity  } from "react-native";
 import { Card } from "react-native-elements";
 import StudentContext from "../contexts/StudentContext";
+import ClassContext from "../contexts/ClassContext";
 
 
-const CourseCard = ({course,navigation }) => {
-  const {addToStudent} = useContext(StudentContext);
+const CourseCard = ({course,callback, navigation }) => {
+  const { addToClass} = useContext(ClassContext);
 
   const handlePress = () => {
-    if (navigation != null){
-      alert(course.courseName);
-      addToStudent('courseName',course.courseName);
-      addToStudent('courseId',course.id);
-      navigation.navigate("CoursePage");
-    }
-    else{
-      //need to send the data
-      //change color
-    }
-
-  }
+    alert(course.courseName);
+    addToClass("courseName", course.courseName);
+    addToClass("courseId", course.id);
+    callback();
+  };
 
   return (
     <TouchableOpacity onPress={handlePress}>
