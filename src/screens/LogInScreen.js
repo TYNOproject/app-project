@@ -1,4 +1,4 @@
-import React,{ useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import { View, Text, TextInput, StyleSheet } from "react-native";
 import { Button } from "@react-native-material/core";
 import { AntDesign } from "@expo/vector-icons";
@@ -6,8 +6,6 @@ import { useFonts } from "expo-font";
 import StudentContext from "../contexts/StudentContext.js";
 import { signIn } from "../api/serviceCalls.js";
 import { LinearGradient } from "expo-linear-gradient";
-
-
 
 export default function LoginScreen({ navigation }) {
   const { addToStudent, items, getVal } = useContext(StudentContext);
@@ -62,20 +60,35 @@ export default function LoginScreen({ navigation }) {
         onChangeText={setPassword}
         value={password}
         secureTextEntry
-      />      
-      <Button title="התחבר"
-        titleStyle={{ fontSize: 25, textAlign: 'center' }} // Add this line to center the title
+      />
+      <Button
+        title="התחבר"
+        titleStyle={{ fontSize: 18, textAlign: "center" }} // Add this line to center the title
         leading={() => <AntDesign name="left" size={24} color="white" />}
-        style={{ width: 200, height: 50, top: -50, justifyContent: 'center', alignItems: 'center' }}
-        onPress={handleLogin} />
+        style={{
+          width: 200,
+          height: 50,
+          top: -50,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+        onPress={handleLogin}
+      />
 
-      <Button title="לא רשום? לחץ כאן"
-        titleStyle={{ fontSize: 25, textAlign: 'center' }} // Add this line to center the title
+      <Button
+        title="לא רשום? לחץ כאן"
+        titleStyle={{ fontSize: 18, textAlign: "center" }} // Add this line to center the title
         leading={() => <AntDesign name="left" size={24} color="white" />}
-        style={{ width: 250, height: 50, top: -90, justifyContent: 'center', alignItems: 'center' }}
-        onPress={handleRegister} />
-
-</View>
+        style={{
+          width: 250,
+          height: 50,
+          top: -90,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+        onPress={handleRegister}
+      />
+    </View>
   );
 }
 
