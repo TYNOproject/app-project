@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { useFonts } from "expo-font";
 import FileUploader from "../components/FileUploader";
+import StudentContext from "../contexts/StudentContext";
 
 export default function TeacherSignUpScreen({ navigation }) {
-  const name = navigation.getParam("name");
+  const { items, getVal, addToStudent } = useContext(StudentContext);
+  const name = getVal(items, "studentDetails").name;
   let [fontsLoaded] = useFonts({
     "Heebo-Bold": require("../../assets/fonts/Heebo-Bold.ttf"),
     "Heebo-Light": require("../../assets/fonts/Heebo-Light.ttf"),
