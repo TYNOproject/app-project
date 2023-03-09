@@ -5,6 +5,7 @@ import { useFonts } from "expo-font";
 import { Calendar, CalendarList, Agenda } from "react-native-calendars";
 import TimeScrollBar from "../components/TimeScrollBar";
 import StudentContext from "../contexts/StudentContext";
+import ClassContext from "../contexts/ClassContext";
 import { getTeacherAvailableClasses } from "../api/serviceCalls.js";
 
 
@@ -13,12 +14,13 @@ import { getTeacherAvailableClasses } from "../api/serviceCalls.js";
 export default function ScheduleScreen({ navigation })
 {
 
-  const {addToStudent} = useContext(StudentContext);
-  const {items} = useContext(StudentContext);
-  const {getVal} = useContext(StudentContext)
 
-  const name = getVal(items,'teacherName');
-  const teacherId = getVal(items,'teacherId');
+  const {addToClass} = useContext(ClassContext);
+  const {itemsClass} = useContext(ClassContext);
+  const {getValClass} = useContext(ClassContext)
+
+  const name = getValClass(itemsClass,'teacherName');
+  const teacherId = getValClass(itemsClass,'teacherId');
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [markedDates, setMarkedDates] = useState({});
   const [currday, setCurrday] = useState(1);
@@ -43,31 +45,7 @@ export default function ScheduleScreen({ navigation })
       };
       getTimes();
     // const name = "מנש";
-
-    const availableDays = [1,3,5];
-
-    const timeMap = new Map();
-    timeMap.set(1, ['13:00', '14:30', '16:20']);
-    timeMap.set(2, ['11:00', '12:30', '15:20']);
-    timeMap.set(3, ['10:00', '14:00', '18:20']);
-    timeMap.set(4, ['10:00', '14:00', '18:20']); 
-    timeMap.set(5, ['10:00', '14:00', '18:20']); 
-    timeMap.set(6, ['10:00', '14:00', '18:20']);
-    timeMap.set(7, ['10:00', '14:00', '18:20']); 
  
- 
-
-    let [fontsLoaded] = useFonts({
-        "Heebo-Bold": require("../../assets/fonts/Heebo-Bold.ttf"),
-        "Heebo-Light": require("../../assets/fonts/Heebo-Light.ttf"),
-        "Heebo-Medium": require("../../assets/fonts/Heebo-Medium.ttf"),
-        "Heebo-Regular": require("../../assets/fonts/Heebo-Regular.ttf"),
-        "Heebo-SemiBold": require("../../assets/fonts/Heebo-SemiBold.ttf"),
-        "Heebo-Thin": require("../../assets/fonts/Heebo-Thin.ttf"),
-        "Heebo-Black": require("../../assets/fonts/Heebo-Black.ttf"),
-        "Heebo-ExtraBold": require("../../assets/fonts/Heebo-ExtraBold.ttf"),
-        "Heebo-ExtraLight": require("../../assets/fonts/Heebo-ExtraLight.ttf"),
-      });
 
    
 

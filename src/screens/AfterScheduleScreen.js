@@ -15,8 +15,6 @@ import TeachersList from "../components/TeachersList";
 import StudentContext from "../contexts/StudentContext";
 import ClassContext from "../contexts/ClassContext";
 
-export default function AfterScheduleScreen({ navigation }) {
-
 export default function AfterScheduleScreen({ navigation })
 {
   const {items} = useContext(StudentContext);

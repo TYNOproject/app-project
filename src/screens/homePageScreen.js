@@ -6,13 +6,14 @@ import SelectOption from "../components/SelectOption";
 import CoursesList from "../components/CoursesList";
 import StudentContext from "../contexts/StudentContext";
 import * as constants from "../../constants";
-import { getCoursesByDepartment } from "../api/serviceCalls";
+import { getCoursesByDepartment, searchCourses } from "../api/serviceCalls";
+import { FontAwesome } from "@expo/vector-icons";
 
 export default function HomePageScreen({ navigation }) {
   const [search, setSearch] = useState("");
   const [faculty, setFaculty] = useState(0);
   const [department, setDepartment] = useState(1);
-  const [year, setYear] = useState(0);
+  const [year, setYear] = useState(1);
   const [courses, setCourses] = useState([]);
   // const name = navigation.getParam("name");
 
@@ -32,16 +33,29 @@ export default function HomePageScreen({ navigation }) {
     "Heebo-Regular": require("../../assets/fonts/Heebo-Regular.ttf"),
   });
 
-if (!fontsLoaded)
-  return (
-    <View>
-      <Text>loading</Text>
-    </View>
-  );
+  const handleSearch = (search) => {
+    let searchDetails = {
+      courseName: search,
+      departmentId: department,
+      year: year,
+    };
+    searchCourses(searchDetails)
+      .then((response) => {
+        response !== undefined ? setCourses(response.data) : setCourses([]);
+      })
+      .catch((error) => console.log(error));
+  };
 
-return (
-<View style={styles.container}>
-          <View style={styles.topPart}>
+  if (!fontsLoaded)
+    return (
+      <View>
+        <Text>loading</Text>
+      </View>
+    );
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.topPart}>
         <Text style={styles.header}>
           היי {name}, {"\n"}
           מה נלמד הפעם? {"\n"}
@@ -56,15 +70,17 @@ return (
           onChangeText={setSearch}
           value={search}
           autoCorrect={false}
+          searchIcon={
+            <FontAwesome
+              name="search"
+              size={24}
+              color="black"
+              onPress={() => handleSearch(search)}
+            />
+          }
         />
       </View>
       <View style={styles.dropdown}>
-        <SelectOption
-          options={constants.faculties.map((faculty) => faculty.faculty_name)}
-          defaultText="פקולטה"
-          buttonStyle={styles.dropdownButtonStyle}
-          onSelectOption={(option) => setFaculty(option.id)}
-        />
         <SelectOption
           options={constants.departments.map(
             (department) => department.department_name
@@ -77,7 +93,10 @@ return (
           options={constants.years}
           defaultText="שנה"
           buttonStyle={styles.dropdownButtonStyle}
-          onSelectOption={(option) => setYear(option.id)}
+          onSelectOption={(option) => {
+            console.log("option chosen in year: " + option);
+            setYear(option);
+          }}
         />
       </View>
       <View style={styles.spacer} />

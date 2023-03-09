@@ -7,15 +7,16 @@ import CoursesList from "../components/CoursesList";
 import TeacherCard from "../components/TeacherCard";
 import TeachersList from "../components/TeachersList";
 import StudentContext from "../contexts/StudentContext";
+import ClassContext from "../contexts/ClassContext";
 import { getTeachersByCourseName } from "../api/serviceCalls.js";
 
 export default function CoursePageScreen({ navigation }) {
   const [teachers, setTeachers] = useState([]);
   // const course = navigation.getParam("course");
 
-  const {items} = useContext(StudentContext);
-  const {getVal} = useContext(StudentContext)
-  const course = getVal(items,'courseName');
+  const {itemsClass} = useContext(ClassContext);
+  const {getValClass} = useContext(ClassContext)
+  const course = getValClass(itemsClass,'courseName');
 
   const getTeachers = () => {
     useEffect(() => {
