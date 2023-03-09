@@ -1,10 +1,11 @@
-import React, { Component,useState,useContext } from "react";
+import React, { Component,useState,useContext,useEffect } from "react";
 import { StyleSheet, Text, View, FlatList,TouchableOpacity,ScrollView } from "react-native";
 import { ListItem, SearchBar,Card, Button,ButtonGroup } from "react-native-elements";
 import { useFonts } from "expo-font";
 import { Calendar,CalendarList,Agenda  } from 'react-native-calendars';
 import TimeScrollBar from "../components/TimeScrollBar";
 import StudentContext from "../contexts/StudentContext";
+import { getTeacherAvailableClasses } from "../api/serviceCalls.js";
 
 
 
@@ -17,6 +18,7 @@ export default function ScheduleScreen({ navigation })
   const {getVal} = useContext(StudentContext)
 
   const name = getVal(items,'teacherName');
+  const teacherId = getVal(items,'teacherId');
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [markedDates, setMarkedDates] = useState({});
   const [currday, setCurrday] = useState(1);
@@ -29,7 +31,17 @@ export default function ScheduleScreen({ navigation })
       navigation.navigate("AfterSchedule");
       };
 
-
+      const getTimes = () => {
+        useEffect(() => {
+          async function fetchData() {
+            console.log(teacherId);
+            timeResponse = await getTeacherAvailableClasses(teacherId);
+            console.log(timeResponse.data);
+          }
+          fetchData();
+        },[]);
+      };
+      getTimes();
     // const name = "מנש";
 
     const availableDays = [1,3,5];

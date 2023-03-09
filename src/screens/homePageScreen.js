@@ -1,15 +1,17 @@
 import React, { Component,useState, useContext } from "react";
-import { StyleSheet, Text, View, FlatList } from "react-native";
+import { StyleSheet, Text, View, FlatList,Button } from "react-native";
 import { ListItem, SearchBar,Card } from "react-native-elements";
 import { useFonts } from "expo-font";
 import SelectOption from "../components/SelectOption";
 import CoursesList from "../components/CoursesList";
 import StudentContext from "../contexts/StudentContext";
+import { getCoursesByCourseName } from "../api/serviceCalls.js";
 
 
 export default function HomePageScreen({ navigation })
 {
   const [search, setSearch] = useState("");
+  const [courses, setCourses] = useState([]);
   // const name = navigation.getParam("name");
 
   const {items} = useContext(StudentContext);
@@ -18,56 +20,17 @@ export default function HomePageScreen({ navigation })
 
   
   //need to take from the DB
-  const courses = [
-    {
-      id:1,
-      courseName: "תולדות היופי",
-      description:
-        "This course covers the fundamentals of computer programming and software development. Students will learn programming concepts such as data types, control structures, functions, and object-oriented programming.",
-    },
-    {
-      id:2,
-      courseName: "חדווא",
-      description:
-        "This course covers the basics of calculus, including limits, derivatives, and integrals. Topics include differentiation and integration of functions, optimization problems, and applications of calculus to physics and engineering.",
-    },
-    {
-      id:3,
-      courseName: "אלגברה",
-      description:
-        "This course focuses on developing writing skills through critical reading and analysis of texts. Students will learn how to write effective essays, research papers, and other types of academic writing.",
-    },
-    {
-      id:4,
-      courseName: "קומפי",
-      description:
-        "This course covers the major events and ideas of Western civilization from ancient Greece to the present. Topics include the rise of democracy, the Renaissance, the Enlightenment, and the World Wars.",
-    },
-    {
-      id:5,
-      courseName: "מודלים",
-      description:
-        "This course covers the major events and ideas of Western civilization from ancient Greece to the present. Topics include the rise of democracy, the Renaissance, the Enlightenment, and the World Wars.",
-    },
-    {
-      id:6,
-      courseName: "אלגו",
-      description:
-        "This course covers the major events and ideas of Western civilization from ancient Greece to the present. Topics include the rise of democracy, the Renaissance, the Enlightenment, and the World Wars.",
-    },
-    {
-      id:7,
-      courseName: "היסטוריה",
-      description:
-        "This course covers the major events and ideas of Western civilization from ancient Greece to the present. Topics include the rise of democracy, the Renaissance, the Enlightenment, and the World Wars.",
-    },
-  ];
-
 
   let [fontsLoaded] = useFonts({
     "Heebo-Bold": require("../../assets/fonts/Heebo-Bold.ttf"),
     "Heebo-Regular": require("../../assets/fonts/Heebo-Regular.ttf"),
   });
+
+  const handleSerach = async () => {
+    serchRespone = await getCoursesByCourseName(search);
+    console.log(serchRespone.data);
+    setCourses(serchRespone.data);
+  };
 
 if (!fontsLoaded)
   return (
@@ -80,7 +43,6 @@ return (
 <View style={styles.container}>
           <View style={styles.topPart}>
         <Text style={styles.header}>
-          היי {username}, {"\n"}
           היי {username}, {"\n"}
           מה נלמד הפעם? {"\n"}
         </Text>
@@ -102,6 +64,7 @@ return (
         <SelectOption options={["Op1", "Op2", "Op3"]} defaultText="מחלקה" buttonStyle= {styles.dropdownButtonStyle} />
         <SelectOption options={["1", "2", "3", "4"]} defaultText="שנה" buttonStyle= {styles.dropdownButtonStyle} />
       </View>
+      <Button title="חפש" onPress={handleSerach}></Button>
       <View style={styles.spacer} />
         <View style={styles.bottomHalf}>
             <CoursesList courses={courses} navigation={navigation} />
@@ -159,5 +122,18 @@ const styles = StyleSheet.create({
     width: '100%',
     flex: 2,
     top:-20
+  },
+  searchButton: {
+    padding: 10,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: 'black',
+    fontWeight: 'bold',
+    fontSize: 16,
+    textAlign: 'center',
+    margin: 10,
+    width: 150,
+    alignSelf: 'center',
+    position: "relative",
   },
 });

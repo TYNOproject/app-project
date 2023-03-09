@@ -1,4 +1,4 @@
-import React, { Component,useState ,useContext} from "react";
+import React, { Component,useState ,useContext,useEffect } from "react";
 import { StyleSheet, Text, View, FlatList } from "react-native";
 import { ListItem, SearchBar, Card } from "react-native-elements";
 import { useFonts } from "expo-font";
@@ -7,60 +7,28 @@ import CoursesList from "../components/CoursesList";
 import TeacherCard from "../components/TeacherCard";
 import TeachersList from "../components/TeachersList";
 import StudentContext from "../contexts/StudentContext";
+import { getTeachersByCourseName } from "../api/serviceCalls.js";
 
 export default function CoursePageScreen({ navigation }) {
-  const [search, setSearch] = useState("");
+  const [teachers, setTeachers] = useState([]);
   // const course = navigation.getParam("course");
 
   const {items} = useContext(StudentContext);
   const {getVal} = useContext(StudentContext)
   const course = getVal(items,'courseName');
 
-  const teachers = [
-    {
-      name: "אבי",
-      year: "שנה ד'",
-      rate: "4",
-      description:
-        "This course covers the fundamentals of computer programming and software development. Students will learn programming concepts such as data types, control structures, functions, and object-oriented programming.",
-    },
-    {
-      name: "יוסי",
-      year: "שנה ד'",
-      rate: "4.5",
-      description:
-        "This course covers the basics of calculus, including limits, derivatives, and integrals. Topics include differentiation and integration of functions, optimization problems, and applications of calculus to physics and engineering.",
-    },
-    {
-      name: "מוטי",
-      year: "שנה ד'",
-      rate: "4",
-      description:
-        "This course focuses on developing writing skills through critical reading and analysis of texts. Students will learn how to write effective essays, research papers, and other types of academic writing.",
-    },
-    {
-      name: "מנש",
-      year: "שנה ד'",
-      rate: "3",
-      description:
-        "This course covers the major events and ideas of Western civilization from ancient Greece to the present. Topics include the rise of democracy, the Renaissance, the Enlightenment, and the World Wars.",
-    },
-    {
-      name: "History of Western Civilization",
-      description:
-        "This course covers the major events and ideas of Western civilization from ancient Greece to the present. Topics include the rise of democracy, the Renaissance, the Enlightenment, and the World Wars.",
-    },
-    {
-      name: "History of Western Civilization",
-      description:
-        "This course covers the major events and ideas of Western civilization from ancient Greece to the present. Topics include the rise of democracy, the Renaissance, the Enlightenment, and the World Wars.",
-    },
-    {
-      name: "History of Western Civilization",
-      description:
-        "This course covers the major events and ideas of Western civilization from ancient Greece to the present. Topics include the rise of democracy, the Renaissance, the Enlightenment, and the World Wars.",
-    },
-  ];
+  const getTeachers = () => {
+    useEffect(() => {
+      async function fetchData() {
+        teachersRespone = await getTeachersByCourseName(course);
+        console.log(teachersRespone.data);
+        setTeachers(teachersRespone.data);
+      }
+      fetchData();
+    },[]);
+  };
+
+  getTeachers();
 
   let [fontsLoaded] = useFonts({
     "Heebo-Bold": require("../../assets/fonts/Heebo-Bold.ttf"),

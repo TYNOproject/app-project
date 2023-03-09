@@ -14,7 +14,7 @@ const HalfScreenCourses = ({ courses,navigation}) => {
       </View>
       <View style={styles.column}>
         {coursesRight.map((course) => (
-          <CourseCard course={course} key={course.courseName} />
+          <CourseCard course={course} key={course.courseName} navigation ={navigation} />
         ))}
       </View>
     </ScrollView>

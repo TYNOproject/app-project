@@ -11,6 +11,7 @@ const TeacherCard = ({ teacher,navigation }) => {
     const handlePress = () => {
       alert(teacher.name);
       addToStudent('teacherName',teacher.name);
+      addToStudent('teacherId',teacher.id);
       // addToStudent('courseId',teacher.id);
       navigation.navigate("Schedule");
     }
@@ -37,7 +38,7 @@ const TeacherCard = ({ teacher,navigation }) => {
 
       <Card.Divider style={styles.cardDivider}/>
       <Text style={styles.description} numberOfLines={6}>
-        {teacher.description}
+        {teacher.privateInfo}
       </Text>
     </Card>
     </View>
