@@ -178,7 +178,7 @@ export const getAllTeachers = async () => {
 
 export const getTeacherReviews = async (teacherId) => {
   try {
-    const response = await service.get(`/users/teacher/${teacherId}/reviews`);
+    const response = await service.get(`/users/teachers/${teacherId}/reviews`);
     return response;
   } catch (error) {
     console.error(error);
@@ -187,7 +187,7 @@ export const getTeacherReviews = async (teacherId) => {
 
 export const getTeacherCourses = async (teacherId) => {
   try {
-    const response = await service.get(`/users/teacher/${teacherId}/courses`);
+    const response = await service.get(`/users/teachers/${teacherId}/courses`);
     return response;
   } catch (error) {
     console.error(error);
@@ -196,7 +196,7 @@ export const getTeacherCourses = async (teacherId) => {
 
 export const getTeacherClasses = async (teacherId) => {
   try {
-    const response = await service.get(`/users/teacher/${teacherId}/classes`);
+    const response = await service.get(`/users/teachers/${teacherId}/classes`);
     return response;
   } catch (error) {
     console.error(error);
@@ -206,7 +206,7 @@ export const getTeacherClasses = async (teacherId) => {
 export const getTeacherAvailableClasses = async (teacherId) => {
   try {
     const response = await service.get(
-      `/users/teacher/${teacherId}/classes/available`
+      `/users/teachers/${teacherId}/classes/available`
     );
     return response;
   } catch (error) {
