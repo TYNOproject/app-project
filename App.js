@@ -165,60 +165,6 @@ function App() {
           />
         </Tab.Navigator>
       </NavigationContainer>
-            <Tab.Screen
-              name="Register"
-              component={RegisterScreen}
-              options={{
-                tabBarButton: () => null, // hides the button
-              }}
-            />
-            <Tab.Screen
-              name="StudentSignUp"
-              component={StudentSignUpScreen}
-              options={{
-                tabBarButton: () => null, // hides the button
-              }}
-            />
-            <Tab.Screen
-              name="HomePage"
-              component={HomePageScreen}
-              options={{
-                tabBarButton: () => null, // hides the button
-              }}
-            />
-            <Tab.Screen
-              name="Schedule"
-              component={ScheduleScreen}
-              options={{
-                tabBarButton: () => null, // hides the button
-              }}
-            />
-            <Tab.Screen
-              name="TeacherProfile"
-              component={TeacherProfileScreen}
-              options={{
-                tabBarButton: () => null, // hides the button
-                tabBarVisibilityAnimationConfig: () => null,
-              }}
-            />
-            <Tab.Screen
-              name="CoursePage"
-              component={CoursePageScreen}
-              options={{
-                tabBarButton: () => null, // hides the button
-                tabBarVisibilityAnimationConfig: () => null,
-              }}
-            />
-            <Tab.Screen
-              name="AfterSchedule"
-              component={AfterScheduleScreen}
-              options={{
-                tabBarButton: () => null, // hides the button
-                tabBarVisibilityAnimationConfig: () => null,
-              }}
-            />
-          </Tab.Navigator>
-        </NavigationContainer>
       </ClassProvider>
     </StudentProvider>
   );
