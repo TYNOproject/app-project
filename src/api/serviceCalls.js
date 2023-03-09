@@ -12,7 +12,7 @@ const service = axios.create({
 
 export const addNewUser = async (studentDetails) => {
   try {
-    const response = await service.post("/add/user", {
+    const response = await service.post("/users/add", {
       name: studentDetails.name,
       email: studentDetails.email,
       password: studentDetails.password,
@@ -32,7 +32,7 @@ export const addNewUser = async (studentDetails) => {
 
 export const signIn = async (studentDetails) => {
   try {
-    const response = await service.post("/signIn", {
+    const response = await service.post("/users/signIn", {
       email: studentDetails.email,
       password: studentDetails.password,
     });
@@ -45,7 +45,7 @@ export const signIn = async (studentDetails) => {
 
 export const addNewClass = async (classDetails) => {
   try {
-    const response = await service.post("/add/class", {
+    const response = await service.post("/classes/add", {
       courseId: classDetails.courseId,
       teacherId: classDetails.teacherId,
       startTime: classDetails.startTime,
@@ -59,7 +59,7 @@ export const addNewClass = async (classDetails) => {
 
 export const bookClass = async (bookingDetails) => {
   try {
-    const response = await service.post("/bookClass", {
+    const response = await service.post("/classes/book", {
       classId: bookingDetails.classId,
       studentId: bookingDetails.studentId,
     });
@@ -71,7 +71,7 @@ export const bookClass = async (bookingDetails) => {
 
 export const addReviewToClass = async (addReviewDetails) => {
   try {
-    const response = await service.post("/addReviewToClass", {
+    const response = await service.post("/classes/addReview", {
       classId: addReviewDetails.classId,
       textReview: addReviewDetails.textReview,
       starsReview: addReviewDetails.starsReview,
@@ -83,7 +83,7 @@ export const addReviewToClass = async (addReviewDetails) => {
 };
 export const updatePersonalDetails = async (updateDetails) => {
   try {
-    const response = await service.post("/updatePersonalDetails", {
+    const response = await service.post("/users/updatePrivateInfo", {
       studentId: updateDetails.studentId,
       privateInfo: updateDetails.privateInfo,
     });
@@ -95,18 +95,18 @@ export const updatePersonalDetails = async (updateDetails) => {
 
 export const getTeachersByCourseName = async (courseName) => {
   try {
-    const response = await service.post("/getTeachersByCourse", {
+    const response = await service.post("/users/getTeachersByCourse", {
       courseName,
     });
     return response;
   } catch (err) {
-    console.log("error in getTeachersByCourseName function: " + err);
+    console.log("error in getTeachersByCourse function: " + err);
   }
 };
 
 export const getTeachersContainingString = async (teacherName) => {
   try {
-    const response = await service.post("/getTeachersContainingString", {
+    const response = await service.post("/users/getTeachersContainingString", {
       teacherName,
     });
     return response;
@@ -117,7 +117,7 @@ export const getTeachersContainingString = async (teacherName) => {
 
 export const getCoursesByCourseName = async (courseName) => {
   try {
-    const response = await service.post("/getCoursesByCourseName", {
+    const response = await service.post("/courses/getByName", {
       courseName,
     });
     return response;
@@ -128,7 +128,7 @@ export const getCoursesByCourseName = async (courseName) => {
 
 export const setStudentAsTeacher = async (studentId) => {
   try {
-    const response = await service.post("/setStudentAsTeacher", {
+    const response = await service.post("/users/setStudentAsTeacher", {
       studentId: studentId,
     });
     return response;
@@ -139,7 +139,10 @@ export const setStudentAsTeacher = async (studentId) => {
 
 export const searchCourses = async (searchDetails) => {
   try {
-    const response = await service.post("/searchCourses", searchDetails);
+    const response = await service.post(
+      "/courses/searchCourses",
+      searchDetails
+    );
     return response;
   } catch (err) {
     console.log("error in searchCourses function: " + err);
@@ -148,7 +151,7 @@ export const searchCourses = async (searchDetails) => {
 
 export const getCoursesByDepartment = async (depId) => {
   try {
-    const response = await service.get(`/${depId}/courses`);
+    const response = await service.get(`/departments/${depId}/courses`);
     return response;
   } catch (error) {
     console.error(error);
@@ -157,7 +160,7 @@ export const getCoursesByDepartment = async (depId) => {
 
 export const getTeachersForCourse = async (courseId) => {
   try {
-    const response = await service.post(`/${courseId}/teachers`);
+    const response = await service.post(`/courses/${courseId}/teachers`);
     return response;
   } catch (err) {
     console.log("error in getTeachersForCourse function: " + err);
@@ -166,7 +169,7 @@ export const getTeachersForCourse = async (courseId) => {
 
 export const getAllTeachers = async () => {
   try {
-    const response = await service.get("/getAllTeachers");
+    const response = await service.get("/users/getAllTeachers");
     return response;
   } catch (error) {
     console.error(error);
@@ -175,7 +178,7 @@ export const getAllTeachers = async () => {
 
 export const getTeacherReviews = async (teacherId) => {
   try {
-    const response = await service.get(`/teacher/${teacherId}/reviews`);
+    const response = await service.get(`/users/teacher/${teacherId}/reviews`);
     return response;
   } catch (error) {
     console.error(error);
@@ -184,7 +187,7 @@ export const getTeacherReviews = async (teacherId) => {
 
 export const getTeacherCourses = async (teacherId) => {
   try {
-    const response = await service.get(`/teacher/${teacherId}/courses`);
+    const response = await service.get(`/users/teacher/${teacherId}/courses`);
     return response;
   } catch (error) {
     console.error(error);
@@ -193,7 +196,7 @@ export const getTeacherCourses = async (teacherId) => {
 
 export const getTeacherClasses = async (teacherId) => {
   try {
-    const response = await service.get(`/teacher/${teacherId}/classes`);
+    const response = await service.get(`/users/teacher/${teacherId}/classes`);
     return response;
   } catch (error) {
     console.error(error);
@@ -203,7 +206,7 @@ export const getTeacherClasses = async (teacherId) => {
 export const getTeacherAvailableClasses = async (teacherId) => {
   try {
     const response = await service.get(
-      `/teacher/${teacherId}/classes/available`
+      `/users/teacher/${teacherId}/classes/available`
     );
     return response;
   } catch (error) {
