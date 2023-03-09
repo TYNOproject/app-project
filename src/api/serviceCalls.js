@@ -137,12 +137,30 @@ export const setStudentAsTeacher = async (studentId) => {
   }
 };
 
+export const searchCourses = async (searchDetails) => {
+  try {
+    const response = await service.post("/searchCourses", searchDetails);
+    return response;
+  } catch (err) {
+    console.log("error in searchCourses function: " + err);
+  }
+};
+
 export const getCoursesByDepartment = async (depId) => {
   try {
     const response = await service.get(`/${depId}/courses`);
     return response;
   } catch (error) {
     console.error(error);
+  }
+};
+
+export const getTeachersForCourse = async (courseId) => {
+  try {
+    const response = await service.post(`/${courseId}/teachers`);
+    return response;
+  } catch (err) {
+    console.log("error in getTeachersForCourse function: " + err);
   }
 };
 
@@ -196,10 +214,12 @@ export const getTeacherAvailableClasses = async (teacherId) => {
 export default {
   addNewUser,
   addNewClass,
+  searchCourses,
   bookClass,
   addReviewToClass,
   updatePersonalDetails,
   getTeachersByCourseName,
+  getTeachersForCourse,
   getTeachersContainingString,
   getCoursesByCourseName,
   setStudentAsTeacher,

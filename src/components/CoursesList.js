@@ -8,20 +8,20 @@ const HalfScreenCourses = ({ courses, navigation, callback }) => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.column}>
-        {coursesLeft.map((course) => (
+        {coursesLeft.map((course, index) => (
           <CourseCard
             course={course}
-            key={course.courseName}
+            key={index}
             navigation={navigation}
             callback={callback}
           />
         ))}
       </View>
       <View style={styles.column}>
-        {coursesRight.map((course) => (
+        {coursesRight.map((course, index) => (
           <CourseCard
             course={course}
-            key={course.courseName}
+            key={index}
             navigation={navigation}
             callback={callback}
           />
