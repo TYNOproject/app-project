@@ -1,25 +1,22 @@
-
-import * as React from 'react';
-import { useContext } from 'react';
-import { View, Text } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Ionicons } from '@expo/vector-icons';
-import {StudentProvider} from './src/contexts/StudentContext';
-import LoginScreen from './src/screens/LogInScreen';
-import RegisterScreen from './src/screens/RegisterScreen';
-import HomePageScreen from './src/screens/HomePageScreen';
-import StudentProfileScreen from './src/screens/StudentProfileScreen';
-import StudentSignUpScreen from './src/screens/StudentSignUpScreen';
-import TeacherProfileScreen from './src/screens/TeacherProfileScreen';
-import CoursePageScreen from './src/screens/CoursePageScreen';
-import ScheduleScreen from './src/screens/ScheduleScreen';
-import AfterScheduleScreen from './src/screens/AfterScheduleScreen';
-import ConfirmLessonsScreen from './src/screens/ConfirmLessonsScreen';
-import EditTeacherScreen from './src/screens/EditTeacherScreen';
-import TeacherRegisterScreen from './src/screens/TeacherRegisterScreen';
-
-
+import * as React from "react";
+import { useContext } from "react";
+import { View, Text } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { Ionicons } from "@expo/vector-icons";
+import { StudentProvider } from "./src/contexts/StudentContext";
+import LoginScreen from "./src/screens/LogInScreen";
+import RegisterScreen from "./src/screens/RegisterScreen";
+import HomePageScreen from "./src/screens/HomePageScreen";
+import StudentProfileScreen from "./src/screens/StudentProfileScreen";
+import StudentSignUpScreen from "./src/screens/StudentSignUpScreen";
+import TeacherProfileScreen from "./src/screens/TeacherProfileScreen";
+import CoursePageScreen from "./src/screens/CoursePageScreen";
+import ScheduleScreen from "./src/screens/ScheduleScreen";
+import AfterScheduleScreen from "./src/screens/AfterScheduleScreen";
+import ConfirmLessonsScreen from "./src/screens/ConfirmLessonsScreen";
+import EditTeacherScreen from "./src/screens/EditTeacherScreen";
+import TeacherRegisterScreen from "./src/screens/TeacherRegisterScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -36,7 +33,7 @@ function App() {
     <StudentProvider>
       <NavigationContainer>
         <Tab.Navigator
-          initialRouteName="TeacherRegister"
+          initialRouteName="LogIn"
           screenOptions={{
             tabBarActiveTintColor: "orange",
             tabBarInactiveTintColor: "gray",
@@ -137,7 +134,7 @@ function App() {
             component={ConfirmLessonsScreen}
             options={{
               tabBarButton: () => null, // hides the button
-              tabBarVisibilityAnimationConfig: () => null, 
+              tabBarVisibilityAnimationConfig: () => null,
             }}
           />
           <Tab.Screen
@@ -145,7 +142,7 @@ function App() {
             component={EditTeacherScreen}
             options={{
               tabBarButton: () => null, // hides the button
-              tabBarVisibilityAnimationConfig: () => null, 
+              tabBarVisibilityAnimationConfig: () => null,
             }}
           />
           <Tab.Screen
@@ -153,7 +150,7 @@ function App() {
             component={CoursePageScreen}
             options={{
               tabBarButton: () => null, // hides the button
-              tabBarVisibilityAnimationConfig: () => null, 
+              tabBarVisibilityAnimationConfig: () => null,
             }}
           />
           <Tab.Screen
@@ -161,10 +158,9 @@ function App() {
             component={TeacherRegisterScreen}
             options={{
               tabBarButton: () => null, // hides the button
-              tabBarVisibilityAnimationConfig: () => null, 
+              tabBarVisibilityAnimationConfig: () => null,
             }}
           />
-          
         </Tab.Navigator>
       </NavigationContainer>
     </StudentProvider>
