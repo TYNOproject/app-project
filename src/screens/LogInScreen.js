@@ -36,11 +36,33 @@ export default function LoginScreen({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>
-        היי,{"\n"}
-        טוב לראות אותך :)
-      </Text>
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <View
+        style={{
+          height: 200,
+          width: 213,
+          position: "absolute",
+          top: 100,
+          left: "50%",
+          marginLeft: -106.5,
+          borderRadius: 0,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Text
+          style={{
+            fontSize: 20,
+            fontWeight: "400",
+            lineHeight: 36,
+            letterSpacing: 0,
+            textAlign: "center",
+          }}
+        >
+          היי,{"\n"}
+          טוב לראות אותך :)
+        </Text>
+      </View>
       <TextInput
         style={styles.inputField}
         placeholder="שם משתמש"
