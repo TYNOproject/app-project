@@ -16,8 +16,8 @@ import CoursePageScreen from './src/screens/CoursePageScreen';
 import ScheduleScreen from './src/screens/ScheduleScreen';
 import AfterScheduleScreen from './src/screens/AfterScheduleScreen';
 import ConfirmLessonsScreen from './src/screens/ConfirmLessonsScreen';
-import EditTeacherScreen from './src/screens/EditTeacherScreen';
 import TeacherRegisterScreen from './src/screens/TeacherRegisterScreen';
+import ReviewScreen from './src/screens/ReviewScreen';
 
 
 
@@ -36,7 +36,7 @@ function App() {
     <StudentProvider>
       <NavigationContainer>
         <Tab.Navigator
-          initialRouteName="TeacherRegister"
+          initialRouteName="Review"
           screenOptions={{
             tabBarActiveTintColor: "orange",
             tabBarInactiveTintColor: "gray",
@@ -141,14 +141,6 @@ function App() {
             }}
           />
           <Tab.Screen
-            name="EditTeacher"
-            component={EditTeacherScreen}
-            options={{
-              tabBarButton: () => null, // hides the button
-              tabBarVisibilityAnimationConfig: () => null, 
-            }}
-          />
-          <Tab.Screen
             name="CoursePage"
             component={CoursePageScreen}
             options={{
@@ -159,6 +151,14 @@ function App() {
           <Tab.Screen
             name="TeacherRegister"
             component={TeacherRegisterScreen}
+            options={{
+              tabBarButton: () => null, // hides the button
+              tabBarVisibilityAnimationConfig: () => null, 
+            }}
+          />
+          <Tab.Screen
+            name="Review"
+            component={ReviewScreen}
             options={{
               tabBarButton: () => null, // hides the button
               tabBarVisibilityAnimationConfig: () => null, 

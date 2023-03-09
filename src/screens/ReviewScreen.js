@@ -1,19 +1,26 @@
 import React, { useState } from "react";
 import { View, Text, TextInput } from "react-native";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Keyboard } from "react-native";
 import { Button } from "@react-native-material/core";
 import { AntDesign } from "@expo/vector-icons";
 import { useFonts } from "expo-font";
+import { useContext } from "react";
+import StudentContext from "../contexts/StudentContext";
+import StarRating from 'react-native-star-rating';
+
+
 
 export default function ReviewScreen ({ navigation }){
-  const name = navigation.getParam("username");
-  const teacherName = navigation.getParam("teacherName");
-  const [numReview, setNumReview] = useState("");
+  const { items } = useContext(StudentContext);
+  const { getVal } = useContext(StudentContext);
+  const name = getVal(items, "name");
+  const teacherName = getVal(items, "teacherName");
+  const [starCount, setStarCount] = useState(0);
   const [wordReview, setWordReview] = useState("");
 
 const handleReview = () => {
 // handle review logic here
-navigation.navigate("HomePage", {name});
+navigation.navigate("HomePage");
 };
 
 let [fontsLoaded] = useFonts({
@@ -47,6 +54,14 @@ if (!fontsLoaded)
         נשמח שתספר לנו איך היה השיעור עם {teacherName} {"\n"}
         זה יכול לעזור ל{teacherName} ולסטודנטים הבאים
       </Text>
+      <StarRating
+        disabled={false}
+        maxStars={5}
+        rating={starCount}
+        selectedStar={(rating) => setStarCount(rating)}
+        starSize={50}
+        fullStarColor={'gold'}
+      />
       <TextInput multiline
         style={styles.inputField}
         placeholder="הוסף הערה"
@@ -66,34 +81,32 @@ if (!fontsLoaded)
 
 const styles = StyleSheet.create({
   container: {
-    top: 20,
     alignItems: "center",
     justifyContent: "center",
-    height: "40%",
   },
   header1: {
-    marginBottom: 20,
-    fontSize: 30,
+    marginBottom: 40,
     top: 20,
+    fontSize: 30,
     fontFamily: "Heebo-Bold",
     textAlign: "center",
   },
   header2: {
     fontSize: 20,
-    top: 20,
+    marginBottom: 50,
     fontFamily: "Heebo-Bold",
     textAlign: "center",
   },
   content: {
     fontSize: 16,
-    top: 100,
+    marginBottom: 20,
     fontFamily: "Heebo-Bold",
     textAlign: "center",
   },
   inputField: {
     width: 300,
     height: 90,
-    top: 120,
+    top: 30,
     backgroundColor: "#fff",
     paddingVertical: 10,
     paddingHorizontal: 15,
@@ -107,7 +120,7 @@ const styles = StyleSheet.create({
   },
   button: {
     position: "relative",
-    top: 130
+    top: 100
 
   }
 });

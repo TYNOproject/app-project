@@ -10,15 +10,18 @@ import StudentContext from "../contexts/StudentContext";
 
 const classes = [
   {
-    name: "Introduction to Computer Science",
+    courseName: "Introduction to Computer Science",
+    name: "Tamar Morin",
     date: "01-01-2024, 08:00",
   },
   {
-    name: "Introduction to Computer Science",
+    courseName: "Introduction to Computer Science",
+    name: "Tamar Morin",
     date: "01-01-2024, 08:00",
   },
   {
-    name: "Introduction to Computer Science",
+    courseName: "Introduction to Computer Science",
+    name: "Tamar Morin",
     date: "01-01-2024, 08:00",
   },
 ];
@@ -82,7 +85,7 @@ export default function StudentProfileScreen({ navigation }) {
       </View>
       <View style={styles.spacer} />
       <View style={styles.bottomHalf}>
-        <ClassesList classes={classes} />
+        <ClassesList classes={classes} horizantal={false} style = {"column"} width = {"80%"} />
       </View>
     </View>
   );
