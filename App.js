@@ -16,7 +16,6 @@ import CoursePageScreen from "./src/screens/CoursePageScreen";
 import ScheduleScreen from "./src/screens/ScheduleScreen";
 import AfterScheduleScreen from "./src/screens/AfterScheduleScreen";
 import ConfirmLessonsScreen from "./src/screens/ConfirmLessonsScreen";
-import EditTeacherScreen from "./src/screens/EditTeacherScreen";
 import TeacherRegisterScreen from "./src/screens/TeacherRegisterScreen";
 
 const Tab = createBottomTabNavigator();
@@ -134,14 +133,6 @@ function App() {
           <Tab.Screen
             name="ConfirmLessons"
             component={ConfirmLessonsScreen}
-            options={{
-              tabBarButton: () => null, // hides the button
-              tabBarVisibilityAnimationConfig: () => null,
-            }}
-          />
-          <Tab.Screen
-            name="EditTeacher"
-            component={EditTeacherScreen}
             options={{
               tabBarButton: () => null, // hides the button
               tabBarVisibilityAnimationConfig: () => null,
