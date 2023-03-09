@@ -6,7 +6,7 @@ import { Calendar, CalendarList, Agenda } from "react-native-calendars";
 import TimeScrollBar from "../components/TimeScrollBar";
 import StudentContext from "../contexts/StudentContext";
 import ClassContext from "../contexts/ClassContext";
-import { getTeacherAvailableClasses } from "../api/serviceCalls.js";
+import { getTeacherAvailableClasses,bookClass } from "../api/serviceCalls.js";
 
 
 
@@ -17,94 +17,103 @@ export default function ScheduleScreen({ navigation })
 
   const {addToClass} = useContext(ClassContext);
   const {itemsClass} = useContext(ClassContext);
-  const {getValClass} = useContext(ClassContext)
+  const {getValClass} = useContext(ClassContext);
+  
+  const {items,getVal} = useContext(StudentContext);
+  const studentId = getVal(items, "studentDetails").id;
 
   const name = getValClass(itemsClass,'teacherName');
   const teacherId = getValClass(itemsClass,'teacherId');
+
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [markedDates, setMarkedDates] = useState({});
-  const [currday, setCurrday] = useState(1);
-  const [chosenTime, setchosenTime] = useState({});
+  const [timeButtons, setTimeButtons] = useState([]);
+  const [chosenTime, setchosenTime] = useState([]);
+  const [chosenCourseId, SetchosenCourseId] = useState([]);
+  const [timeMap, setTimeMap] = useState({});
+  const [classMap, setClassMap] = useState({});
 
-    const handleScheduale = () => {
-      addToStudent('selectedDate',chosenTime);
-      addToStudent('startTime',timeMap.get(currday)[selectedIndex]);
 
-      navigation.navigate("AfterSchedule");
-      };
+  const getTimes = () => {
+    useEffect(() => {
+      async function fetchData() {
+        console.log(teacherId);
+        timeResponse = await getTeacherAvailableClasses(teacherId);
+        dates = timeResponse.data.map(item => new Date(item.startTime));
+          // extract startTime value and convert to Date object
+        const datestoMark = dates.reduce((obj, date) => {
+          const dateString = new Date(date).toISOString().split('T')[0];
+          obj[dateString] = { marked: true };
+          return obj;
+        }, {});
 
-      const getTimes = () => {
-        useEffect(() => {
-          async function fetchData() {
-            console.log(teacherId);
-            timeResponse = await getTeacherAvailableClasses(teacherId);
-            console.log(timeResponse.data);
-          }
-          fetchData();
-        },[]);
-      };
-      getTimes();
+        setMarkedDates(datestoMark);
+        updateMaps(timeResponse.data);
+      }
+      fetchData();
+    },[]);
+  };
+  getTimes();
     // const name = "מנש";
+
+  const updateMaps = (dates) => {
+    const myTimeMap = new Map();
+    const myClassMap = new Map();
+    
+    dates.forEach(item => {
+      const date = item.startTime.split('T')[0];
+      const time = item.startTime.split('T')[1];
+      const classId = item.id;
+
+      if (myTimeMap.has(date)) {
+        const times = myTimeMap.get(date);
+        times.push(time);
+        myTimeMap.set(date, times);
+      } else {
+        myTimeMap.set(date, [time]);
+      } 
+
+      if (myClassMap.has(date)) {
+        const classIds = myClassMap.get(date);
+        classIds.push(classId);
+        myClassMap.set(date, classIds);
+      } else {
+        myClassMap.set(date, [classId]);
+      }
+
+      setTimeMap(myTimeMap);
+      setClassMap(myClassMap);
+    });
+  }
  
 
-   
+  function handelPossibleTimes(day) {
+    setchosenTime(day.dateString);
+    setTimeButtons(timeMap.get(day.dateString));
+  }
 
 
-  const handleSchedule = () => {
-    addToClass("selectedDate", chosenTime);
-    addToClass("startTime", timeMap.get(currday)[selectedIndex]);
-    addToClass("endTime", timeMap.get(currday)[selectedIndex] + 1);
-    navigation.navigate("AfterSchedule");
+  async function handleScheduale () {
+    SetchosenCourseId(classMap.get(chosenTime)[selectedIndex]);
+    bookResponse = await bookClass({chosenCourseId,studentId});
+    
+    if (bookResponse == 200)
+    {
+      addToClass('startTime', timeButtons[selectedIndex]);
+      addToClass('classDate', chosenTime);
+      navigation.navigate("AfterSchedule");
+    }
+    else{
+      alert("error!");
+      return;
+    }   
   };
-  const availableDays = [1, 3, 5];
-  const timeMap = new Map();
-  timeMap.set(1, ["13:00", "14:30", "16:20"]);
-  timeMap.set(2, ["11:00", "12:30", "15:20"]);
-  timeMap.set(3, ["10:00", "14:00", "18:20"]);
-  timeMap.set(4, ["10:00", "14:00", "18:20"]);
-  timeMap.set(5, ["10:00", "14:00", "18:20"]);
-  timeMap.set(6, ["10:00", "14:00", "18:20"]);
-  timeMap.set(7, ["10:00", "14:00", "18:20"]);
 
   let [fontsLoaded] = useFonts({
     "Heebo-Bold": require("../../assets/fonts/Heebo-Bold.ttf"),
     "Heebo-Regular": require("../../assets/fonts/Heebo-Regular.ttf"),
   });
 
-      function handelPossibleTimes(day) {
-        const selectedDay = new Date(day.dateString);
-        const dayOfWeek = selectedDay.getUTCDay() + 1;
-        setchosenTime(selectedDay);
-        setCurrday(dayOfWeek);  
-        alert(selectedDay);
-
-         
-    }
-
-
-  // Function to mark all available Days for a given year
-  const markDays = (year, availableDays) => {
-    const date = new Date(year, 0, 1); // January 1st of the year
-    const endDate = new Date(year, 11, 31); // December 31st of the year
-    const availableDates = {};
-
-    while (date <= endDate) {
-      const dayOfWeek = date.getDay();
-      if (availableDays.includes(dayOfWeek)) {
-        // Monday
-        const dateString = date.toISOString().slice(0, 10);
-        availableDates[dateString] = { marked: true };
-      }
-      date.setDate(date.getDate() + 1);
-    }
-
-    setMarkedDates(availableDates, availableDays);
-  };
-
-  // Call markMondays with the current year when the component mounts
-  React.useEffect(() => {
-    markDays(new Date().getFullYear(), availableDays);
-  }, []);
 
   if (!fontsLoaded)
     return (
@@ -130,7 +139,7 @@ export default function ScheduleScreen({ navigation })
                             <ScrollView contentContainerStyle={styles.containerTime} horizontal={true}>
                               <View style={styles.row}>
                               <ButtonGroup style={styles.timeButton}
-                                    buttons={timeMap.get(currday)}
+                                    buttons={timeButtons}
                                     selectedIndex={selectedIndex}
                                     onPress={(value) => {
                                         setSelectedIndex(value);
@@ -139,7 +148,6 @@ export default function ScheduleScreen({ navigation })
                                 />
                               </View>
                           </ScrollView>
-                {/* <TimeScrollBar times={timeMap.get(currday)} ></TimeScrollBar> */}
             </View>
             </View>
             <View>

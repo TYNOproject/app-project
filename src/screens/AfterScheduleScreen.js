@@ -17,29 +17,28 @@ import ClassContext from "../contexts/ClassContext";
 
 export default function AfterScheduleScreen({ navigation })
 {
-  const {items} = useContext(StudentContext);
-  const {getVal} = useContext(StudentContext)
+  const {items,getVal} = useContext(StudentContext);
   
-  const name = getVal(items,'userName');
-  const teacherName = getVal(items,'teacherName');
-  const dateObj = getVal(items,'selectedDate');
-  const date = dateObj.toISOString().slice(0, 10);
-  const fromTime = getVal(items,'startTime');
-
-  // const name = "נועם";
-  // const teacherName = "יותם";
-  // const date = "18/01";
-  // const fromTime = "18:00";
+  const {addToClass} = useContext(ClassContext);
+  const {itemsClass} = useContext(ClassContext);
+  const {getValClass} = useContext(ClassContext);
+  
+  const name = getVal(items, "studentDetails").name;
+  const teacherName = getValClass(itemsClass,'teacherName');
+  const date = getValClass(itemsClass,'classDate');
+  const fromTime = getValClass(itemsClass,'startTime');
   const toTime = addHourToTime(fromTime);
 
   function addHourToTime(timeString) {
-    const [hours, minutes] = timeString.split(':'); // split the time string into hours and minutes
+    const [hours, minutes, seconds] = timeString.split(':'); // split the time string into hours, minutes, and seconds
     let hour = parseInt(hours); // convert hours to a number
     let minute = parseInt(minutes); // convert minutes to a number
+    let second = parseInt(seconds); // convert seconds to a number
     hour = (hour + 1) % 24; // add an hour and wrap around to the next day if needed
-    const newTimeString = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`; // format the new time as a string
+    const newTimeString = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}:${second.toString().padStart(2, '0')}`; // format the new time as a string
     return newTimeString;
   }
+  
   
 
 
