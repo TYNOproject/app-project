@@ -5,6 +5,9 @@ import { AntDesign } from "@expo/vector-icons";
 import { useFonts } from "expo-font";
 import StudentContext from "../contexts/StudentContext.js";
 import { signIn } from "../api/serviceCalls.js";
+import { LinearGradient } from "expo-linear-gradient";
+
+
 
 export default function LoginScreen({ navigation }) {
   const { addToStudent, items, getVal } = useContext(StudentContext);
@@ -48,35 +51,31 @@ export default function LoginScreen({ navigation }) {
         טוב לראות אותך :)
       </Text>
       <TextInput
-        style={styles.inputField}
+        style={styles.inputField1}
         placeholder="כתובת מייל"
         onChangeText={setEmail}
         value={email}
       />
       <TextInput
-        style={styles.inputField}
+        style={styles.inputField2}
         placeholder="סיסמא"
         onChangeText={setPassword}
         value={password}
         secureTextEntry
-      />
-      <Button
-        leading={() => <AntDesign name="left" size={24} />}
-        title="התחבר"
-        variant="outlined"
-        color="black"
-        style={{ position: "relative", top: 80 }}
-        onPress={handleLogin}
-      />
-      <Button
-        leading={() => <AntDesign name="left" size={24} />}
-        title="לא רשום? לחץ כאן"
-        variant="outlined"
-        color="black"
-        style={{ position: "relative", top: 70 }}
-        onPress={handleRegister}
-      />
-    </View>
+      />      
+      <Button title="התחבר"
+        titleStyle={{ fontSize: 25, textAlign: 'center' }} // Add this line to center the title
+        leading={() => <AntDesign name="left" size={24} color="white" />}
+        style={{ width: 200, height: 50, top: -50, justifyContent: 'center', alignItems: 'center' }}
+        onPress={handleLogin} />
+
+      <Button title="לא רשום? לחץ כאן"
+        titleStyle={{ fontSize: 25, textAlign: 'center' }} // Add this line to center the title
+        leading={() => <AntDesign name="left" size={24} color="white" />}
+        style={{ width: 250, height: 50, top: -90, justifyContent: 'center', alignItems: 'center' }}
+        onPress={handleRegister} />
+
+</View>
   );
 }
 
@@ -85,23 +84,39 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "space-between",
-    height: "50%",
+    height: "100%",
   },
   header: {
     fontSize: 30,
-    top: 90,
+    top: 110,
     fontFamily: "Heebo-Bold",
     textAlign: "center",
   },
-  inputField: {
+  inputField1: {
     width: 300,
-    top: 100,
-    height: 40,
+    top: 60,
+    height: 50,
     backgroundColor: "#fff",
     paddingVertical: 10,
     paddingHorizontal: 15,
-    borderColor: "#ccc",
-    borderWidth: 1,
+    borderColor: "purple", // added purple border color
+    borderWidth: 2, // increased border width for visibility
+    borderRadius: 15,
+    fontSize: 16,
+    direction: "rtl",
+    textAlign: "right",
+    fontFamily: "Heebo-Regular",
+  },
+
+  inputField2: {
+    width: 300,
+    top: 0,
+    height: 50,
+    backgroundColor: "#fff",
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderColor: "purple", // added purple border color
+    borderWidth: 2, // increased border width for visibility
     borderRadius: 15,
     fontSize: 16,
     direction: "rtl",

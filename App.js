@@ -8,7 +8,6 @@ import { StudentProvider } from "./src/contexts/StudentContext";
 import { ClassProvider } from "./src/contexts/ClassContext";
 import LoginScreen from "./src/screens/LogInScreen";
 import RegisterScreen from "./src/screens/RegisterScreen";
-import HomePageScreen from "./src/screens/HomePageScreen";
 import StudentProfileScreen from "./src/screens/StudentProfileScreen";
 import StudentSignUpScreen from "./src/screens/StudentSignUpScreen";
 import TeacherProfileScreen from "./src/screens/TeacherProfileScreen";
@@ -16,15 +15,26 @@ import CoursePageScreen from "./src/screens/CoursePageScreen";
 import ScheduleScreen from "./src/screens/ScheduleScreen";
 import AfterScheduleScreen from "./src/screens/AfterScheduleScreen";
 import ConfirmLessonsScreen from "./src/screens/ConfirmLessonsScreen";
-import EditTeacherScreen from "./src/screens/EditTeacherScreen";
 import TeacherRegisterScreen from "./src/screens/TeacherRegisterScreen";
-
+import HomePageScreen from "./src/screens/HomePageScreen";
 const Tab = createBottomTabNavigator();
 
 function BellIcon() {
   return (
     <View style={{ marginRight: 15 }}>
-      <Ionicons name="notifications-outline" size={30} color="orange" />
+      <Ionicons name="notifications-outline" size={30} color="'orange'" />
+    </View>
+  );
+}
+
+function BackIcon({ pageName }) {
+  const navigation = useNavigation();
+
+  return (
+    <View style={{ marginRight: 50 }}>
+      <TouchableOpacity onPress={() => navigation.navigate(pageName)}>
+        <Ionicons name="arrow-back" size={40} color="orange" />
+      </TouchableOpacity>
     </View>
   );
 }
@@ -38,7 +48,7 @@ function App() {
             initialRouteName="LogIn"
             screenOptions={{
               tabBarActiveTintColor: "orange",
-              tabBarInactiveTintColor: "gray",
+              tabBarInactiveTintColor: "purple",
               tabBarShowLabel: false,
               tabBarStyle: [
                 {
@@ -55,6 +65,8 @@ function App() {
                 tabBarIcon: ({ color, size }) => (
                   <Ionicons name="log-out-outline" size={40} color={color} />
                 ),
+                headerShown: false, // hide top title
+
               }}
             />
             <Tab.Screen
@@ -65,6 +77,7 @@ function App() {
                   <Ionicons name="home-outline" size={40} color={color} />
                 ),
                 headerRight: () => <BellIcon />,
+                headerShown: false, // hide top title
               }}
             />
             <Tab.Screen
@@ -85,6 +98,8 @@ function App() {
               component={LoginScreen}
               options={{
                 tabBarButton: () => null, // hides the button
+                headerShown: false, // hide top title
+
               }}
             />
 
@@ -93,6 +108,7 @@ function App() {
             component={RegisterScreen}
             options={{
               tabBarButton: () => null, // hides the button
+              headerShown: false, // hide top title
             }}
           />
           <Tab.Screen
@@ -100,6 +116,7 @@ function App() {
             component={StudentSignUpScreen}
             options={{
               tabBarButton: () => null, // hides the button
+              headerShown: false, // hide top title
             }}
           />
           <Tab.Screen
@@ -107,6 +124,7 @@ function App() {
             component={HomePageScreen}
             options={{
               tabBarButton: () => null, // hides the button
+              headerShown: false, // hide top title
             }}
           />
           <Tab.Screen
@@ -114,6 +132,7 @@ function App() {
             component={ScheduleScreen}
             options={{
               tabBarButton: () => null, // hides the button
+              headerShown: false, // hide top title
             }}
           />
           <Tab.Screen
@@ -121,6 +140,7 @@ function App() {
             component={AfterScheduleScreen}
             options={{
               tabBarButton: () => null, // hides the button
+              headerShown: false, // hide top title
             }}
           />
           <Tab.Screen
@@ -129,6 +149,7 @@ function App() {
             options={{
               tabBarButton: () => null, // hides the button
               tabBarVisibilityAnimationConfig: () => null,
+              headerShown: false, // hide top title
             }}
           />
           <Tab.Screen
@@ -137,14 +158,7 @@ function App() {
             options={{
               tabBarButton: () => null, // hides the button
               tabBarVisibilityAnimationConfig: () => null,
-            }}
-          />
-          <Tab.Screen
-            name="EditTeacher"
-            component={EditTeacherScreen}
-            options={{
-              tabBarButton: () => null, // hides the button
-              tabBarVisibilityAnimationConfig: () => null,
+              headerShown: false, // hide top title
             }}
           />
           <Tab.Screen
@@ -153,6 +167,7 @@ function App() {
             options={{
               tabBarButton: () => null, // hides the button
               tabBarVisibilityAnimationConfig: () => null,
+              headerShown: false, // hide top title
             }}
           />
           <Tab.Screen
@@ -161,6 +176,7 @@ function App() {
             options={{
               tabBarButton: () => null, // hides the button
               tabBarVisibilityAnimationConfig: () => null,
+              headerShown: false, // hide top title
             }}
           />
         </Tab.Navigator>

@@ -5,6 +5,8 @@ import { Button } from "@react-native-material/core";
 import { AntDesign } from "@expo/vector-icons";
 import { useFonts } from "expo-font";
 import StudentContext from "../contexts/StudentContext";
+import { LinearGradient } from "expo-linear-gradient";
+
 
 export default function RegisterScreen({ navigation }) {
   const { addToStudent } = useContext(StudentContext);
@@ -54,17 +56,15 @@ export default function RegisterScreen({ navigation }) {
         value={password}
         secureTextEntry
       />
-      <Button
-        leading={() => <AntDesign name="left" size={24} />}
-        title="אפשר להמשיך"
-        variant="outlined"
-        color="black"
-        style={{ position: "relative", top: 10 }}
+      <Button title="אפשר להמשיך"
+        titleStyle={{ fontSize: 25, textAlign: 'center' }} // Add this line to center the title
+        leading={() => <AntDesign name="left" size={24} color="white" />}
+        style={{ width: 250, height: 50, top: 80, justifyContent: 'center', alignItems: 'center' }}
         onPress={() => {
           addToStudent("studentDetails", { name, email, password });
           handleRegister();
-        }}
-      />
+        }} />
+
     </View>
   );
 }
@@ -74,22 +74,24 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "space-between",
-    height: "80%",
+    height: "75%",
+    top:10
   },
   header: {
     fontSize: 30,
-    top: 20,
+    top:85,
     fontFamily: "Heebo-Bold",
     textAlign: "center",
   },
   inputField: {
     width: 300,
-    height: 40,
+    top:40,
+    height: 50,
     backgroundColor: "#fff",
     paddingVertical: 10,
     paddingHorizontal: 15,
-    borderColor: "#ccc",
-    borderWidth: 1,
+    borderColor: "purple", // added purple border color
+    borderWidth: 2, // increased border width for visibility
     borderRadius: 15,
     fontSize: 16,
     direction: "rtl",
