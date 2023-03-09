@@ -2,19 +2,18 @@ import React, { useState ,useContext } from "react";
 import { Text, View, StyleSheet ,TouchableOpacity} from "react-native";
 import { Card,Icon,Avatar  } from "react-native-elements";
 import StudentContext from "../contexts/StudentContext";
+import ClassContext from "../contexts/ClassContext";
 
-const TeacherCard = ({ teacher,navigation }) => {
-    const avatarImage = require('../../assets/pics/avatarPic.png' );
-    const {addToStudent} = useContext(StudentContext);
+const TeacherCard = ({ teacher, navigation }) => {
+  const avatarImage = require("../../assets/pics/avatarPic.png");
+  const { addToClass } = useContext(ClassContext);
 
-
-    const handlePress = () => {
-      alert(teacher.name);
-      addToStudent('teacherName',teacher.name);
-      addToStudent('teacherId',teacher.id);
-      // addToStudent('courseId',teacher.id);
-      navigation.navigate("Schedule");
-    }
+  const handlePress = () => {
+    alert(teacher.name);
+    addToClass("teacherName", teacher.name);
+    addToClass("teacherId", teacher.id);
+    navigation.navigate("Schedule");
+  };
 
   return (
     <TouchableOpacity onPress={handlePress}>

@@ -26,7 +26,7 @@ export default function RegisterScreen({ navigation }) {
     );
 
   const handleRegister = () => {
-    navigation.navigate("StudentSignUp", { name });
+    navigation.navigate("StudentSignUp");
   };
 
   return (
@@ -61,8 +61,7 @@ export default function RegisterScreen({ navigation }) {
         color="black"
         style={{ position: "relative", top: 10 }}
         onPress={() => {
-          clearItems();
-          addToStudent('username', name);
+          addToStudent("studentDetails", { name, email, password });
           handleRegister();
         }}
       />

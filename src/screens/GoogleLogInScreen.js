@@ -1,6 +1,7 @@
 import * as React from "react";
 import { View, Image, StyleSheet, Text, TouchableOpacity } from "react-native";
 import * as WebBrowser from "expo-web-browser";
+import { Google } from "expo";
 import * as Google from "expo-auth-session/providers/google";
 //web: 689467618406-scpe9ik85l7uom2kelebldu2oh4uhpa2.apps.googleusercontent.com
 //ios: 689467618406-q3u5gsnb3m1qq63cmggqvi2jm8kttli6.apps.googleusercontent.com

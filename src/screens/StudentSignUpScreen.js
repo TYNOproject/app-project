@@ -6,17 +6,26 @@ import { AntDesign } from "@expo/vector-icons";
 import { StyleSheet, View, Text } from "react-native";
 import { useFonts } from "expo-font";
 import SelectOption from "../components/SelectOption";
+import * as constants from "../../constants";
 import Service from "../api/Service";
 import { addNewUser } from "../api/serviceCalls";
 
+const handleRegister = async (navigation, studentDetails) => {
+  console.log(studentDetails);
+  const response = await addNewUser(studentDetails);
+  console.log(response);
+  if (response.status === 200) {
+    navigation.navigate("HomePage");
+  } else {
+    alert("אירעה שגיאה, אנא נסה שנית");
+  }
+};
+
 export default function StudentSignUpScreen({ navigation }) {
-  const [degreeInput, setDegree] = useState("");
-  const [departmentIdInput, setDepartmentId] = useState(0);
-  const [yearInput, setYear] = useState(0);
   // const studentDetails = navigation.getParam("studentDetails");
-  const {items} = useContext(StudentContext);
-  const {getVal} = useContext(StudentContext);
-  const name = getVal(items,"username");
+  const { addToStudent, items, getVal } = useContext(StudentContext);
+
+  const name = getVal(items, "studentDetails").name;
 
   let [fontsLoaded] = useFonts({
     "Heebo-Bold": require("../../assets/fonts/Heebo-Bold.ttf"),
@@ -42,39 +51,60 @@ export default function StudentSignUpScreen({ navigation }) {
       </View>
       <View style={styles.dropdown}>
         <SelectOption
-          options={["1", "2", "3"]}
+          options={constants.faculties.map((faculty) => faculty.faculty_name)}
           defaultText="פקולטה"
           buttonStyle={styles.selectOptionStyle}
           onSelectOption={(selectedItem) => {
-            console.log("i selected: " + selectedItem);
-            setFaculty(selectedItem);
+            facId = constants.faculties.find(
+              (faculty) => faculty.faculty_name === selectedItem
+            ).id;
+            studentDetails = getVal(items, "studentDetails");
+            addToStudent("studentDetails", {
+              ...studentDetails,
+              faculty: facId,
+            });
           }}
         />
         <SelectOption
-          options={["1", "2", "3"]}
+          options={constants.departments.map(
+            (department) => department.department_name
+          )}
           defaultText="מחלקה"
           buttonStyle={styles.selectOptionStyle}
           onSelectOption={(selectedItem) => {
-            console.log("i selected: " + selectedItem);
-            setDepartmentId(selectedItem);
+            depId = constants.departments.find(
+              (department) => department.department_name === selectedItem
+            ).id;
+            studentDetails = getVal(items, "studentDetails");
+            console.log("selectedItem" + selectedItem);
+            addToStudent("studentDetails", {
+              ...studentDetails,
+              departmentId: depId,
+            });
           }}
         />
         <SelectOption
-          options={["1", "2", "3"]}
+          options={constants.degrees}
           defaultText="תואר"
           buttonStyle={styles.selectOptionStyle}
           onSelectOption={(selectedItem) => {
-            console.log("i selected: " + selectedItem);
-            setDegree(selectedItem);
+            studentDetails = getVal(items, "studentDetails");
+            addToStudent("studentDetails", {
+              ...studentDetails,
+              degree: selectedItem,
+            });
           }}
         />
         <SelectOption
-          options={["1", "2", "3"]}
+          options={constants.years}
           defaultText="שנה"
           buttonStyle={styles.selectOptionStyle}
           onSelectOption={(selectedItem) => {
-            console.log("i selected: " + selectedItem);
-            setYear(selectedItem);
+            studentDetails = getVal(items, "studentDetails");
+            addToStudent("studentDetails", {
+              ...studentDetails,
+              year: selectedItem,
+            });
           }}
         />
         <Button
@@ -83,8 +113,9 @@ export default function StudentSignUpScreen({ navigation }) {
           variant="outlined"
           color="black"
           style={{ position: "relative", top: 10 }}
-          onPress={() => navigation.navigate("HomePage")}
-          //onPress={sendToServer}
+          onPress={() =>
+            handleRegister(navigation, getVal(items, "studentDetails"))
+          }
         />
       </View>
     </View>

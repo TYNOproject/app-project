@@ -34,6 +34,9 @@ const PopupMenu = ({ navigation, hideMenu }) => {
       <TouchableOpacity onPress={() => handleNavigation("TeacherSignUp")}>
         <Text style={styles.popupItem}>Teacher Sign Up</Text>
       </TouchableOpacity>
+      <TouchableOpacity onPress={() => handleNavigation("Review")}>
+        <Text style={styles.popupItem}>Review</Text>
+      </TouchableOpacity>
       <TouchableOpacity onPress={hideMenu}>
         <Text style={styles.popupItem}>Cancel</Text>
       </TouchableOpacity>

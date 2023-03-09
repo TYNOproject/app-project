@@ -10,15 +10,15 @@ import StudentContext from "../contexts/StudentContext";
 
 const classes = [
   {
-    name: "Introduction to Computer Science",
+    name: "Introduction to Computer Science1",
     date: "01-01-2024, 08:00",
   },
   {
-    name: "Introduction to Computer Science",
+    name: "Introduction to Computer Science2",
     date: "01-01-2024, 08:00",
   },
   {
-    name: "Introduction to Computer Science",
+    name: "Introduction to Computer Science3",
     date: "01-01-2024, 08:00",
   },
 ];
@@ -26,8 +26,7 @@ const classes = [
 export default function StudentProfileScreen({ navigation }) {
   const { items } = useContext(StudentContext);
   const { getVal } = useContext(StudentContext);
-  const name = getVal(items, "name");
-  const lastName = getVal(items, "lastname");
+  const name = getVal(items, "studentDetails").name;
 
   let [fontsLoaded] = useFonts({
     "Heebo-Bold": require("../../assets/fonts/Heebo-Bold.ttf"),
@@ -53,7 +52,6 @@ export default function StudentProfileScreen({ navigation }) {
       <View style={styles.topContainer}>
         <Text style={styles.header}>
           פרופיל אישי{"\n"}
-          {name} {lastName}
           {name}
         </Text>
         <Button
