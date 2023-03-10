@@ -48,6 +48,7 @@ export const addNewClass = async (classDetails) => {
     const response = await service.post("/classes/add", {
       courseId: classDetails.courseId,
       teacherId: classDetails.teacherId,
+      date: classDetails.date,
       startTime: classDetails.startTime,
       endTime: classDetails.endTime,
     });
