@@ -38,7 +38,7 @@ export default function ScheduleScreen({ navigation })
     useEffect(() => {
       async function fetchData() {
         console.log(teacherId);
-        timeResponse = await getTeacherAvailableClasses(teacherId);
+        timeResponse = await getTeacherAvailableClasses(teacherId); //need to catch
         dates = timeResponse.data.map(item => new Date(item.startTime));
           // extract startTime value and convert to Date object
         const datestoMark = dates.reduce((obj, date) => {
@@ -95,6 +95,8 @@ export default function ScheduleScreen({ navigation })
 
   async function handleScheduale () {
     SetchosenCourseId(classMap.get(chosenTime)[selectedIndex]);
+    console.log("student: " + studentId);
+    console.log("course: " + chosenCourseId);
     bookResponse = await bookClass({chosenCourseId,studentId});
     
     if (bookResponse == 200)
