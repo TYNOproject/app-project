@@ -45,8 +45,6 @@ export default function ScheduleScreen({ navigation }) {
         setchosenTime(selectedDay);
         setCurrday(dayOfWeek);
         alert(selectedDay);
-
-
     }
 
 
@@ -81,44 +79,47 @@ export default function ScheduleScreen({ navigation }) {
       </View>
     );
 
-    return(
-        <View style={styles.container}>
-            <View style={styles.topPart}>
-                <Text style={styles.header}>
-                  למתי לתאם עם {name} ?
-                </Text>
-            </View>
-            <View style={styles.bottomPart}>
-                <Calendar style={styles.calenderStyle}
-                    markedDates={markedDates}
-                    markingType="simple"
-                    onDayPress={handelPossibleTimes}
-                />
-                            <View style={styles.TimeScrollBar}>
-                            <ScrollView contentContainerStyle={styles.containerTime} horizontal={true}>
-                              <View style={styles.row}>
-                              <ButtonGroup style={styles.timeButton}
-                                    buttons={timeMap.get(currday)}
-                                    selectedIndex={selectedIndex}
-                                    onPress={(value) => {
-                                        setSelectedIndex(value);
-                                    }}
-                                    containerStyle={{ marginBottom: 20 }}
-                                />
-                              </View>
-                          </ScrollView>
-                {/* <TimeScrollBar times={timeMap.get(currday)} ></TimeScrollBar> */}
-            </View>
-            </View>
-            <View>
-            <TouchableOpacity style={styles.submitButton} onPress={handleScheduale}>
-                <Text style={styles.textstyle}>
-                     לקביעת שיעור עם {name}
-                </Text>
-            </TouchableOpacity>
-            </View>
+  return (
+    <View style={styles.container}>
+      <View style={styles.topPart}>
+        <Text style={styles.header}>
+          למתי לתאם עם {name} ?
+        </Text>
+      </View>
+      <View style={styles.bottomPart}>
+        <View style={{ width: '120%', height: 350, top: "3s00%" }}>
+          <Calendar
+            markedDates={markedDates}
+            markingType="simple"
+            onDayPress={handelPossibleTimes}
+          />
         </View>
-    );
+
+        <View style={styles.TimeScrollBar}>
+          <ScrollView contentContainerStyle={styles.containerTime} horizontal={true}>
+            <View style={styles.row}>
+              <ButtonGroup style={styles.timeButton}
+                buttons={timeMap.get(currday)}
+                selectedIndex={selectedIndex}
+                onPress={(value) => {
+                  setSelectedIndex(value);
+                }}
+                containerStyle={{ marginBottom: 20 }}
+              />
+            </View>
+          </ScrollView>
+          {/* <TimeScrollBar times={timeMap.get(currday)} ></TimeScrollBar> */}
+        </View>
+      </View>
+      <View>
+        <TouchableOpacity style={styles.submitButton} onPress={handleSchedule}>
+          <Text style={styles.textstyle}>
+            לקביעת שיעור עם {name}
+          </Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({

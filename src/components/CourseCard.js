@@ -36,13 +36,15 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     height: 200,
     width: 150,
+    borderColor: "#7521f3", // added purple border color
+    borderWidth: 1, // increased border width for visibility
   },
   name: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: "bold",
   },
   description: {
-    fontSize: 10,
+    fontSize: 15,
     flex: 0,
   },
 });

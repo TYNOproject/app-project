@@ -20,6 +20,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: 10,
     width: "80%",
+    borderColor: "#7521f3", // added purple border color
+    borderWidth: 2, // increased border width for visibility
   },
   name: {
     fontSize: 14,

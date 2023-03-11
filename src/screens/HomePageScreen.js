@@ -1,5 +1,5 @@
 import React, { Component, useState, useContext, useEffect } from "react";
-import { StyleSheet, Text, View, FlatList } from "react-native";
+import { StyleSheet, Text, View, FlatList,Model } from "react-native";
 import { ListItem, SearchBar, Card } from "react-native-elements";
 import { useFonts } from "expo-font";
 import SelectOption from "../components/SelectOption";
@@ -89,6 +89,8 @@ export default function HomePageScreen({ navigation }) {
           defaultText="מחלקה"
           buttonStyle={styles.dropdownButtonStyle}
           onSelectOption={(option) => setDepartment(option.id)}
+          overlayStyle={styles.overlayStyle}
+          searchable={true}
         />
         <SelectOption
           options={constants.years}
@@ -147,11 +149,12 @@ const styles = StyleSheet.create({
     top: 250,
     justifyContent: "space-between",
     alignItems: "center",
+    
   },
   dropdownButtonStyle: {
     flexDirection: "row",
     justifyContent: "center",
-    width: 110,
+    width: 200,
     top: -30,
   },
 
@@ -162,6 +165,6 @@ const styles = StyleSheet.create({
     alignSelf: "flex-end",
     width: "100%",
     flex: 2,
-    top: 20,
+    top: -25,
   },
 });

@@ -1,8 +1,10 @@
 import * as React from "react";
-import { useContext } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
-import { NavigationContainer, useNavigation } from "@react-navigation/native";
+import { useContext, useState } from "react";
+import { View, Text,TouchableOpacity } from "react-native";
+import { useNavigation } from '@react-navigation/native';
+import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { HeaderBackButton } from '@react-navigation/stack';
 import { Ionicons } from "@expo/vector-icons";
 import { StudentProvider } from "./src/contexts/StudentContext";
 import { ClassProvider } from "./src/contexts/ClassContext";
@@ -19,19 +21,12 @@ import TeacherRegisterScreen from "./src/screens/TeacherRegisterScreen";
 import HomePageScreen from "./src/screens/HomePageScreen";
 const Tab = createBottomTabNavigator();
 
-function BellIcon() {
-  return (
-    <View style={{ marginRight: 15 }}>
-      <Ionicons name="notifications-outline" size={30} color="orange" />
-    </View>
-  );
-}
 
 function BackIcon({ pageName }) {
   const navigation = useNavigation();
 
   return (
-    <View style={{ marginRight: 50 }}>
+    <View style={{ marginRight: 70 }}>
       <TouchableOpacity onPress={() => navigation.navigate(pageName)}>
         <Ionicons
           name="arrow-back"
@@ -45,15 +40,17 @@ function BackIcon({ pageName }) {
 }
 
 function App() {
+
+
   return (
     <StudentProvider>
       <ClassProvider>
         <NavigationContainer>
-          <Tab.Navigator
+        <Tab.Navigator
             initialRouteName="LogIn"
             screenOptions={{
-              tabBarActiveTintColor: "orange",
-              tabBarInactiveTintColor: "purple",
+              tabBarActiveTintColor: "black",
+              tabBarInactiveTintColor: "#7521f3",
               tabBarShowLabel: false,
               tabBarStyle: [
                 {
@@ -70,7 +67,8 @@ function App() {
                 tabBarIcon: ({ color, size }) => (
                   <Ionicons name="log-out-outline" size={40} color={color} />
                 ),
-                headerShown: false, // hide top title
+                //headerShown: false, // hide top title
+
                 tabBarStyle: { display: "none" }, // hide bottom tab
               }}
             />
@@ -81,7 +79,6 @@ function App() {
                 tabBarIcon: ({ color, size }) => (
                   <Ionicons name="home-outline" size={40} color={color} />
                 ),
-                headerRight: () => <BellIcon />,
                 headerShown: false, // hide top title
               }}
             />
@@ -89,6 +86,7 @@ function App() {
               name="Profile"
               component={StudentProfileScreen}
               options={{
+                headerShown: false, // hide top title
                 tabBarIcon: ({ color, size }) => (
                   <Ionicons
                     name="person-circle-outline"
@@ -98,16 +96,15 @@ function App() {
                 ),
               }}
             />
-            <Tab.Screen
-              name="LogIn"
-              component={LoginScreen}
-              options={{
-                tabBarButton: () => null, // hides the button
-                headerShown: false, // hide top title
-                tabBarStyle: { display: "none" }, // hide bottom tab
-              }}
-            />
-
+          <Tab.Screen
+            name="LogIn"
+            component={LoginScreen}
+            options={{
+              headerShown: false,
+              tabBarStyle: { display: "none" },
+              tabBarButton: () => null, // hides the button
+            }}
+          />
             <Tab.Screen
               name="Register"
               component={RegisterScreen}
