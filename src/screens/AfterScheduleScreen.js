@@ -7,21 +7,13 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { ListItem, SearchBar, Card, Icon } from "react-native-elements";
-import { useFonts } from "expo-font";
-import SelectOption from "../components/SelectOption";
-import CoursesList from "../components/CoursesList";
-import TeacherCard from "../components/TeacherCard";
-import TeachersList from "../components/TeachersList";
 import StudentContext from "../contexts/StudentContext";
 import ClassContext from "../contexts/ClassContext";
 
 export default function AfterScheduleScreen({ navigation })
 {
   const {items,getVal} = useContext(StudentContext);
-  
-  const {addToClass} = useContext(ClassContext);
-  const {itemsClass} = useContext(ClassContext);
-  const {getValClass} = useContext(ClassContext);
+  const {itemsClass,getValClass} = useContext(ClassContext);
   
   const name = getVal(items, "studentDetails").name;
   const teacherName = getValClass(itemsClass,'teacherName');
@@ -32,7 +24,7 @@ export default function AfterScheduleScreen({ navigation })
   function addHourToTime(timeString) {
     const [hours, minutes, seconds] = timeString.split(':'); // split the time string into hours, minutes, and seconds
     let hour = parseInt(hours); // convert hours to a number
-    let minute = parseInt(minutes); // convert minutes to a number
+    let minute = parseInt(minutrubikes); // convert minutes to a number
     let second = parseInt(seconds); // convert seconds to a number
     hour = (hour + 1) % 24; // add an hour and wrap around to the next day if needed
     const newTimeString = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}:${second.toString().padStart(2, '0')}`; // format the new time as a string
@@ -40,9 +32,7 @@ export default function AfterScheduleScreen({ navigation })
   }
   
   
-
-
-
+  
   return (
     <View style={styles.container}>
       <View style={styles.topPart}>
@@ -59,7 +49,7 @@ export default function AfterScheduleScreen({ navigation })
         <Text style={styles.mainText}>עד שעה: {toTime}</Text>
         <Icon name="timer" style={{ right: 0 }} />
       </View>
-      <TouchableOpacity style={styles.submitButton}>
+      <TouchableOpacity style={styles.submitButton} onPress={() => navigation.navigate("HomePage")}>
         <Text style={styles.textstyle}>סגור</Text>
       </TouchableOpacity>
     </View>
@@ -126,7 +116,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   textstyle: {
-    fontFamily: "Rubik",
+    fontFamily: "Heebo-Bold",
     fontSize: 24,
     fontWeight: "400",
     lineHeight: 28,

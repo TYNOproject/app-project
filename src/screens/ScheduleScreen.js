@@ -29,86 +29,70 @@ export default function ScheduleScreen({ navigation })
   const [markedDates, setMarkedDates] = useState({});
   const [timeButtons, setTimeButtons] = useState([]);
   const [chosenTime, setchosenTime] = useState([]);
-  const [chosenCourseId, SetchosenCourseId] = useState([]);
   const [timeMap, setTimeMap] = useState({});
-  const [classMap, setClassMap] = useState({});
 
 
-  const getTimes = () => {
     useEffect(() => {
-      async function fetchData() {
         console.log(teacherId);
-        timeResponse = await getTeacherAvailableClasses(teacherId); //need to catch
-        dates = timeResponse.data.map(item => new Date(item.startTime));
-          // extract startTime value and convert to Date object
-        const datestoMark = dates.reduce((obj, date) => {
-          const dateString = new Date(date).toISOString().split('T')[0];
-          obj[dateString] = { marked: true };
-          return obj;
-        }, {});
-
-        setMarkedDates(datestoMark);
-        updateMaps(timeResponse.data);
-      }
-      fetchData();
+        getTeacherAvailableClasses(teacherId).then((timeResponse)=>
+        {
+          const dates = timeResponse.data.map(item => item.date.split('T')[0]);
+          console.log(dates);
+          const datestoMark = dates.reduce((obj, date) =>{
+            obj[date] = { marked: true };
+            return obj;
+          },{});
+          console.log(datestoMark);
+          setMarkedDates(datestoMark);
+          updateMaps(timeResponse.data);
+        });
     },[]);
-  };
-  getTimes();
-    // const name = "מנש";
 
   const updateMaps = (dates) => {
     const myTimeMap = new Map();
-    const myClassMap = new Map();
-    
+
     dates.forEach(item => {
-      const date = item.startTime.split('T')[0];
-      const time = item.startTime.split('T')[1];
-      const classId = item.id;
+      const date = item.date.split('T')[0];
+      const time = item.startTime;
+      const classId = item.id; 
+
 
       if (myTimeMap.has(date)) {
         const times = myTimeMap.get(date);
-        times.push(time);
+        times.push([time,classId]);
         myTimeMap.set(date, times);
       } else {
-        myTimeMap.set(date, [time]);
+        myTimeMap.set(date, [[time,classId]]);
       } 
 
-      if (myClassMap.has(date)) {
-        const classIds = myClassMap.get(date);
-        classIds.push(classId);
-        myClassMap.set(date, classIds);
-      } else {
-        myClassMap.set(date, [classId]);
-      }
-
       setTimeMap(myTimeMap);
-      setClassMap(myClassMap);
     });
   }
  
 
   function handelPossibleTimes(day) {
     setchosenTime(day.dateString);
-    setTimeButtons(timeMap.get(day.dateString));
+    console.log(timeMap.get(day.dateString));
+    const timesbuttons = timeMap.get(day.dateString).map((timeAndId)=> timeAndId[0]);
+     setTimeButtons(timesbuttons);
   }
 
 
   async function handleScheduale () {
-    SetchosenCourseId(classMap.get(chosenTime)[selectedIndex]);
-    console.log("student: " + studentId);
-    console.log("course: " + chosenCourseId);
-    bookResponse = await bookClass({chosenCourseId,studentId});
-    
-    if (bookResponse == 200)
-    {
-      addToClass('startTime', timeButtons[selectedIndex]);
-      addToClass('classDate', chosenTime);
-      navigation.navigate("AfterSchedule");
-    }
-    else{
-      alert("error!");
-      return;
-    }   
+    const classId_ = timeMap.get(chosenTime)[selectedIndex][1];
+
+    let bookDetails = {
+      classId: classId_,
+      studentId: studentId,
+    };
+
+    console.log("classId: " + classId_);
+    console.log("studentId: " + studentId);
+    bookClass(bookDetails).then((bookRespone) => {
+    addToClass('startTime', timeButtons[selectedIndex]);
+    addToClass('classDate', chosenTime);
+    navigation.navigate("AfterSchedule");}
+    ).catch((error) => console.log(error)); 
   };
 
   let [fontsLoaded] = useFonts({

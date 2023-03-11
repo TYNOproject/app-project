@@ -17,6 +17,22 @@ export default function CoursePageScreen({ navigation }) {
   const {itemsClass} = useContext(ClassContext);
   const {getValClass} = useContext(ClassContext)
   const course = getValClass(itemsClass,'courseName');
+  const filterOptions = ["rate","year","price"];
+  const sortOptions = ["rate","year","price"];
+
+  function sortByProperty(list, property) {
+    return list.sort((a, b) => {
+      if (a[property] < b[property]) {
+        return -1;
+      } else if (a[property] > b[property]) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+  }
+
+  
 
   const getTeachers = () => {
     useEffect(() => {
@@ -57,12 +73,16 @@ export default function CoursePageScreen({ navigation }) {
       </View>
       <View style={styles.dropdown}>
         <SelectOption
-          options={["Op1", "Op2", "Op3"]}
+          options={sortOptions}
           defaultText="מיון"
           buttonStyle={styles.dropdownButtonStyle}
+          onSelectOption={(option) => {
+            console.log("option chosen in year: " + option);
+            setTeachers(sortByProperty(teachers,option));
+          }}
         />
         <SelectOption
-          options={["Op1", "Op2", "Op3"]}
+          options={filterOptions}
           defaultText="סינון"
           buttonStyle={styles.dropdownButtonStyle}
         />
