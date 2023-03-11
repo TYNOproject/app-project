@@ -1,11 +1,13 @@
 import React, { useContext, useState } from "react";
-import { View, Text, TextInput, StyleSheet, Image } from "react-native";
+import { View, Text, TextInput, StyleSheet, Image,TouchableOpacity } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import { Button } from "@react-native-material/core";
 import { AntDesign } from "@expo/vector-icons";
 import { useFonts } from "expo-font";
 import StudentContext from "../contexts/StudentContext.js";
 import { signIn } from "../api/serviceCalls.js";
 import { LinearGradient } from "expo-linear-gradient";
+import { HeaderBackButton } from '@react-navigation/stack';
 
 export default function LoginScreen({ navigation }) {
   const { addToStudent, items, getVal } = useContext(StudentContext);
@@ -43,6 +45,7 @@ export default function LoginScreen({ navigation }) {
   };
 
   return (
+
     <View style={styles.container}>
       <Image
         source={require("../../assets/images/logo.png")}
@@ -94,6 +97,7 @@ export default function LoginScreen({ navigation }) {
           style={styles.registerButton}
           onPress={handleRegister}
         />
+
       </View>
     </View>
   );

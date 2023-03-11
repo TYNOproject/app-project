@@ -153,10 +153,7 @@ export default function TeacherProfileScreen({ navigation }) {
       <View style={styles.scrollView}>
         <TeacherCoursesList courses={courses} />
       </View>
-      <Text style={styles.teacherPrice}>המחיר שלי לשיעור</Text>
-      <Card containerStyle={styles.CardContainer}>
-        <Text style={styles.price}>{price} ש"ח</Text>
-      </Card>
+      <Text style={styles.teacherPrice}>המחיר שלי לשיעור הוא {price} ש"ח</Text>
     </View>
   );
 }
@@ -175,19 +172,19 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   feutareLessons: {
-    fontSize: 16,
+    fontSize: 20,
     fontFamily: "Heebo-Bold",
     right: 10,
-    alignSelf: "flex-end",
+    alignSelf: "flex-end",  
     marginBottom: -10,
   },
   scrollView: {
     alignSelf: "flex-end",
     width: "100%",
-    marginBottom: -10,
+    marginBottom: 18,
   },
   waitingLessons: {
-    fontSize: 16,
+    fontSize: 20,
     fontFamily: "Heebo-Bold",
     right: 10,
     alignSelf: "flex-end",
@@ -195,7 +192,7 @@ const styles = StyleSheet.create({
   },
   ConfirmLessonsButton: {
     position: "relative",
-    marginBottom: 10,
+    marginBottom: 15,
   },
   row: {
     flexDirection: "row",
@@ -207,26 +204,26 @@ const styles = StyleSheet.create({
     left: 10,
   },
   teacherCourses: {
-    fontSize: 16,
+    fontSize: 20,
     fontFamily: "Heebo-Bold",
     flex: 1,
     textAlign: "right",
     right: 10,
   },
   aviableTimes: {
-    fontSize: 16,
+    fontSize: 20,
     fontFamily: "Heebo-Bold",
     right: 10,
     alignSelf: "flex-end",
     marginBottom: -10,
   },
   teacherPrice: {
-    fontSize: 16,
+    fontSize: 20,
     fontFamily: "Heebo-Bold",
     right: 10,
     alignSelf: "flex-end",
     marginBottom: -5,
-    top: -5,
+    top: -20,
   },
   CardContainer: {
     borderRadius: 10,

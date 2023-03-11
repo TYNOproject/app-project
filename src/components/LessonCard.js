@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     width: 160,
   },
   name: {
-    fontSize: 12,
+    fontSize: 16,
     bottom: 5,
     fontWeight: "bold",
   },
@@ -40,17 +40,17 @@ const styles = StyleSheet.create({
     flexDirection: "row"
   },
   studentName: {
-    fontSize: 10,
+    fontSize: 12,
     flex: 1,
     textAlign: "right"
   },
   date: {
-    fontSize: 10,
+    fontSize: 12,
     flex: 1,
     textAlign: "left"
   },
   time: {
-    fontSize: 10,
+    fontSize: 12,
     flex: 1,
     textAlign: "left"
   }

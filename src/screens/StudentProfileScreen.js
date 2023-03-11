@@ -54,6 +54,7 @@ export default function StudentProfileScreen({ navigation }) {
           פרופיל אישי{"\n"}
           {name}
         </Text>
+        <View style={styles.spacer1} />
         <Button
           leading={() => (
             <MaterialCommunityIcons
@@ -67,6 +68,7 @@ export default function StudentProfileScreen({ navigation }) {
           color="black"
           onPress={handleRegisterPress}
         />
+        <View style={styles.spacer1} />
         <Button
           leading={() => (
             <FontAwesome5 name="chalkboard-teacher" size={24} color="black" />
@@ -88,7 +90,7 @@ export default function StudentProfileScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    top: 90,
+    top: 100,
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "space-between",
@@ -106,11 +108,15 @@ const styles = StyleSheet.create({
   spacer: {
     flex: 1,
   },
+  spacer1: {
+    flex: 0.5,
+  },
   bottomHalf: {
     alignSelf: "flex-end",
     width: "100%",
     flex: 4,
     top: -80,
     right: -20,
+    
   },
 });

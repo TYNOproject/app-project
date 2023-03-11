@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
-import { View, Text, TextInput } from "react-native";
+import { View, Text, TextInput,TouchableOpacity } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import { StyleSheet } from "react-native";
 import { Button } from "@react-native-material/core";
 import { AntDesign } from "@expo/vector-icons";
@@ -31,6 +32,7 @@ export default function RegisterScreen({ navigation }) {
   };
 
   return (
+    
     <View style={styles.container}>
       <Text style={styles.header}>
         טוב שבאת! {"\n"}
@@ -55,6 +57,8 @@ export default function RegisterScreen({ navigation }) {
         value={password}
         secureTextEntry
       />
+
+
       <Button
         title="אפשר להמשיך"
         titleStyle={{
