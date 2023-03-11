@@ -48,7 +48,7 @@ function App() {
             initialRouteName="LogIn"
             screenOptions={{
               tabBarActiveTintColor: "orange",
-              tabBarInactiveTintColor: "purple",
+              tabBarInactiveTintColor: "#7521f3",
               tabBarShowLabel: false,
               tabBarStyle: [
                 {
@@ -66,7 +66,6 @@ function App() {
                   <Ionicons name="log-out-outline" size={40} color={color} />
                 ),
                 headerShown: false, // hide top title
-
               }}
             />
             <Tab.Screen
@@ -99,88 +98,87 @@ function App() {
               options={{
                 tabBarButton: () => null, // hides the button
                 headerShown: false, // hide top title
-
               }}
             />
 
-          <Tab.Screen
-            name="Register"
-            component={RegisterScreen}
-            options={{
-              tabBarButton: () => null, // hides the button
-              headerShown: false, // hide top title
-            }}
-          />
-          <Tab.Screen
-            name="StudentSignUp"
-            component={StudentSignUpScreen}
-            options={{
-              tabBarButton: () => null, // hides the button
-              headerShown: false, // hide top title
-            }}
-          />
-          <Tab.Screen
-            name="HomePage"
-            component={HomePageScreen}
-            options={{
-              tabBarButton: () => null, // hides the button
-              headerShown: false, // hide top title
-            }}
-          />
-          <Tab.Screen
-            name="Schedule"
-            component={ScheduleScreen}
-            options={{
-              tabBarButton: () => null, // hides the button
-              headerShown: false, // hide top title
-            }}
-          />
-          <Tab.Screen
-            name="AfterSchedule"
-            component={AfterScheduleScreen}
-            options={{
-              tabBarButton: () => null, // hides the button
-              headerShown: false, // hide top title
-            }}
-          />
-          <Tab.Screen
-            name="TeacherProfile"
-            component={TeacherProfileScreen}
-            options={{
-              tabBarButton: () => null, // hides the button
-              tabBarVisibilityAnimationConfig: () => null,
-              headerShown: false, // hide top title
-            }}
-          />
-          <Tab.Screen
-            name="ConfirmLessons"
-            component={ConfirmLessonsScreen}
-            options={{
-              tabBarButton: () => null, // hides the button
-              tabBarVisibilityAnimationConfig: () => null,
-              headerShown: false, // hide top title
-            }}
-          />
-          <Tab.Screen
-            name="CoursePage"
-            component={CoursePageScreen}
-            options={{
-              tabBarButton: () => null, // hides the button
-              tabBarVisibilityAnimationConfig: () => null,
-              headerShown: false, // hide top title
-            }}
-          />
-          <Tab.Screen
-            name="TeacherRegister"
-            component={TeacherRegisterScreen}
-            options={{
-              tabBarButton: () => null, // hides the button
-              tabBarVisibilityAnimationConfig: () => null,
-              headerShown: false, // hide top title
-            }}
-          />
-        </Tab.Navigator>
-      </NavigationContainer>
+            <Tab.Screen
+              name="Register"
+              component={RegisterScreen}
+              options={{
+                tabBarButton: () => null, // hides the button
+                headerShown: false, // hide top title
+              }}
+            />
+            <Tab.Screen
+              name="StudentSignUp"
+              component={StudentSignUpScreen}
+              options={{
+                tabBarButton: () => null, // hides the button
+                headerShown: false, // hide top title
+              }}
+            />
+            <Tab.Screen
+              name="HomePage"
+              component={HomePageScreen}
+              options={{
+                tabBarButton: () => null, // hides the button
+                headerShown: false, // hide top title
+              }}
+            />
+            <Tab.Screen
+              name="Schedule"
+              component={ScheduleScreen}
+              options={{
+                tabBarButton: () => null, // hides the button
+                headerShown: false, // hide top title
+              }}
+            />
+            <Tab.Screen
+              name="AfterSchedule"
+              component={AfterScheduleScreen}
+              options={{
+                tabBarButton: () => null, // hides the button
+                headerShown: false, // hide top title
+              }}
+            />
+            <Tab.Screen
+              name="TeacherProfile"
+              component={TeacherProfileScreen}
+              options={{
+                tabBarButton: () => null, // hides the button
+                tabBarVisibilityAnimationConfig: () => null,
+                headerShown: false, // hide top title
+              }}
+            />
+            <Tab.Screen
+              name="ConfirmLessons"
+              component={ConfirmLessonsScreen}
+              options={{
+                tabBarButton: () => null, // hides the button
+                tabBarVisibilityAnimationConfig: () => null,
+                headerShown: false, // hide top title
+              }}
+            />
+            <Tab.Screen
+              name="CoursePage"
+              component={CoursePageScreen}
+              options={{
+                tabBarButton: () => null, // hides the button
+                tabBarVisibilityAnimationConfig: () => null,
+                headerShown: false, // hide top title
+              }}
+            />
+            <Tab.Screen
+              name="TeacherRegister"
+              component={TeacherRegisterScreen}
+              options={{
+                tabBarButton: () => null, // hides the button
+                tabBarVisibilityAnimationConfig: () => null,
+                headerShown: false, // hide top title
+              }}
+            />
+          </Tab.Navigator>
+        </NavigationContainer>
       </ClassProvider>
     </StudentProvider>
   );
