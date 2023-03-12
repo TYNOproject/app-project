@@ -100,7 +100,7 @@ export default function StudentEditDetails({navigation}) {
                 multiline
             />
             <Button
-                title="לא רשום? לחץ כאן"
+                title="שלח"
                 titleStyle={{
                     fontSize: 18,
                     textAlign: "center",
@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
     selectOptionStyle: {
         margin: "3%",
         borderRadius: 8,
-        borderColor: "#444",
+        borderColor: "#7521f3",
         width: "80%",
         borderWidth: 2, // increased border width for visibility
         top: 20,
@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
         margin: "10%",
         writingDirection: "rtl",
         borderWidth: 2,
-        borderColor: "#444",
+        borderColor: "#7521f3",
         backgroundColor: "#e8e8e8",
         borderRadius: 8,
     },
