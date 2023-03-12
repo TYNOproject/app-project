@@ -66,7 +66,7 @@ if (!fontsLoaded)
         starSize={50}
         fullStarColor={'gold'}
       />
-      <TextInput multiline
+      <TextInput
         style={styles.inputField}
         placeholder="הוסף הערה"
         onChangeText={setWordReview}

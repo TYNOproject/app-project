@@ -107,6 +107,7 @@ export default function HomePageScreen({ navigation }) {
         <CoursesList
           courses={courses}
           navigation={navigation}
+          changeColor = {false}
           callback={() => navigation.navigate("CoursePage")}
         />
       </View>
