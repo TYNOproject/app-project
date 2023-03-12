@@ -88,10 +88,12 @@ export default function ScheduleScreen({ navigation })
 
     console.log("classId: " + classId_);
     console.log("studentId: " + studentId);
-    bookClass(bookDetails).then((bookRespone) => {
-    addToClass('startTime', timeButtons[selectedIndex]);
-    addToClass('classDate', chosenTime);
-    navigation.navigate("AfterSchedule");}
+    bookClass(bookDetails).then((bookRespone) => 
+    {
+      addToClass('startTime', timeButtons[selectedIndex]);
+      addToClass('classDate', chosenTime);
+      navigation.navigate("AfterSchedule");
+    }
     ).catch((error) => console.log(error)); 
   };
 
