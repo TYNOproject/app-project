@@ -51,7 +51,7 @@ export default function StudentEditDetails({ navigation }) {
           defaultText="בחר פקולטה"
           buttonStyle={styles.selectOptionStyle}
           onSelectOption={(selectedItem) => {
-            studentDetails = getVal(items, "studentDetails");
+            let studentDetails = getVal(items, "studentDetails");
             addToStudent("studentDetails", {
               ...studentDetails,
               faculty: selectedItem,
@@ -63,7 +63,7 @@ export default function StudentEditDetails({ navigation }) {
           defaultText="בחר מחלקה"
           buttonStyle={styles.selectOptionStyle}
           onSelectOption={(selectedItem) => {
-            studentDetails = getVal(items, "studentDetails");
+            let studentDetails = getVal(items, "studentDetails");
             addToStudent("studentDetails", {
               ...studentDetails,
               department: selectedItem,
@@ -75,7 +75,7 @@ export default function StudentEditDetails({ navigation }) {
           defaultText="בחר תואר"
           buttonStyle={styles.selectOptionStyle}
           onSelectOption={(selectedItem) => {
-            studentDetails = getVal(items, "studentDetails");
+            let studentDetails = getVal(items, "studentDetails");
             addToStudent("studentDetails", {
               ...studentDetails,
               degree: selectedItem,
@@ -87,7 +87,7 @@ export default function StudentEditDetails({ navigation }) {
           defaultText="בחר שנה"
           buttonStyle={styles.selectOptionStyle}
           onSelectOption={(selectedItem) => {
-            studentDetails = getVal(items, "studentDetails");
+            let studentDetails = getVal(items, "studentDetails");
             addToStudent("studentDetails", {
               ...studentDetails,
               year: selectedItem,
@@ -139,7 +139,6 @@ const styles = StyleSheet.create({
   },
   selectOptionStyle: {
     margin: "3%",
-    borderWidth: 1,
     borderRadius: 8,
     borderColor: "#444",
     width: 250,
