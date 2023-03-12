@@ -1,13 +1,17 @@
-import React,{ useContext, useState } from "react";
-import { View, Text, TextInput, StyleSheet } from "react-native";
+import React, { useContext, useState } from "react";
+import { View, Text, TextInput, StyleSheet, Image,TouchableOpacity } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import { Button } from "@react-native-material/core";
 import { AntDesign } from "@expo/vector-icons";
 import { useFonts } from "expo-font";
-import StudentContext from "../contexts/StudentContext";
+import StudentContext from "../contexts/StudentContext.js";
+import { signIn } from "../api/serviceCalls.js";
+import { LinearGradient } from "expo-linear-gradient";
+import { HeaderBackButton } from '@react-navigation/stack';
 
 export default function LoginScreen({ navigation }) {
-  const { addToStudent } = useContext(StudentContext);
-  const [username, setUsername] = React.useState("");
+  const { addToStudent, items, getVal } = useContext(StudentContext);
+  const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   let [fontsLoaded] = useFonts({
     "Heebo-Bold": require("../../assets/fonts/Heebo-Bold.ttf"),
@@ -20,108 +24,141 @@ export default function LoginScreen({ navigation }) {
         <Text>loading</Text>
       </View>
     );
-  const handleLogin = () => {
-    if (username.endsWith("@post.bgu.ac.il")) {
-      alert("הרשמה הצליחה");
-    } else {
-      alert("הרשמה נכשלה");
+  const handleLogin = async () => {
+    //check if the user exists in the database, if so -> nvaigate to home page
+    //else, pop up that says that he's not registered
+    signInResponse = await signIn({ email, password });
+    console.log(signInResponse.data);
+    if (signInResponse.status !== 200) {
+      alert("אירעה שגיאה, אנא נסה שנית");
+      return;
     }
-    addToStudent("username",username);
-    addToStudent("password",password);
-    navigation.navigate("HomePage");
+    if (signInResponse.status === 200) {
+      addToStudent("studentDetails", signInResponse.data);
+      console.log(getVal(items, "studentDetails"));
+      navigation.navigate("HomePage");
+    }
   };
 
-  const handleRegister = () => {
+  const handleRegister = async () => {
     navigation.navigate("Register");
   };
 
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <View
+
+    <View style={styles.container}>
+      <Image
+        source={require("../../assets/images/logo.png")}
         style={{
-          height: 200,
-          width: 213,
-          position: "absolute",
-          top: 100,
-          left: "50%",
-          marginLeft: -106.5,
-          borderRadius: 0,
-          justifyContent: "center",
-          alignItems: "center",
+          width: "50%",
         }}
-      >
-        <Text
-          style={{
-            fontSize: 20,
-            fontWeight: "400",
-            lineHeight: 36,
-            letterSpacing: 0,
-            textAlign: "center",
-          }}
-        >
-          היי,{"\n"}
-          טוב לראות אותך :)
-        </Text>
+        resizeMode="contain"
+      />
+      <Text style={styles.header}>
+        {"\n"}
+        היי,{"\n"}
+        טוב לראות אותך :)
+      </Text>
+      <View style={styles.inputFields}>
+        <TextInput
+          style={styles.inputField1}
+          placeholder="כתובת מייל"
+          onChangeText={setEmail}
+          value={email}
+        />
+        <TextInput
+          style={styles.inputField2}
+          placeholder="סיסמא"
+          onChangeText={setPassword}
+          value={password}
+          secureTextEntry
+        />
       </View>
-      <TextInput
-        style={styles.inputField}
-        placeholder="שם משתמש"
-        onChangeText={setUsername}
-        value={username}
-      />
-      <TextInput
-        style={styles.inputField}
-        placeholder="סיסמא"
-        onChangeText={setPassword}
-        value={password}
-        secureTextEntry
-      />
-      <Button
-        leading={() => <AntDesign name="left" size={24} />}
-        title="התחבר"
-        variant="outlined"
-        color="black"
-        style={{ position: "relative", top: 80 }}
-        onPress={handleLogin}
-      />
-      <Button
-        leading={() => <AntDesign name="left" size={24} />}
-        title="לא רשום? לחץ כאן"
-        variant="outlined"
-        color="black"
-        style={{ position: "relative", top: 70 }}
-        onPress={handleRegister}
-      />
+      <View style={styles.buttonContainer}>
+        <Button
+          title="התחבר"
+          titleStyle={{
+            fontSize: 18,
+            textAlign: "center",
+            fontFamily: "Heebo-Bold",
+          }} // Add this line to center the title
+          leading={() => <AntDesign name="left" size={24} color="white" />}
+          onPress={handleLogin}
+        />
+
+        <Button
+          title="לא רשום? לחץ כאן"
+          titleStyle={{
+            fontSize: 18,
+            textAlign: "center",
+            fontFamily: "Heebo-Bold",
+          }} // Add this line to center the title
+          leading={() => <AntDesign name="left" size={24} color="white" />}
+          style={styles.registerButton}
+          onPress={handleRegister}
+        />
+
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "space-between",
-    height: "50%",
+    marginTop: "15%",
+  },
+  inputFields: {
+    width: "80%",
+    flex: 1,
+    justifyContent: "space-evenly",
+    marginTop: "10%",
   },
   header: {
-    fontSize: 30,
-    top: 90,
+    fontSize: 30, // use responsive font size
     fontFamily: "Heebo-Bold",
     textAlign: "center",
+    textShadowColor: "#A1B2C3",
+    textShadowOffset: { width: 1 },
+    textShadowRadius: 7,
   },
-  inputField: {
-    width: 300,
-    top: 100,
-    height: 40,
+  inputField1: {
     backgroundColor: "#fff",
     paddingVertical: 10,
     paddingHorizontal: 15,
-    borderColor: "#ccc",
-    borderWidth: 1,
+    borderColor: "#7521f3",
+    borderWidth: 2,
     borderRadius: 15,
     fontSize: 16,
     direction: "rtl",
     textAlign: "right",
     fontFamily: "Heebo-Regular",
+  },
+
+  inputField2: {
+    backgroundColor: "#fff",
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderColor: "#7521f3",
+    borderWidth: 2,
+    borderRadius: 15,
+    fontSize: 16,
+    direction: "rtl",
+    textAlign: "right",
+    fontFamily: "Heebo-Regular",
+  },
+  buttonContainer: {
+    flex: 1,
+    width: "80%",
+    alignItems: "center",
+    justifyContent: "space-evenly",
+    marginBottom: "30%",
+  },
+  buttonText: {
+    fontSize: 18,
+    textAlign: "center",
   },
 });

@@ -1,4 +1,4 @@
-import React, {Component, useState } from "react";
+import React, { Component, useState } from "react";
 import { Button } from "@react-native-material/core";
 import { StyleSheet, Text, View, FlatList } from "react-native";
 import { ListItem, SearchBar, Card } from "react-native-elements";
@@ -56,12 +56,14 @@ export default function TeacherProfileScreen({ navigation }) {
   const courses = [
     {
       name: "קומפליציה",
+      name: "קומפליציה",
     },
     {
       name: "לוגיקה",
+      name: "לוגיקה",
     },
     {
-      name: "אלגברה 2"
+      name: "אלגברה 2",
     },
     {
       name: "מודלים חיישובים"
@@ -103,15 +105,15 @@ export default function TeacherProfileScreen({ navigation }) {
       </View>
     );
 
-    const handleLessonsConfermation = () => {
-      navigation.navigate("ConfirmLessons");
-    };
+  const handleLessonsConfermation = () => {
+    navigation.navigate("ConfirmLessons");
+  };
 
-    const handleEditTeacher = () => {
-      navigation.navigate("TeacherRegister");
-    };
+  const handleEditTeacher = () => {
+    navigation.navigate("TeacherRegister");
+  };
 
-    return (
+  return (
     <View style={styles.container}>
         <Text style={styles.header}>
           היי {name}
@@ -174,7 +176,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   feutareLessons: {
-    fontSize: 16,
+    fontSize: 20,
     fontFamily: "Heebo-Bold",
     right: 10,
     alignSelf: "flex-end",
@@ -186,7 +188,7 @@ const styles = StyleSheet.create({
     marginBottom: -15
   },
   waitingLessons: {
-    fontSize: 16,
+    fontSize: 20,
     fontFamily: "Heebo-Bold",
     right: 10,
     alignSelf: "flex-end",
@@ -194,7 +196,7 @@ const styles = StyleSheet.create({
   },
   ConfirmLessonsButton: {
     position: "relative",
-    marginBottom: 10
+    marginBottom: 15,
   },
   row: {
     flexDirection: "row",
@@ -204,14 +206,14 @@ const styles = StyleSheet.create({
     position: "relative",
     alignSelf: "flex-start",
     left: 10,
-    },
+  },
   teacherCourses: {
-    fontSize: 16,
+    fontSize: 20,
     fontFamily: "Heebo-Bold",
     flex: 1,
     textAlign: "right",
-    right: 10
-    },
+    right: 10,
+  },
   aviableTimes: {
       fontSize: 16,
       fontFamily: "Heebo-Bold",
@@ -220,7 +222,7 @@ const styles = StyleSheet.create({
       marginBottom: -15
     },
   teacherPrice: {
-    fontSize: 16,
+    fontSize: 20,
     fontFamily: "Heebo-Bold",
     flex: 1,
     textAlign: "right",
