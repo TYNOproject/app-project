@@ -20,9 +20,8 @@ const CourseCard = ({course,callback }) => {
       <Card.Title style={styles.name}>{course.courseName}</Card.Title>
       <Card.Divider />
       <Text style={styles.description} numberOfLines={3}>
-        {course.year}"שנה:"
-        {"\n"}
-        {course.departmentId}"מחלקה:"
+        {"שנה: " + course.year} {"\n"}
+        {"מחלקה: " + course.department.departmentName}
       </Text>
     </Card>
     </TouchableOpacity>
@@ -43,8 +42,12 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   description: {
-    fontSize: 15,
+    fontSize: 12,
     flex: 0,
+    textAlign: 'right',
+    writingDirection: 'rtl',
+    fontFamily: 'Heebo-Regular',
+    color: 'black',
   },
 });
 

@@ -1,21 +1,16 @@
-import React, { Component,useState ,useContext,useEffect } from "react";
-import { StyleSheet, Text, View, FlatList } from "react-native";
-import { ListItem, SearchBar, Card } from "react-native-elements";
+import React, { useState ,useContext,useEffect } from "react";
+import { StyleSheet, Text, View } from "react-native";
 import { useFonts } from "expo-font";
 import SelectOption from "../components/SelectOption";
-import CoursesList from "../components/CoursesList";
-import TeacherCard from "../components/TeacherCard";
+
 import TeachersList from "../components/TeachersList";
-import StudentContext from "../contexts/StudentContext";
 import ClassContext from "../contexts/ClassContext";
-import { getTeachersByCourseName } from "../api/serviceCalls.js";
+import {getTeachersByCourseName} from "../api/serviceCalls.js";
 
 export default function CoursePageScreen({ navigation }) {
   const [teachers, setTeachers] = useState([]);
-  // const course = navigation.getParam("course");
 
-  const {itemsClass} = useContext(ClassContext);
-  const {getValClass} = useContext(ClassContext)
+  const {itemsClass, getValClass} = useContext(ClassContext);
   const course = getValClass(itemsClass,'courseName');
   const filterOptions = ["rate","year","price"];
   const sortOptions = ["rate","year","price"];
@@ -32,31 +27,17 @@ export default function CoursePageScreen({ navigation }) {
     });
   }
 
-  
-
-  const getTeachers = () => {
-    useEffect(() => {
-      async function fetchData() {
-        teachersRespone = await getTeachersByCourseName(course);
-        console.log(teachersRespone.data);
-        setTeachers(teachersRespone.data);
-      }
-      fetchData();
-    },[]);
-  };
-
-  getTeachers();
+  useEffect(() => {
+    getTeachersByCourseName(course)
+        .then((response) =>
+            response !== undefined ? setTeachers(response.data) : setTeachers([])
+        )
+        .catch((error) => console.log(error));
+  }, []);
 
   let [fontsLoaded] = useFonts({
     "Heebo-Bold": require("../../assets/fonts/Heebo-Bold.ttf"),
-    "Heebo-Light": require("../../assets/fonts/Heebo-Light.ttf"),
-    "Heebo-Medium": require("../../assets/fonts/Heebo-Medium.ttf"),
-    "Heebo-Regular": require("../../assets/fonts/Heebo-Regular.ttf"),
-    "Heebo-SemiBold": require("../../assets/fonts/Heebo-SemiBold.ttf"),
-    "Heebo-Thin": require("../../assets/fonts/Heebo-Thin.ttf"),
-    "Heebo-Black": require("../../assets/fonts/Heebo-Black.ttf"),
-    "Heebo-ExtraBold": require("../../assets/fonts/Heebo-ExtraBold.ttf"),
-    "Heebo-ExtraLight": require("../../assets/fonts/Heebo-ExtraLight.ttf"),
+    "Heebo-Regular": require("../../assets/fonts/Heebo-Regular.ttf")
   });
 
   if (!fontsLoaded)
