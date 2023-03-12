@@ -7,9 +7,12 @@ import { AntDesign } from "@expo/vector-icons";
 import { useContext } from "react";
 import SelectOption from "../components/SelectOption";
 import CoursesList from "../components/CoursesList";
-import LessonsList from "../components/LessonsList";
 import TeacherCoursesList from "../components/TeacherCoursesList";
 import StudentContext from "../contexts/StudentContext";
+import ClassesList from "../components/ClassesList";
+import AviableTimesList from "../components/AviableTimesList";
+
+
 
 export default function TeacherProfileScreen({ navigation }) {
   const { items } = useContext(StudentContext);
@@ -18,77 +21,70 @@ export default function TeacherProfileScreen({ navigation }) {
   const lastName = getVal(items, "lastname");
 
   //need to take from the DB
-  const lessons = [
+  const classes = [
     {
-      name: "קומפליציה",
-      studentName: "עמרי חן",
-      date: "1/1/22",
-      time: "17:30-19:00",
+      courseName: "קומפליציה",
+      name: "עמרי חן",
+      date: "01-01-2024, 08:00",
     },
     {
-      name: "מודלים חישוביים",
-      studentName: "יובל ים",
-      date: "1/1/22",
-      time: "17:30-19:00",
+      courseName: "מודלים חישוביים",
+      name:"יובל ים",
+      date: "01-01-2024 08:00",
     },
     {
-      name: "לוגיקה",
-      studentName: "נועם שטיין",
-      date: "1/1/22",
-      time: "17:30-19:00",
+      courseName: "לוגיקה",
+      name: "נועם שטיין",
+      date: "01-01-2024 08:00",
     },
     {
-      name: "קומפליציה",
-      studentName: "עמרי חן",
-      date: "1/1/22",
-      time: "17:30-19:00",
+      courseName: "קומפליציה",
+      name: "עמרי חן",
+      date: "01-01-2024 08:00",
     },
     {
-      name: "מודלים חישוביים",
-      studentName: "יובל ים",
-      date: "1/1/22",
-      time: "17:30-19:00",
+      courseName: "מודלים חישוביים",
+      name:"יובל ים",
+      date: "01-01-2024 08:00",
     },
     {
-      name: "לוגיקה",
-      studentName: "נועם שטיין",
-      date: "1/1/22",
-      time: "17:30-19:00",
+      courseName: "לוגיקה",
+      name: "נועם שטיין",
+      date: "01-01-2024 08:00",
     },
   ];
   const courses = [
     {
       name: "קומפליציה",
+      name: "קומפליציה",
     },
     {
+      name: "לוגיקה",
       name: "לוגיקה",
     },
     {
       name: "אלגברה 2",
     },
     {
-      name: "מודלים חיישובים",
+      name: "מודלים חיישובים"
+    }
+  ];
+  const times = [
+    {
+      time: "01-01-2024\n 08:00-10:00",
     },
+    {
+      time: "02-01-2024\n 08:00-10:00",
+    },
+    {
+      time: "03-01-2024\n 08:00-10:00"
+    },
+    {
+      time: "04-01-2024\n 08:00-10:00"
+    }
   ];
   const price = "120";
-  const aviableClasses = [
-    {
-      name: "",
-      date: "1/1/22\n 17:00-19:00",
-    },
-    {
-      name: "",
-      date: "1/1/22\n 17:00-19:00",
-    },
-    {
-      name: "",
-      date: "1/1/22\n 17:00-19:00",
-    },
-    {
-      name: "",
-      date: "1/1/22\n 17:00-19:00",
-    },
-  ];
+
 
   let [fontsLoaded] = useFonts({
     "Heebo-Bold": require("../../assets/fonts/Heebo-Bold.ttf"),
@@ -119,41 +115,49 @@ export default function TeacherProfileScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>היי {name}</Text>
-      <Text style={styles.feutareLessons}>שיעורים קרובים</Text>
-      <View style={styles.scrollView}>
-        <LessonsList lessons={lessons} />
-      </View>
-      <Text style={styles.waitingLessons}>שיעורים שמחכים לאישור</Text>
-      <View style={styles.scrollView}>
-        <LessonsList lessons={lessons} />
-      </View>
-      <Button
-        style={styles.ConfirmLessonsButton}
+        <Text style={styles.header}>
+          היי {name}
+        </Text>
+        <Text style= {styles.feutareLessons}>
+        שיעורים קרובים
+        </Text>
+        <View style={styles.scrollView}>
+        <ClassesList classes = {classes} horizantal = {true} style = {"row"} width = {160} />
+        </View>
+        <Text style= {styles.waitingLessons}>
+        שיעורים שמחכים לאישור
+        </Text>
+        <View style={styles.scrollView}>
+        <ClassesList classes = {classes} horizantal = {true} style = {"row"} width = {160}/>
+        </View>
+        <Button style = {styles.ConfirmLessonsButton}
         leading={() => <AntDesign name="left" size={24} />}
         title="לאישור/דחיית שיעורים"
         variant="outlined"
         color="black"
-        onPress={handleLessonsConfermation}
-      />
-      <View style={styles.row}>
-        <Button
-          style={styles.editButton}
-          title="עריכת פרטים אישיים"
-          variant="outlined"
-          color="black"
-          onPress={handleEditTeacher}
-        />
-        <Text style={styles.teacherCourses}>קורסים שאני מלמד</Text>
-      </View>
-      <View style={styles.scrollView}>
-        <TeacherCoursesList courses={courses} />
-      </View>
-      <Text style={styles.aviableTimes}>הזמנים הפנויים שלי</Text>
-      <View style={styles.scrollView}>
-        <TeacherCoursesList courses={courses} />
-      </View>
-      <Text style={styles.teacherPrice}>המחיר שלי לשיעור הוא {price} ש"ח</Text>
+        onPress={handleLessonsConfermation}/>
+        <View style = {styles.row}>
+        <Button style = {styles.editButton}
+        title="עריכת פרטים אישיים"
+        variant="outlined"
+        color="black"
+        onPress={handleEditTeacher}/>
+        <Text style= {styles.teacherCourses}>
+        קורסים שאני מלמד
+        </Text>
+        </View>
+        <View style={styles.scrollView}>
+        <TeacherCoursesList courses = {courses} />
+        </View>
+        <Text style= {styles.aviableTimes}>
+        הזמנים הפנויים שלי
+        </Text>
+        <View style={styles.scrollView}>
+        <AviableTimesList availableTimes={times}/>
+        </View>
+        <Text style= {styles.teacherPrice}>
+        המחיר שלי לשיעור: {price} ש"ח
+        </Text>
     </View>
   );
 }
@@ -166,6 +170,8 @@ const styles = StyleSheet.create({
     verticalAlign: "top",
   },
   header: {
+    top: 50,
+    marginBottom: 50,
     fontFamily: "Heebo-Bold",
     fontWeight: "bold",
     fontSize: 30,
@@ -175,20 +181,20 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontFamily: "Heebo-Bold",
     right: 10,
-    alignSelf: "flex-end",  
-    marginBottom: -10,
+    alignSelf: "flex-end",
+    marginBottom: -15
   },
   scrollView: {
     alignSelf: "flex-end",
     width: "100%",
-    marginBottom: 18,
+    marginBottom: -15
   },
   waitingLessons: {
     fontSize: 20,
     fontFamily: "Heebo-Bold",
     right: 10,
     alignSelf: "flex-end",
-    marginBottom: -10,
+    marginBottom: -15
   },
   ConfirmLessonsButton: {
     position: "relative",
@@ -196,7 +202,7 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: "row",
-    marginBottom: -10,
+    marginBottom: -15
   },
   editButton: {
     position: "relative",
@@ -211,30 +217,18 @@ const styles = StyleSheet.create({
     right: 10,
   },
   aviableTimes: {
-    fontSize: 20,
-    fontFamily: "Heebo-Bold",
-    right: 10,
-    alignSelf: "flex-end",
-    marginBottom: -10,
-  },
+      fontSize: 16,
+      fontFamily: "Heebo-Bold",
+      right: 10,
+      alignSelf: "flex-end",
+      marginBottom: -15
+    },
   teacherPrice: {
     fontSize: 20,
     fontFamily: "Heebo-Bold",
-    right: 10,
-    alignSelf: "flex-end",
-    marginBottom: -5,
-    top: -20,
+    flex: 1,
+    textAlign: "right",
+    right: 10
   },
-  CardContainer: {
-    borderRadius: 10,
-    width: "30%",
-    height: "7%",
-    alignSelf: "flex-end",
-    marginBottom: 10,
-  },
-  price: {
-    fontSize: 16,
-    fontWeight: "bold",
-    textAlign: "center",
-  },
+  
 });
