@@ -1,11 +1,8 @@
 import React from "react";
 import { useContext, useState } from "react";
 import { View, Text, StyleSheet, TextInput } from "react-native";
-import { Button } from "@react-native-material/core";
-import { FontAwesome5 } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useFonts } from "expo-font";
-import ClassesList from "../components/ClassesList";
 import StudentContext from "../contexts/StudentContext";
 import SelectOption from "../components/SelectOption";
 import * as constants from "../../constants";
