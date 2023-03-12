@@ -56,10 +56,8 @@ export default function TeacherProfileScreen({ navigation }) {
   const courses = [
     {
       name: "קומפליציה",
-      name: "קומפליציה",
     },
     {
-      name: "לוגיקה",
       name: "לוגיקה",
     },
     {
