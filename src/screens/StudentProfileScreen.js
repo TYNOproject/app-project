@@ -34,7 +34,7 @@ export default function StudentProfileScreen({ navigation }) {
   });
 
   function handleRegisterPress() {
-    navigation.navigate("Register");
+    navigation.navigate("EditStudentDetails");
   }
 
   function handleTeacherPress() {
