@@ -204,6 +204,15 @@ export const getTeacherClasses = async (teacherId) => {
   }
 };
 
+export const getStudentClasses = async (studentId) => {
+  try {
+    const response = await service.get(`/users/students/${studentId}/classes`);
+    return response;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const getTeacherAvailableClasses = async (teacherId) => {
   try {
     const response = await service.get(
@@ -233,4 +242,5 @@ export default {
   getTeacherClasses,
   getTeacherAvailableClasses,
   getCoursesByDepartment,
+  getStudentClasses
 };
