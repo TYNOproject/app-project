@@ -2,7 +2,7 @@ import React from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import CourseCard from "./CourseCard";
 
-const HalfScreenCourses = ({ courses, navigation, callback }) => {
+const HalfScreenCourses = ({ courses, navigation, changeColor, callback }) => {
   const coursesLeft = courses.slice(0, Math.ceil(courses.length / 2));
   const coursesRight = courses.slice(Math.ceil(courses.length / 2));
   return (
@@ -13,6 +13,7 @@ const HalfScreenCourses = ({ courses, navigation, callback }) => {
             course={course}
             key={index}
             navigation={navigation}
+            changeColor={changeColor}
             callback={callback}
           />
         ))}

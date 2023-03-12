@@ -5,19 +5,25 @@ import StudentContext from "../contexts/StudentContext";
 import ClassContext from "../contexts/ClassContext";
 
 
-const CourseCard = ({course,callback, navigation }) => {
+const CourseCard = ({course, navigation, changeColor, callback }) => {
   const { addToClass} = useContext(ClassContext);
-
+  const [isSelected, setIsSelected] = useState(false);
+  
   const handlePress = () => {
     alert(course.courseName);
     addToClass('courseName',course.courseName);
     addToClass('courseId',course.id);
     callback();
+    if(changeColor){
+      setIsSelected(!isSelected);
+    }
   }
 
   return (
     <TouchableOpacity onPress={handlePress}>
-    <Card containerStyle={styles.cardContainer}>
+      <Card containerStyle={[styles.cardContainer,
+          isSelected && styles.cardSelected, // add cardSelected style when selected
+        ]}>
       <Card.Title style={styles.name}>{course.courseName}</Card.Title>
       <Card.Divider />
       <Text style={styles.description} numberOfLines={3}>
@@ -38,6 +44,9 @@ const styles = StyleSheet.create({
     width: 150,
     borderColor: "#7521f3", // added purple border color
     borderWidth: 1, // increased border width for visibility
+  },
+  cardSelected: {
+    backgroundColor: "#b27bf0", // set background color to purple when selected
   },
   name: {
     fontSize: 16,

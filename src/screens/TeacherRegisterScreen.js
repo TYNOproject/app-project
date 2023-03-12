@@ -88,7 +88,7 @@ export default function RegisterScreen({ navigation }) {
         תספר לתלמידים שלנו קצת עלייך: תואר,שנה.. {"\n"}
         התיאור יופיע בעמוד המורה שלך
       </Text>
-      <TextInput multiline
+      <TextInput
         style={styles.descriptionInput}
         placeholder="תספר לנו קצת עלייך"
         onChangeText={setDescription}
@@ -112,7 +112,7 @@ export default function RegisterScreen({ navigation }) {
         <SelectOption options={["1", "2", "3", "4"]} defaultText="שנה" buttonStyle= {styles.dropdownButtonStyle} />
       </View>
         <View style={styles.bottomHalf}>
-            <CoursesList courses={courses} navigation={navigation}/>
+            <CoursesList courses={courses} navigation={navigation} changeColor = {true} callback = {()=> {}} />
         </View>
       <Button style = {styles.button}
         leading={() => <AntDesign name="left" size={24} />}
