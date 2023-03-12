@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState,useContext } from "react";
 import { Text, View, StyleSheet,TouchableOpacity  } from "react-native";
 import { Card } from "react-native-elements";
 import StudentContext from "../contexts/StudentContext";
@@ -10,10 +10,10 @@ const CourseCard = ({course,callback, navigation }) => {
 
   const handlePress = () => {
     alert(course.courseName);
-    addToClass("courseName", course.courseName);
-    addToClass("courseId", course.id);
+    addToClass('courseName',course.courseName);
+    addToClass('courseId',course.id);
     callback();
-  };
+  }
 
   return (
     <TouchableOpacity onPress={handlePress}>

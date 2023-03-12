@@ -1,6 +1,6 @@
-import React, { useState, useContext } from "react";
-import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
-import { Card, Icon, Avatar } from "react-native-elements";
+import React, { useState ,useContext } from "react";
+import { Text, View, StyleSheet ,TouchableOpacity} from "react-native";
+import { Card,Icon,Avatar  } from "react-native-elements";
 import StudentContext from "../contexts/StudentContext";
 import ClassContext from "../contexts/ClassContext";
 
@@ -17,18 +17,17 @@ const TeacherCard = ({ teacher, navigation }) => {
 
   return (
     <TouchableOpacity onPress={handlePress}>
-      <View style={styles.viewcardContainer}>
-        <Avatar
-          rounded
-          source={{ uri: "https://via.placeholder.com/150" }}
-          containerStyle={styles.avatarContainer}
-        />
-        <Icon
-          name="star"
-          type="font-awesome"
-          color="#FFD700"
-          containerStyle={styles.starContainer}
-        />
+    <View style={styles.viewcardContainer}>
+    <Avatar
+    rounded
+    source={{uri: 'https://via.placeholder.com/150'}}
+    containerStyle={styles.avatarContainer}
+    />
+  <Icon
+    name="star"
+    type="font-awesome"
+    color="#FFD700"
+    containerStyle={styles.starContainer}/>
         <Card containerStyle={styles.cardContainer}>
           <Card.Title style={styles.name}>
             {teacher.name}, {"\n"}
@@ -36,12 +35,12 @@ const TeacherCard = ({ teacher, navigation }) => {
           </Card.Title>
           <Text style={styles.starRatingText}>{teacher.rate}/5</Text>
 
-          <Card.Divider style={styles.cardDivider} />
-          <Text style={styles.description} numberOfLines={6}>
-            {teacher.description}
-          </Text>
-        </Card>
-      </View>
+      <Card.Divider style={styles.cardDivider}/>
+      <Text style={styles.description} numberOfLines={6}>
+        {teacher.privateInfo}
+      </Text>
+    </Card>
+    </View>
     </TouchableOpacity>
   );
 };
