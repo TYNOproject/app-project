@@ -15,7 +15,6 @@ export default function HomePageScreen({navigation}) {
     const [department, setDepartment] = useState(1);
     const [year, setYear] = useState(1);
     const [courses, setCourses] = useState([]);
-    // const name = navigation.getParam("name");
 
     const {items, getVal, addToStudent} = useContext(StudentContext);
     const name = getVal(items, "studentDetails").name;
