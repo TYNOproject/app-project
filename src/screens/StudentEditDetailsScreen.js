@@ -10,7 +10,7 @@ import {Button} from "@react-native-material/core";
 import {updatePersonalDetails} from "../api/serviceCalls";
 import {FancyAlert} from "react-native-expo-fancy-alerts";
 
-export default function StudentEditDetails({navigation}) {
+export default function StudentEditDetailsScreen({navigation}) {
     const {items, getVal, addToStudent} = useContext(StudentContext);
     const name = getVal(items, "studentDetails").name;
     const [privateInfo, setPrivateInfo] = useState("");
@@ -49,7 +49,7 @@ export default function StudentEditDetails({navigation}) {
                         let studentDetails = getVal(items, "studentDetails");
                         addToStudent("studentDetails", {
                             ...studentDetails,
-                            faculty: selectedItem,
+                            faculty: constants.faculties.find((faculty) => faculty.faculty_name === selectedItem),
                         });
                     }}
                 />
@@ -61,7 +61,7 @@ export default function StudentEditDetails({navigation}) {
                         let studentDetails = getVal(items, "studentDetails");
                         addToStudent("studentDetails", {
                             ...studentDetails,
-                            department: selectedItem,
+                            department: constants.departments.find((dep) => dep.department_name === selectedItem),
                         });
                     }}
                 />
@@ -108,11 +108,15 @@ export default function StudentEditDetails({navigation}) {
                 }} // Add this line to center the title
                 leading={() => <AntDesign name="left" size={24} color="white"/>}
                 onPress={() => {
-                    setVisible(!visible);
                     updatePersonalDetails({
                         studentId: getVal(items, "studentDetails").id,
+                        faculty: getVal(items, "studentDetails").faculty.id,
+                        department: getVal(items, "studentDetails").department.id,
+                        degree: getVal(items, "studentDetails").degree,
+                        year: getVal(items, "studentDetails").year,
                         privateInfo: privateInfo,
                     }).then(() => {
+                        setVisible(!visible);
                         navigation.navigate("Profile")
                     })
                         .catch((err) => console.log(err))

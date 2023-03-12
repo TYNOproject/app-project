@@ -19,7 +19,7 @@ import AfterScheduleScreen from "./src/screens/AfterScheduleScreen";
 import ConfirmLessonsScreen from "./src/screens/ConfirmLessonsScreen";
 import TeacherRegisterScreen from "./src/screens/TeacherRegisterScreen";
 import HomePageScreen from "./src/screens/HomePageScreen";
-import StudentEditDetails from "./src/screens/StudentEditDetails";
+import StudentEditDetailsScreen from "./src/screens/StudentEditDetailsScreen";
 import ReviewScreen from "./src/screens/ReviewScreen";
 const Tab = createBottomTabNavigator();
 
@@ -139,7 +139,7 @@ function App() {
             />
             <Tab.Screen
               name="EditStudentDetails"
-              component={StudentEditDetails}
+              component={StudentEditDetailsScreen}
               options={{
                 tabBarStyle: { display: "none" }, // hide bottom tab
                 tabBarButton: () => null, // hides the button
