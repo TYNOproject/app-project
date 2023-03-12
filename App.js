@@ -48,7 +48,7 @@ function App() {
       <ClassProvider>
         <NavigationContainer>
         <Tab.Navigator
-            initialRouteName="TeacherProfile"
+            initialRouteName="LogIn"
             screenOptions={{
               tabBarActiveTintColor: "black",
               tabBarInactiveTintColor: "#7521f3",
