@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
-import { View, Text, TextInput } from "react-native";
+import { View, Text, TextInput,TouchableOpacity } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import { StyleSheet } from "react-native";
 import { Button } from "@react-native-material/core";
 import { AntDesign } from "@expo/vector-icons";
@@ -31,6 +32,7 @@ export default function RegisterScreen({ navigation }) {
   };
 
   return (
+    
     <View style={styles.container}>
       <Text style={styles.header}>
         טוב שבאת! {"\n"}
@@ -55,9 +57,15 @@ export default function RegisterScreen({ navigation }) {
         value={password}
         secureTextEntry
       />
+
+
       <Button
         title="אפשר להמשיך"
-        titleStyle={{ fontSize: 18, textAlign: "center" }} // Add this line to center the title
+        titleStyle={{
+          fontSize: 18,
+          textAlign: "center",
+          fontFamily: "Heebo-Bold",
+        }} // Add this line to center the title
         leading={() => <AntDesign name="left" size={24} color="white" />}
         style={{
           width: 250,
@@ -96,7 +104,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     paddingVertical: 10,
     paddingHorizontal: 15,
-    borderColor: "purple", // added purple border color
+    borderColor: "#7521f3", // added purple border color
     borderWidth: 2, // increased border width for visibility
     borderRadius: 15,
     fontSize: 16,

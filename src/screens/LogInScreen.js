@@ -1,11 +1,13 @@
 import React, { useContext, useState } from "react";
-import { View, Text, TextInput, StyleSheet } from "react-native";
+import { View, Text, TextInput, StyleSheet, Image,TouchableOpacity } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import { Button } from "@react-native-material/core";
 import { AntDesign } from "@expo/vector-icons";
 import { useFonts } from "expo-font";
 import StudentContext from "../contexts/StudentContext.js";
 import { signIn } from "../api/serviceCalls.js";
 import { LinearGradient } from "expo-linear-gradient";
+import { HeaderBackButton } from '@react-navigation/stack';
 
 export default function LoginScreen({ navigation }) {
   const { addToStudent, items, getVal } = useContext(StudentContext);
@@ -43,77 +45,92 @@ export default function LoginScreen({ navigation }) {
   };
 
   return (
+
     <View style={styles.container}>
+      <Image
+        source={require("../../assets/images/logo.png")}
+        style={{
+          width: "50%",
+        }}
+        resizeMode="contain"
+      />
       <Text style={styles.header}>
+        {"\n"}
         היי,{"\n"}
         טוב לראות אותך :)
       </Text>
-      <TextInput
-        style={styles.inputField1}
-        placeholder="כתובת מייל"
-        onChangeText={setEmail}
-        value={email}
-      />
-      <TextInput
-        style={styles.inputField2}
-        placeholder="סיסמא"
-        onChangeText={setPassword}
-        value={password}
-        secureTextEntry
-      />
-      <Button
-        title="התחבר"
-        titleStyle={{ fontSize: 18, textAlign: "center" }} // Add this line to center the title
-        leading={() => <AntDesign name="left" size={24} color="white" />}
-        style={{
-          width: 200,
-          height: 50,
-          top: -50,
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-        onPress={handleLogin}
-      />
+      <View style={styles.inputFields}>
+        <TextInput
+          style={styles.inputField1}
+          placeholder="כתובת מייל"
+          onChangeText={setEmail}
+          value={email}
+        />
+        <TextInput
+          style={styles.inputField2}
+          placeholder="סיסמא"
+          onChangeText={setPassword}
+          value={password}
+          secureTextEntry
+        />
+      </View>
+      <View style={styles.buttonContainer}>
+        <Button
+          title="התחבר"
+          titleStyle={{
+            fontSize: 18,
+            textAlign: "center",
+            fontFamily: "Heebo-Bold",
+          }} // Add this line to center the title
+          leading={() => <AntDesign name="left" size={24} color="white" />}
+          onPress={handleLogin}
+        />
 
-      <Button
-        title="לא רשום? לחץ כאן"
-        titleStyle={{ fontSize: 18, textAlign: "center" }} // Add this line to center the title
-        leading={() => <AntDesign name="left" size={24} color="white" />}
-        style={{
-          width: 250,
-          height: 50,
-          top: -90,
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-        onPress={handleRegister}
-      />
+        <Button
+          title="לא רשום? לחץ כאן"
+          titleStyle={{
+            fontSize: 18,
+            textAlign: "center",
+            fontFamily: "Heebo-Bold",
+          }} // Add this line to center the title
+          leading={() => <AntDesign name="left" size={24} color="white" />}
+          style={styles.registerButton}
+          onPress={handleRegister}
+        />
+
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "space-between",
-    height: "100%",
+    marginTop: "15%",
+  },
+  inputFields: {
+    width: "80%",
+    flex: 1,
+    justifyContent: "space-evenly",
+    marginTop: "10%",
   },
   header: {
-    fontSize: 30,
-    top: 110,
+    fontSize: 30, // use responsive font size
     fontFamily: "Heebo-Bold",
     textAlign: "center",
+    textShadowColor: "#A1B2C3",
+    textShadowOffset: { width: 1 },
+    textShadowRadius: 7,
   },
   inputField1: {
-    width: 300,
-    top: 60,
-    height: 50,
     backgroundColor: "#fff",
     paddingVertical: 10,
     paddingHorizontal: 15,
-    borderColor: "purple", // added purple border color
-    borderWidth: 2, // increased border width for visibility
+    borderColor: "#7521f3",
+    borderWidth: 2,
     borderRadius: 15,
     fontSize: 16,
     direction: "rtl",
@@ -122,18 +139,26 @@ const styles = StyleSheet.create({
   },
 
   inputField2: {
-    width: 300,
-    top: 0,
-    height: 50,
     backgroundColor: "#fff",
     paddingVertical: 10,
     paddingHorizontal: 15,
-    borderColor: "purple", // added purple border color
-    borderWidth: 2, // increased border width for visibility
+    borderColor: "#7521f3",
+    borderWidth: 2,
     borderRadius: 15,
     fontSize: 16,
     direction: "rtl",
     textAlign: "right",
     fontFamily: "Heebo-Regular",
+  },
+  buttonContainer: {
+    flex: 1,
+    width: "80%",
+    alignItems: "center",
+    justifyContent: "space-evenly",
+    marginBottom: "30%",
+  },
+  buttonText: {
+    fontSize: 18,
+    textAlign: "center",
   },
 });

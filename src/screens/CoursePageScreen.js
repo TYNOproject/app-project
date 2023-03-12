@@ -1,4 +1,4 @@
-import React, { Component,useState ,useContext} from "react";
+import React, { Component,useState ,useContext,useEffect } from "react";
 import { StyleSheet, Text, View, FlatList } from "react-native";
 import { ListItem, SearchBar, Card } from "react-native-elements";
 import { useFonts } from "expo-font";
@@ -7,49 +7,45 @@ import CoursesList from "../components/CoursesList";
 import TeacherCard from "../components/TeacherCard";
 import TeachersList from "../components/TeachersList";
 import StudentContext from "../contexts/StudentContext";
+import ClassContext from "../contexts/ClassContext";
+import { getTeachersByCourseName } from "../api/serviceCalls.js";
 
 export default function CoursePageScreen({ navigation }) {
-  const [search, setSearch] = useState("");
+  const [teachers, setTeachers] = useState([]);
   // const course = navigation.getParam("course");
 
-  const {items} = useContext(StudentContext);
-  const {getVal} = useContext(StudentContext)
-  const course = getVal(items,'courseName');
+  const {itemsClass} = useContext(ClassContext);
+  const {getValClass} = useContext(ClassContext)
+  const course = getValClass(itemsClass,'courseName');
+  const filterOptions = ["rate","year","price"];
+  const sortOptions = ["rate","year","price"];
 
-  const teachers = [
-    {
-      id: 1,
-      name: "אבי",
-      year: "שנה ד'",
-      rate: "4",
-      description:
-        "This course covers the fundamentals of computer programming and software development. Students will learn programming concepts such as data types, control structures, functions, and object-oriented programming.",
-    },
-    {
-      id: 1,
-      name: "יוסי",
-      year: "שנה ד'",
-      rate: "4.5",
-      description:
-        "This course covers the basics of calculus, including limits, derivatives, and integrals. Topics include differentiation and integration of functions, optimization problems, and applications of calculus to physics and engineering.",
-    },
-    {
-      id: 1,
-      name: "מוטי",
-      year: "שנה ד'",
-      rate: "4",
-      description:
-        "This course focuses on developing writing skills through critical reading and analysis of texts. Students will learn how to write effective essays, research papers, and other types of academic writing.",
-    },
-    {
-      id: 1,
-      name: "מנש",
-      year: "שנה ד'",
-      rate: "3",
-      description:
-        "This course covers the major events and ideas of Western civilization from ancient Greece to the present. Topics include the rise of democracy, the Renaissance, the Enlightenment, and the World Wars.",
-    },
-  ];
+  function sortByProperty(list, property) {
+    return list.sort((a, b) => {
+      if (a[property] < b[property]) {
+        return -1;
+      } else if (a[property] > b[property]) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+  }
+
+  
+
+  const getTeachers = () => {
+    useEffect(() => {
+      async function fetchData() {
+        teachersRespone = await getTeachersByCourseName(course);
+        console.log(teachersRespone.data);
+        setTeachers(teachersRespone.data);
+      }
+      fetchData();
+    },[]);
+  };
+
+  getTeachers();
 
   let [fontsLoaded] = useFonts({
     "Heebo-Bold": require("../../assets/fonts/Heebo-Bold.ttf"),
@@ -77,12 +73,16 @@ export default function CoursePageScreen({ navigation }) {
       </View>
       <View style={styles.dropdown}>
         <SelectOption
-          options={["Op1", "Op2", "Op3"]}
+          options={sortOptions}
           defaultText="מיון"
           buttonStyle={styles.dropdownButtonStyle}
+          onSelectOption={(option) => {
+            console.log("option chosen in year: " + option);
+            setTeachers(sortByProperty(teachers,option));
+          }}
         />
         <SelectOption
-          options={["Op1", "Op2", "Op3"]}
+          options={filterOptions}
           defaultText="סינון"
           buttonStyle={styles.dropdownButtonStyle}
         />
