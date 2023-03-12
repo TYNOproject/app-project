@@ -1,5 +1,5 @@
 import React, {Component, useState, useContext, useEffect} from "react";
-import {StyleSheet, Text, View, FlatList} from "react-native";
+import {StyleSheet, Text, View, FlatList, ActivityIndicator} from "react-native";
 import {ListItem, SearchBar, Card} from "react-native-elements";
 import {useFonts} from "expo-font";
 import SelectOption from "../components/SelectOption";
@@ -9,12 +9,14 @@ import * as constants from "../../constants";
 import {getCoursesByDepartment, searchCourses} from "../api/serviceCalls";
 import {FontAwesome} from "@expo/vector-icons";
 
+
 export default function HomePageScreen({navigation}) {
     const [search, setSearch] = useState("");
     const [faculty, setFaculty] = useState(0);
     const [department, setDepartment] = useState(1);
     const [year, setYear] = useState(1);
     const [courses, setCourses] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     const {items, getVal, addToStudent} = useContext(StudentContext);
     const name = getVal(items, "studentDetails").name;
@@ -23,7 +25,8 @@ export default function HomePageScreen({navigation}) {
             .then((response) =>
                 response !== undefined ? setCourses(response.data) : setCourses([])
             )
-            .catch((error) => console.log(error));
+            .catch((error) => console.log(error))
+            .finally(() => setIsLoading(false));
     }, []);
     //need to take from the DB
 
@@ -43,18 +46,20 @@ export default function HomePageScreen({navigation}) {
             .then((response) => {
                 response !== undefined ? setCourses(response.data) : setCourses([]);
             })
-            .catch((error) => console.log(error));
+            .catch((error) => console.log(error))
+            .finally(() => setIsLoading(false));
     };
 
     if (!fontsLoaded)
         return (
             <View>
-                <Text>loading</Text>
+                <ActivityIndicator size="large" color="#0000ff" />
             </View>
         );
 
     return (
         <View style={styles.container}>
+
             <View style={styles.topPart}>
                 <Text style={styles.header}>
                     היי {name}, {"\n"}
@@ -75,7 +80,10 @@ export default function HomePageScreen({navigation}) {
                             name="search"
                             size={24}
                             color="black"
-                            onPress={() => handleSearch(search)}
+                            onPress={() => {
+                                setIsLoading(true);
+                                handleSearch(search)
+                            }}
                         />
                     }
                 />
@@ -101,12 +109,16 @@ export default function HomePageScreen({navigation}) {
             </View>
             <View style={styles.spacer}/>
             <View style={styles.bottomHalf}>
-                <CoursesList
-                    courses={courses}
-                    navigation={navigation}
-                    callback={() => navigation.navigate("CoursePage")}
-                />
+                {isLoading ? (<ActivityIndicator size="large" color="#0000ff" />) : (
+
+                        <CoursesList
+                            courses={courses}
+                            navigation={navigation}
+                            callback={() => navigation.navigate("CoursePage")}
+                        />
+                    )}
             </View>
+
         </View>
     );
 }

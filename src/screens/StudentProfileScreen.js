@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {useContext} from "react";
-import {View, Text, StyleSheet} from "react-native";
+import {View, Text, StyleSheet, ActivityIndicator} from "react-native";
 import {Button} from "@react-native-material/core";
 import {FontAwesome5} from "@expo/vector-icons";
 import {MaterialCommunityIcons} from "@expo/vector-icons";
@@ -14,6 +14,7 @@ export default function StudentProfileScreen({navigation}) {
     const {getVal} = useContext(StudentContext);
     const name = getVal(items, "studentDetails").name;
     const [classes, setClasses] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     let [fontsLoaded] = useFonts({
         "Heebo-Bold": require("../../assets/fonts/Heebo-Bold.ttf"),
@@ -28,18 +29,19 @@ export default function StudentProfileScreen({navigation}) {
         navigation.navigate("TeacherProfile");
     }
 
-  useEffect(() => {
-    getStudentClasses(getVal(items, "studentDetails").id)
-        .then((response) =>
-            response !== undefined ? setClasses(response.data) : setClasses([])
-        )
-        .catch((error) => console.log(error));
-  }, []);
+    useEffect(() => {
+        getStudentClasses(getVal(items, "studentDetails").id)
+            .then((response) =>
+                response !== undefined ? setClasses(response.data) : setClasses([])
+            )
+            .catch((error) => console.log(error))
+            .finally(() => setIsLoading(false));
+    }, []);
 
     if (!fontsLoaded)
         return (
             <View>
-                <Text>loading</Text>
+                <ActivityIndicator size="large" color="#0000ff"/>
             </View>
         );
     return (
@@ -75,7 +77,9 @@ export default function StudentProfileScreen({navigation}) {
             </View>
             <View style={styles.spacer}/>
             <View style={styles.bottomHalf}>
-                <ClassesList classes={classes}/>
+                {isLoading ? (<ActivityIndicator size="large" color="#0000ff"/>) : (
+                    <ClassesList classes={classes}/>
+                )}
             </View>
         </View>
     );
