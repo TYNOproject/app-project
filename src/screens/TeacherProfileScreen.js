@@ -170,6 +170,8 @@ const styles = StyleSheet.create({
     verticalAlign: "top",
   },
   header: {
+    top: 50,
+    marginBottom: 50,
     fontFamily: "Heebo-Bold",
     fontWeight: "bold",
     fontSize: 30,

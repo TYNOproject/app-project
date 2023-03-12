@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, TextInput } from "react-native";
-import { StyleSheet, Keyboard } from "react-native";
+import { StyleSheet, Keyboard, KeyboardAvoidingView} from "react-native";
 import { Button } from "@react-native-material/core";
 import { AntDesign } from "@expo/vector-icons";
 import { useFonts } from "expo-font";
@@ -20,6 +20,7 @@ export default function ReviewScreen ({ navigation }){
 
 const handleReview = () => {
 // handle review logic here
+Keyboard.dismiss();
 navigation.navigate("HomePage");
 };
 
@@ -43,7 +44,10 @@ if (!fontsLoaded)
   );
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView style={styles.container}
+    behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
+    <View>
       <Text style={styles.header1}>
         כל הכבוד {name} !
       </Text>
@@ -76,17 +80,18 @@ if (!fontsLoaded)
         onPress={handleReview}
       />
     </View>
+    </KeyboardAvoidingView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     alignItems: "center",
     justifyContent: "center",
   },
   header1: {
     marginBottom: 40,
-    top: 20,
     fontSize: 30,
     fontFamily: "Heebo-Bold",
     textAlign: "center",
@@ -107,6 +112,7 @@ const styles = StyleSheet.create({
     width: 300,
     height: 90,
     top: 30,
+    marginBottom: 50,
     backgroundColor: "#fff",
     paddingVertical: 10,
     paddingHorizontal: 15,
@@ -120,7 +126,5 @@ const styles = StyleSheet.create({
   },
   button: {
     position: "relative",
-    top: 100
-
   }
 });
