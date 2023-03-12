@@ -45,7 +45,8 @@ export default function ScheduleScreen({ navigation })
           console.log(datestoMark);
           setMarkedDates(datestoMark);
           updateMaps(timeResponse.data);
-        });
+        }
+        ).catch((error) => console.log(error)); 
     },[]);
 
   const updateMaps = (dates) => {
@@ -74,7 +75,7 @@ export default function ScheduleScreen({ navigation })
     setchosenTime(day.dateString);
     console.log(timeMap.get(day.dateString));
     const timesbuttons = timeMap.get(day.dateString).map((timeAndId)=> timeAndId[0]);
-     setTimeButtons(timesbuttons);
+    setTimeButtons(timesbuttons);
   }
 
 
