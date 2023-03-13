@@ -1,4 +1,4 @@
-import React, { Component, useState,useContext } from "react";
+import React, { Component, useState,useContext ,useEffect} from "react";
 import {
   StyleSheet,
   Text,
@@ -15,22 +15,36 @@ export default function AfterScheduleScreen({ navigation })
   const {items,getVal} = useContext(StudentContext);
   const {itemsClass,getValClass} = useContext(ClassContext);
   
+  // const [endTime, setEndTime] = useState("");
+
+
   const name = getVal(items, "studentDetails").name;
   const teacherName = getValClass(itemsClass,'teacherName');
   const date = getValClass(itemsClass,'classDate');
   const fromTime = getValClass(itemsClass,'startTime');
-  const toTime = addHourToTime(fromTime);
+  const endTime = addHourToTime(fromTime);
+  console.log(fromTime);
 
+  // useEffect(() => {
+  //   const timeString = fromTime;
+  //   const [hours, minutes, seconds] = timeString.split(':'); // split the time string into hours, minutes, and seconds
+  //   let hour = parseInt(hours); // convert hours to a number
+  //   let minute = parseInt(minutes); // convert minutes to a number
+  //   let second = parseInt(seconds); // convert seconds to a number
+  //   hour = (hour + 1) % 24; // add an hour and wrap around to the next day if needed
+  //   const newTimeString = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}:${second.toString().padStart(2, '0')}`; // format the new time as a string
+  //   setEndTime(newTimeString);
+  // },{});
+  
   function addHourToTime(timeString) {
     const [hours, minutes, seconds] = timeString.split(':'); // split the time string into hours, minutes, and seconds
     let hour = parseInt(hours); // convert hours to a number
-    let minute = parseInt(minutrubikes); // convert minutes to a number
+    let minute = parseInt(minutes); // convert minutes to a number
     let second = parseInt(seconds); // convert seconds to a number
     hour = (hour + 1) % 24; // add an hour and wrap around to the next day if needed
     const newTimeString = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}:${second.toString().padStart(2, '0')}`; // format the new time as a string
-    return newTimeString;
-  }
-  
+    return (newTimeString);
+  } 
   
   
   return (
@@ -46,7 +60,7 @@ export default function AfterScheduleScreen({ navigation })
         <Icon name="calendar" type="font-awesome" />
         <Text style={styles.mainText}>משעה: {fromTime}</Text>
         <Icon name="timer" style={{ right: 0 }} />
-        <Text style={styles.mainText}>עד שעה: {toTime}</Text>
+        <Text style={styles.mainText}>עד שעה: {endTime}</Text>
         <Icon name="timer" style={{ right: 0 }} />
       </View>
       <TouchableOpacity style={styles.submitButton} onPress={() => navigation.navigate("HomePage")}>
@@ -99,10 +113,6 @@ const styles = StyleSheet.create({
     top: 20,
     textAlign: "center",
     left: 40,
-  },
-  iconStyle: {
-    position: "abs",
-    right: 60,
   },
   submitButton: {
     height: 53,

@@ -1,6 +1,6 @@
 import React, { Component,useState,useContext,useEffect } from "react";
 import { StyleSheet, Text, View, FlatList,TouchableOpacity,ScrollView } from "react-native";
-import { ListItem, SearchBar,Card, Button,ButtonGroup } from "react-native-elements";
+import { ListItem, SearchBar,Card,ButtonGroup } from "react-native-elements";
 import { useFonts } from "expo-font";
 import { Calendar, CalendarList, Agenda } from "react-native-calendars";
 import TimeScrollBar from "../components/TimeScrollBar";
@@ -28,23 +28,23 @@ export default function ScheduleScreen({ navigation })
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [markedDates, setMarkedDates] = useState({});
   const [timeButtons, setTimeButtons] = useState([]);
-  const [chosenTime, setchosenTime] = useState([]);
+  const [chosenTime, setChosenTime] = useState(null);
   const [timeMap, setTimeMap] = useState({});
 
 
     useEffect(() => {
-        console.log(teacherId);
         getTeacherAvailableClasses(teacherId).then((timeResponse)=>
         {
+          if (timeResponse !== undefined){
           const dates = timeResponse.data.map(item => item.date.split('T')[0]);
-          console.log(dates);
           const datestoMark = dates.reduce((obj, date) =>{
             obj[date] = { marked: true };
             return obj;
-          },{});
-          console.log(datestoMark);
+          }
+          ,{});
           setMarkedDates(datestoMark);
           updateMaps(timeResponse.data);
+        }
         }
         ).catch((error) => console.log(error)); 
     },[]);
@@ -72,23 +72,29 @@ export default function ScheduleScreen({ navigation })
  
 
   function handelPossibleTimes(day) {
-    setchosenTime(day.dateString);
-    console.log(timeMap.get(day.dateString));
-    const timesbuttons = timeMap.get(day.dateString).map((timeAndId)=> timeAndId[0]);
+    timesbuttons =[];
+    if (timeMap.size === 0 ||timeMap.get(day.dateString) === undefined) {
+      timesbuttons = [];
+    }
+    else
+    {
+      timesbuttons = timeMap.get(day.dateString).map((timeAndId)=> timeAndId[0]);
+      setChosenTime(day.dateString);
+    }
     setTimeButtons(timesbuttons);
+    setChosenTime(day.dateString);
+    setSelectedIndex(0);
   }
 
 
   async function handleScheduale () {
     const classId_ = timeMap.get(chosenTime)[selectedIndex][1];
-
+    console.log(classId_);
     let bookDetails = {
       classId: classId_,
       studentId: studentId,
     };
-
-    console.log("classId: " + classId_);
-    console.log("studentId: " + studentId);
+    //start dbug
     bookClass(bookDetails).then((bookRespone) => 
     {
       addToClass('startTime', timeButtons[selectedIndex]);
@@ -186,15 +192,6 @@ const styles = StyleSheet.create({
         fontSize: 30,
         top: 0,
         textAlign: "center",
-      },
-      timeButtonContainer: {
-        maxHeight: 200,
-        backgroundColor: 'white',
-        borderWidth: 1,
-        borderColor: 'lightgray',
-        borderRadius: 4,
-        padding: 8,
-        top:100,
       },
       TimeScrollBar: {
         position:"relative",

@@ -6,8 +6,8 @@ const TeachersList = ({ teachers,navigation }) => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.column}>
-        {teachers.map((teacher) => (
-          <TeacherCard teacher={teacher} navigation={navigation} />
+        {teachers.map((teacher,index) => (
+          <TeacherCard teacher={teacher} navigation={navigation} key={index} />
         ))}
       </View>
     </ScrollView>

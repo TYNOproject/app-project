@@ -13,6 +13,7 @@ import RegisterScreen from "./src/screens/RegisterScreen";
 import StudentProfileScreen from "./src/screens/StudentProfileScreen";
 import StudentSignUpScreen from "./src/screens/StudentSignUpScreen";
 import TeacherProfileScreen from "./src/screens/TeacherProfileScreen";
+import TeacherPageScreen from "./src/screens/TeacherPageScreen";
 import CoursePageScreen from "./src/screens/CoursePageScreen";
 import ScheduleScreen from "./src/screens/ScheduleScreen";
 import AfterScheduleScreen from "./src/screens/AfterScheduleScreen";
@@ -163,6 +164,15 @@ function App() {
             <Tab.Screen
               name="TeacherProfile"
               component={TeacherProfileScreen}
+              options={{
+                tabBarButton: () => null, // hides the button
+                tabBarVisibilityAnimationConfig: () => null,
+                headerShown: false, // hide top title
+              }}
+            />
+            <Tab.Screen
+              name="TeacherPage"
+              component={TeacherPageScreen}
               options={{
                 tabBarButton: () => null, // hides the button
                 tabBarVisibilityAnimationConfig: () => null,
