@@ -9,8 +9,8 @@ const TeacherCoursesList = ({ courses }) => {
     showsHorizontalScrollIndicator = {false}
     contentContainerStyle={styles.container}>
       <View style={styles.scrollView}>
-        {courses.map((course) => (
-          <CourseNameCard course={course} />
+        {courses.map((course, index) => (
+          <CourseNameCard course={course} key={index}/>
         ))}
       </View>
     </ScrollView>

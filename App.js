@@ -19,6 +19,7 @@ import AfterScheduleScreen from "./src/screens/AfterScheduleScreen";
 import ConfirmLessonsScreen from "./src/screens/ConfirmLessonsScreen";
 import TeacherRegisterScreen from "./src/screens/TeacherRegisterScreen";
 import HomePageScreen from "./src/screens/HomePageScreen";
+import StudentEditDetailsScreen from "./src/screens/StudentEditDetailsScreen";
 import ReviewScreen from "./src/screens/ReviewScreen";
 const Tab = createBottomTabNavigator();
 
@@ -115,7 +116,6 @@ function App() {
                 headerBackground: () => null, // hide header
                 headerTitle: () => null, // hide header title
                 headerLeft: () => <BackIcon pageName="LogIn" />, // hide header back button
-                tabBarStyle: { display: "none" }, // hide bottom tab
               }}
             />
             <Tab.Screen
@@ -127,7 +127,6 @@ function App() {
                 headerBackground: () => null, // hide header
                 headerTitle: () => null, // hide header title
                 headerLeft: () => <BackIcon pageName="Register" />, // hide header back button
-                tabBarStyle: { display: "none" }, // hide bottom tab
               }}
             />
             <Tab.Screen
@@ -136,6 +135,17 @@ function App() {
               options={{
                 tabBarButton: () => null, // hides the button
                 headerShown: false, // hide top title
+              }}
+            />
+            <Tab.Screen
+              name="EditStudentDetails"
+              component={StudentEditDetailsScreen}
+              options={{
+                tabBarStyle: { display: "none" }, // hide bottom tab
+                tabBarButton: () => null, // hides the button
+                headerBackground: () => null, // hide header
+                headerTitle: () => null, // hide header title
+                headerLeft: () => <BackIcon pageName="Profile" />, // hide header back button
               }}
             />
             <Tab.Screen

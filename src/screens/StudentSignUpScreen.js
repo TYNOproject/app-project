@@ -56,10 +56,10 @@ export default function StudentSignUpScreen({ navigation }) {
           defaultText="פקולטה"
           buttonStyle={styles.selectOptionStyle}
           onSelectOption={(selectedItem) => {
-            facId = constants.faculties.find(
+            let facId = constants.faculties.find(
               (faculty) => faculty.faculty_name === selectedItem
             ).id;
-            studentDetails = getVal(items, "studentDetails");
+            let studentDetails = getVal(items, "studentDetails");
             addToStudent("studentDetails", {
               ...studentDetails,
               faculty: facId,
@@ -73,10 +73,10 @@ export default function StudentSignUpScreen({ navigation }) {
           defaultText="מחלקה"
           buttonStyle={styles.selectOptionStyle}
           onSelectOption={(selectedItem) => {
-            depId = constants.departments.find(
+            let depId = constants.departments.find(
               (department) => department.department_name === selectedItem
             ).id;
-            studentDetails = getVal(items, "studentDetails");
+            let studentDetails = getVal(items, "studentDetails");
             console.log("selectedItem" + selectedItem);
             addToStudent("studentDetails", {
               ...studentDetails,
@@ -89,7 +89,7 @@ export default function StudentSignUpScreen({ navigation }) {
           defaultText="תואר"
           buttonStyle={styles.selectOptionStyle}
           onSelectOption={(selectedItem) => {
-            studentDetails = getVal(items, "studentDetails");
+            let studentDetails = getVal(items, "studentDetails");
             addToStudent("studentDetails", {
               ...studentDetails,
               degree: selectedItem,
@@ -101,7 +101,7 @@ export default function StudentSignUpScreen({ navigation }) {
           defaultText="שנה"
           buttonStyle={styles.selectOptionStyle}
           onSelectOption={(selectedItem) => {
-            studentDetails = getVal(items, "studentDetails");
+            let studentDetails = getVal(items, "studentDetails");
             addToStudent("studentDetails", {
               ...studentDetails,
               year: selectedItem,
@@ -163,11 +163,9 @@ const styles = StyleSheet.create({
     paddingBottom: 0, // add some padding to the bottom
   },
   selectOptionStyle: {
-    borderWidth: 1,
     borderRadius: 8,
     borderColor: "#444",
     width: 250,
-    borderColor: "purple", // added purple border color
     borderWidth: 2, // increased border width for visibility
     top: 20,
     paddingBottom: 0,
