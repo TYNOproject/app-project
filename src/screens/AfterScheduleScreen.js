@@ -1,12 +1,11 @@
-import React, { Component, useState,useContext } from "react";
+import React, {useContext } from "react";
 import {
   StyleSheet,
   Text,
   View,
-  FlatList,
   TouchableOpacity,
 } from "react-native";
-import { ListItem, SearchBar, Card, Icon } from "react-native-elements";
+import { Icon } from "react-native-elements";
 import StudentContext from "../contexts/StudentContext";
 import ClassContext from "../contexts/ClassContext";
 
