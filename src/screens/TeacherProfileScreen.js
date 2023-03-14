@@ -72,26 +72,32 @@ export default function TeacherProfileScreen({navigation}) {
         navigation.navigate("TeacherRegister");
     };
 
+
     return (
         <ScrollView contentContainerStyle={styles.container}>
             <Text style={styles.header}>
                 היי {name}
             </Text>
-            <Text style={styles.feutareLessons}>
-                שיעורים קרובים
-            </Text>
-            <View style={styles.scrollView}>
-                <ClassesList classes={bookedClasses} horizantal={true} style={"row"}/>
-            </View>
-            <Text style={styles.waitingLessons}>
+            <Text style={styles.feutareLessons}>שיעורים קרובים</Text>
+            {bookedClasses.length === 0 && (
+                <Text style={styles.noClassesText}>אין לך שיעורים קרובים</Text>
+            )}
+            {bookedClasses.length > 0 && (
+             <>
+                <View style={styles.scrollView}>
+                    <ClassesList classes={bookedClasses} horizantal={true} style={"row"} />
+                </View>
+            </>
+            )}
+            {/* <Text style={styles.waitingLessons}>
                 שיעורים שמחכים לאישור
             </Text>
             <View style={styles.scrollView}>
                 <ClassesList classes={pendingClasses} horizantal={true} style={"row"} width={160}/>
-            </View>
+            </View> */}
             <Button style={styles.ConfirmLessonsButton}
                     leading={() => <AntDesign name="left" size={24}/>}
-                    title="לאישור/דחיית שיעורים"
+                    title="לאישור/דחיית שיעורים ממתינים"
                     variant="outlined"
                     color="black"
                     onPress={handleLessonsConfermation}/>
@@ -129,8 +135,7 @@ const styles = StyleSheet.create({
         verticalAlign: "top",
     },
     header: {
-        top: 50,
-        marginBottom: 50,
+        marginBottom: 20,
         fontFamily: "Heebo-Bold",
         fontWeight: "bold",
         fontSize: 30,
@@ -141,27 +146,36 @@ const styles = StyleSheet.create({
         fontFamily: "Heebo-Bold",
         right: 10,
         alignSelf: "flex-end",
-        marginBottom: -15
+        marginBottom: 20
+    },
+    noClassesText: {
+        marginBottom: 20,
+        fontFamily: "Heebo-Bold",
+        fontWeight: "bold",
+        fontSize: 20,
+        textAlign: "center",
+        marginBottom: 100,
+        top: 30
     },
     scrollView: {
         alignSelf: "flex-end",
         width: "100%",
-        marginBottom: -15
+        marginBottom: 10
     },
-    waitingLessons: {
-        fontSize: 20,
-        fontFamily: "Heebo-Bold",
-        right: 10,
-        alignSelf: "flex-end",
-        marginBottom: -15
-    },
+    // waitingLessons: {
+    //     fontSize: 20,
+    //     fontFamily: "Heebo-Bold",
+    //     right: 10,
+    //     alignSelf: "flex-end",
+    //     marginBottom: -15
+    // },
     ConfirmLessonsButton: {
         position: "relative",
-        marginBottom: 15,
+        marginBottom: 30,
     },
     row: {
         flexDirection: "row",
-        marginBottom: -15
+        marginBottom: 5,
     },
     editButton: {
         position: "relative",
@@ -176,11 +190,11 @@ const styles = StyleSheet.create({
         right: 10,
     },
     aviableTimes: {
-        fontSize: 16,
+        fontSize: 20,
         fontFamily: "Heebo-Bold",
         right: 10,
         alignSelf: "flex-end",
-        marginBottom: -15
+        marginBottom: 5
     },
     teacherPrice: {
         fontSize: 20,
