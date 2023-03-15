@@ -1,12 +1,14 @@
-import React, { Component,useState } from "react";
+import React, { Component,useState,useContext,useEffect } from "react";
 import { StyleSheet, Text, View, FlatList } from "react-native";
-import { ListItem, SearchBar,Card,Avatar,Icon, Button } from "react-native-elements";
+import { ListItem, SearchBar,Card,Avatar,Icon } from "react-native-elements";
 import { useFonts } from "expo-font";
 import SelectOption from "../components/SelectOption";
 import CoursesList from "../components/CoursesList";
 import TeacherCourseBar from "../components/TeacherCourseBar";
 import ReviewBar from "../components/ReviewBar";
-import { Chip } from '@rneui/themed';
+import { getTeacherCourses,getTeacherReviews } from "../api/serviceCalls.js";
+import ClassContext from "../contexts/ClassContext";
+import { Button } from "@react-native-material/core";
 
 
 
@@ -14,20 +16,37 @@ import { Chip } from '@rneui/themed';
 
 export default function TeacherPageScreen({ navigation })
 {
-  const [search, setSearch] = useState("");
-  // const name = navigation.getParam("username");
-  // const year = navigation.getParam("year");
-  // const rate = navigation.getParam("rate");
-  // const money = navigation.getParam("money");
+  const [courses, setCourses] = useState([]);
+  const [reviews, setReviews] = useState([]);
+
+  const {itemsClass,getValClass} = useContext(ClassContext);
+  
+  const name = getValClass(itemsClass,'teacherName');
+  const teacherId = getValClass(itemsClass,'teacherId');
+
+  const year = getValClass(itemsClass,'teacherYear');
+  const rate = getValClass(itemsClass,'teacherReat');
+  const money = getValClass(itemsClass,'teacherPrice');
 
 
-  const name = "משה בן חמו";
-  const year = "שנה ד'";
-  const rate = "4";
-  const money = "120";
-
+  useEffect(() => {
+    console.log(teacherId);
+    getTeacherCourses(teacherId).then((CoursesResponse)=>
+    {
+      console.log(CoursesResponse.data);
+      const teacherCourses = CoursesResponse.data.map(item => {return item.courseName});
+      console.log(teacherCourses);
+      setCourses(teacherCourses);
+    }
+    ).catch((error) => console.log(error));
+    getTeacherReviews(teacherId).then((reviewsResponse) =>
+    {
+      setReviews(reviewsResponse.data);
+    }).catch((error) => console.log(error));
+      },{})
   //need to take from the DB
-  const courses = [
+  console.log(courses);
+  const coursesDemo = [
     {
       name: "קומפילציה",
       description:
@@ -45,7 +64,7 @@ export default function TeacherPageScreen({ navigation })
     },
   ];
 
-  const reviews = [
+  const reviewsDemo = [
     {
       reat: "2",
       name: "ישראל ישראלי",
@@ -71,14 +90,7 @@ export default function TeacherPageScreen({ navigation })
 
   let [fontsLoaded] = useFonts({
     "Heebo-Bold": require("../../assets/fonts/Heebo-Bold.ttf"),
-    "Heebo-Light": require("../../assets/fonts/Heebo-Light.ttf"),
-    "Heebo-Medium": require("../../assets/fonts/Heebo-Medium.ttf"),
     "Heebo-Regular": require("../../assets/fonts/Heebo-Regular.ttf"),
-    "Heebo-SemiBold": require("../../assets/fonts/Heebo-SemiBold.ttf"),
-    "Heebo-Thin": require("../../assets/fonts/Heebo-Thin.ttf"),
-    "Heebo-Black": require("../../assets/fonts/Heebo-Black.ttf"),
-    "Heebo-ExtraBold": require("../../assets/fonts/Heebo-ExtraBold.ttf"),
-    "Heebo-ExtraLight": require("../../assets/fonts/Heebo-ExtraLight.ttf"),
   });
 
 if (!fontsLoaded)
@@ -119,7 +131,7 @@ return (
         <View style={styles.bottomHalf}>
             <ReviewBar reviews={reviews} />
         </View>
-        <Button title= {<Text style={styles.starRatingText}> לקביעת שיעור עם {name}</Text>} onPress={() => alert("move to nexxt page")} style = {styles.button}/>
+        <Button title= {<Text style={styles.starRatingText}> לקביעת שיעור עם {name}</Text>} onPress={() => navigation.navigate("Schedule")} style = {styles.button}/>
       </View>); 
 }
 
@@ -139,18 +151,18 @@ const styles = StyleSheet.create({
     },
     reatingLocatioin: {
       position: 'relative',
-      left:150,
-      top:250,
+      left:"40%",
+      top:"30%",
     },
     moneyLocatioin: {
       position: 'relative',
-      left:-100,
-      top:220,
+      right:"25%",
+      top:"25%",
     },
   avatarContainer: {
     position: 'absolute',
-    top: 20,
-    left:100,
+    top: "70%",
+    marginLeft:"25%",
     transform: [{ translateX: -25 }],
     zIndex: 1,
   },

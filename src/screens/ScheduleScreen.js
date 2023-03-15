@@ -1,8 +1,8 @@
-import React, {Component, useState, useContext, useEffect} from "react";
-import {StyleSheet, Text, View, FlatList, TouchableOpacity, ScrollView} from "react-native";
-import {ListItem, SearchBar, Card, Button, ButtonGroup} from "react-native-elements";
-import {useFonts} from "expo-font";
-import {Calendar, CalendarList, Agenda} from "react-native-calendars";
+import React, { Component,useState,useContext,useEffect } from "react";
+import { StyleSheet, Text, View, FlatList,TouchableOpacity,ScrollView } from "react-native";
+import { ListItem, SearchBar,Card,ButtonGroup } from "react-native-elements";
+import { useFonts } from "expo-font";
+import { Calendar, CalendarList, Agenda } from "react-native-calendars";
 import TimeScrollBar from "../components/TimeScrollBar";
 import StudentContext from "../contexts/StudentContext";
 import ClassContext from "../contexts/ClassContext";
@@ -22,28 +22,29 @@ export default function ScheduleScreen({navigation}) {
     const name = getValClass(itemsClass, 'teacherName');
     const teacherId = getValClass(itemsClass, 'teacherId');
 
-    const [selectedIndex, setSelectedIndex] = useState(0);
-    const [markedDates, setMarkedDates] = useState({});
-    const [timeButtons, setTimeButtons] = useState([]);
-    const [chosenTime, setchosenTime] = useState([]);
-    const [timeMap, setTimeMap] = useState({});
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [markedDates, setMarkedDates] = useState({});
+  const [timeButtons, setTimeButtons] = useState([]);
+  const [chosenTime, setChosenTime] = useState(null);
+  const [timeMap, setTimeMap] = useState({});
 
 
     useEffect(() => {
-        console.log(teacherId);
-        getTeacherAvailableClasses(teacherId).then((timeResponse) => {
-                const dates = timeResponse.data.map(item => item.date.split('T')[0]);
-                console.log(dates);
-                const datestoMark = dates.reduce((obj, date) => {
-                    obj[date] = {marked: true};
-                    return obj;
-                }, {});
-                console.log(datestoMark);
-                setMarkedDates(datestoMark);
-                updateMaps(timeResponse.data);
-            }
-        ).catch((error) => console.log(error));
-    }, []);
+        getTeacherAvailableClasses(teacherId).then((timeResponse)=>
+        {
+          if (timeResponse !== undefined){
+          const dates = timeResponse.data.map(item => item.date.split('T')[0]);
+          const datestoMark = dates.reduce((obj, date) =>{
+            obj[date] = { marked: true };
+            return obj;
+          }
+          ,{});
+          setMarkedDates(datestoMark);
+          updateMaps(timeResponse.data);
+        }
+        }
+        ).catch((error) => console.log(error)); 
+    },[]);
 
     const updateMaps = (dates) => {
         const myTimeMap = new Map();
@@ -67,31 +68,38 @@ export default function ScheduleScreen({navigation}) {
     }
 
 
-    function handelPossibleTimes(day) {
-        setchosenTime(day.dateString);
-        console.log(timeMap.get(day.dateString));
-        const timesbuttons = timeMap.get(day.dateString).map((timeAndId) => timeAndId[0]);
-        setTimeButtons(timesbuttons);
+  function handelPossibleTimes(day) {
+    timesbuttons =[];
+    if (timeMap.size === 0 ||timeMap.get(day.dateString) === undefined) {
+      timesbuttons = [];
     }
+    else
+    {
+      timesbuttons = timeMap.get(day.dateString).map((timeAndId)=> timeAndId[0]);
+      setChosenTime(day.dateString);
+    }
+    setTimeButtons(timesbuttons);
+    setChosenTime(day.dateString);
+    setSelectedIndex(0);
+  }
 
 
-    async function handleScheduale() {
-        const classId_ = timeMap.get(chosenTime)[selectedIndex][1];
-
-        let bookDetails = {
-            classId: classId_,
-            studentId: studentId,
-        };
-
-        console.log("classId: " + classId_);
-        console.log("studentId: " + studentId);
-        bookClass(bookDetails).then((bookRespone) => {
-                addToClass('startTime', timeButtons[selectedIndex]);
-                addToClass('classDate', chosenTime);
-                navigation.navigate("AfterSchedule");
-            }
-        ).catch((error) => console.log(error));
+  async function handleScheduale () {
+    const classId_ = timeMap.get(chosenTime)[selectedIndex][1];
+    console.log(classId_);
+    let bookDetails = {
+      classId: classId_,
+      studentId: studentId,
     };
+    //start dbug
+    bookClass(bookDetails).then((bookRespone) => 
+    {
+      addToClass('startTime', timeButtons[selectedIndex]);
+      addToClass('classDate', chosenTime);
+      navigation.navigate("AfterSchedule");
+    }
+    ).catch((error) => console.log(error)); 
+  };
 
     let [fontsLoaded] = useFonts({
         "Heebo-Bold": require("../../assets/fonts/Heebo-Bold.ttf"),
@@ -181,21 +189,12 @@ const styles = StyleSheet.create({
         fontSize: 30,
         top: 0,
         textAlign: "center",
-    },
-    timeButtonContainer: {
-        maxHeight: 200,
-        backgroundColor: 'white',
-        borderWidth: 1,
-        borderColor: 'lightgray',
-        borderRadius: 4,
-        padding: 8,
-        top: 100,
-    },
-    TimeScrollBar: {
-        position: "relative",
-        top: 180
-    },
-    submitButton: {
+      },
+      TimeScrollBar: {
+        position:"relative",
+        top:180
+      },
+      submitButton: {
         height: 53,
         width: 326,
         left: 0,

@@ -9,7 +9,6 @@ const CourseCard = ({course, navigation, changeColor, callback }) => {
   const [isSelected, setIsSelected] = useState(false);
 
   const handlePress = () => {
-    alert(course.courseName);
     addToClass('courseName',course.courseName);
     addToClass('courseId',course.id);
     callback();
