@@ -96,12 +96,12 @@ export default function StudentProfileScreen({navigation}) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        padding: "5%",
     },
     header: {
         alignItems: "center",
-        height: "30%",
+        height: "40%",
         justifyContent: "center",
-        flex: 1,
     },
     headerText: {
         fontSize: 30,
@@ -111,6 +111,5 @@ const styles = StyleSheet.create({
     content: {
         justifyContent: 'center',
         alignItems: 'center',
-        flex: 2,
     },
 });
