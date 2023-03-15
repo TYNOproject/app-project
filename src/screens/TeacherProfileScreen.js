@@ -1,6 +1,6 @@
-import React, {Component, useEffect, useState} from "react";
+import React, { useEffect, useState} from "react";
 import {Button} from "@react-native-material/core";
-import {StyleSheet, Text, View, FlatList, ScrollView} from "react-native";
+import {StyleSheet, Text, View, ScrollView, ActivityIndicator} from "react-native";
 import {useFonts} from "expo-font";
 import {AntDesign} from "@expo/vector-icons";
 import {useContext} from "react";
@@ -8,7 +8,7 @@ import TeacherCoursesList from "../components/TeacherCoursesList";
 import StudentContext from "../contexts/StudentContext";
 import ClassesList from "../components/ClassesList";
 import AviableTimesList from "../components/AviableTimesList";
-import {getStudentClasses, getTeacherClasses, getTeacherCourses} from "../api/serviceCalls";
+import {getTeacherClasses, getTeacherCourses} from "../api/serviceCalls";
 
 
 export default function TeacherProfileScreen({navigation}) {
@@ -149,7 +149,6 @@ const styles = StyleSheet.create({
         marginBottom: 20
     },
     noClassesText: {
-        marginBottom: 20,
         fontFamily: "Heebo-Bold",
         fontWeight: "bold",
         fontSize: 20,
