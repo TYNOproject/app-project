@@ -9,10 +9,11 @@ const TeacherCard = ({ teacher, navigation }) => {
   const { addToClass } = useContext(ClassContext);
 
   const handlePress = () => {
-    alert(teacher.name);
-    addToClass("teacherName", teacher.name);
-    addToClass("teacherId", teacher.id);
-    navigation.navigate("Schedule");
+    addToClass('teacherName', teacher.name);
+    addToClass('teacherId', teacher.id);
+    addToClass('teacherRate', teacher.rate);
+    addToClass('teacherPrice', teacher.price);
+    navigation.navigate("TeacherPage");
   };
 
   return (

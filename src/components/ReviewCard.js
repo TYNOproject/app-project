@@ -7,13 +7,13 @@ import { AirbnbRating } from '@rneui/themed';
 const ReviewCard = ({ review }) => {
   return (
     <Card containerStyle={styles.cardContainer}>
-      <Card.Title style={styles.name}>{review.name}</Card.Title>
+      <Card.Title style={styles.name}>{review.studentName}</Card.Title>
       <Card.Divider />
       <Text style={styles.description}>
-        {review.description}
+        {review.textReview}
       </Text>
       <View style={styles.reating}>
-        <AirbnbRating reviewSize = {20} size = {20} defaultRating = {review.reat} style ={styles.reating}/>
+        <AirbnbRating reviewSize = {20} size = {20} defaultRating = {review.starsReview} style ={styles.reating}/>
       </View>
     </Card>
   );

@@ -9,8 +9,8 @@ const ReviewBar = ({ reviews }) => {
     return (
         <ScrollView contentContainerStyle={styles.container} horizontal={true}>
           <View style={styles.row}>
-            {reviews.map((review) => (
-              <ReviewCard review={review} />
+            {reviews.map((review,index) => (
+              <ReviewCard review={review} key={index} />
             ))}
           </View>
         </ScrollView>
