@@ -51,8 +51,8 @@ export default function StudentProfileScreen({navigation}) {
         );
     return (
         <View style={styles.container}>
-            <View style={styles.topContainer}>
-                <Text style={styles.header}>
+            <View style={styles.header}>
+                <Text style={styles.headerText}>
                     פרופיל אישי{"\n"}
                     {name}
                 </Text>
@@ -80,10 +80,15 @@ export default function StudentProfileScreen({navigation}) {
                     onPress={handleTeacherPress}
                 />
             </View>
-            <View style={styles.spacer}/>
-            <View style={styles.bottomHalf}>
-                {isLoading ? (<ActivityIndicator size="large" color="#0000ff"/>) : (
-                    <ClassesList classes={classes}/>
+            <View style={styles.content}>
+                {isLoading ? (
+                    <ActivityIndicator size="large" color="#0000ff"/>
+                ) : (
+                    classes.length > 0 ? (
+                        <ClassesList classes={classes}/>
+                    ) : (
+                        <Text style={{fontSize: 20, fontFamily: 'Heebo-Bold', textAlign: "center"}}>לא נמצאו שיעורים</Text>
+                    )
                 )}
             </View>
         </View>
@@ -92,29 +97,21 @@ export default function StudentProfileScreen({navigation}) {
 
 const styles = StyleSheet.create({
     container: {
-        top: 90,
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "space-between",
-        height: "100%",
-    },
-    topContainer: {
-        flex: 2,
-        height: 200,
+        flex: 1,
+        padding: "5%",
     },
     header: {
+        alignItems: "center",
+        height: "40%",
+        justifyContent: "center",
+    },
+    headerText: {
         fontSize: 30,
         fontFamily: "Heebo-Bold",
         textAlign: "center",
     },
-    spacer: {
-        flex: 1,
-    },
-    bottomHalf: {
-        alignSelf: "flex-end",
-        width: "100%",
-        flex: 4,
-        top: -80,
-        right: -20,
+    content: {
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 });

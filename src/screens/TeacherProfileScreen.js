@@ -1,14 +1,14 @@
-import React, {Component, useEffect, useState} from "react";
+import React, { useEffect, useState} from "react";
 import {Button} from "@react-native-material/core";
-import {StyleSheet, Text, View, FlatList, ScrollView} from "react-native";
+import {StyleSheet, Text, View, ScrollView, ActivityIndicator} from "react-native";
 import {useFonts} from "expo-font";
-import {AntDesign} from "@expo/vector-icons";
+import {AntDesign, FontAwesome5, MaterialCommunityIcons} from "@expo/vector-icons";
 import {useContext} from "react";
 import TeacherCoursesList from "../components/TeacherCoursesList";
 import StudentContext from "../contexts/StudentContext";
 import ClassesList from "../components/ClassesList";
 import AviableTimesList from "../components/AviableTimesList";
-import {getStudentClasses, getTeacherClasses, getTeacherCourses} from "../api/serviceCalls";
+import {getTeacherClasses, getTeacherCourses} from "../api/serviceCalls";
 
 
 export default function TeacherProfileScreen({navigation}) {
@@ -74,134 +74,91 @@ export default function TeacherProfileScreen({navigation}) {
 
 
     return (
-        <ScrollView contentContainerStyle={styles.container}>
-            <Text style={styles.header}>
-                היי {name}
+        <ScrollView contentContainerStyle={styles.container} style={{flex: 1}}>
+            <Text style={styles.title}>
+                <FontAwesome5 name="chalkboard-teacher" size={30} color="black"/>{"\n"}
+                פרופיל מורה{"\n"}
+                {name}
             </Text>
-            <Text style={styles.feutareLessons}>שיעורים קרובים</Text>
-            {bookedClasses.length === 0 && (
-                <Text style={styles.noClassesText}>אין לך שיעורים קרובים</Text>
-            )}
-            {bookedClasses.length > 0 && (
-             <>
-                <View style={styles.scrollView}>
-                    <ClassesList classes={bookedClasses} horizantal={true} style={"row"} />
-                </View>
-            </>
-            )}
-            {/* <Text style={styles.waitingLessons}>
-                שיעורים שמחכים לאישור
-            </Text>
-            <View style={styles.scrollView}>
-                <ClassesList classes={pendingClasses} horizantal={true} style={"row"} width={160}/>
-            </View> */}
-            <Button style={styles.ConfirmLessonsButton}
-                    leading={() => <AntDesign name="left" size={24}/>}
-                    title="לאישור/דחיית שיעורים ממתינים"
-                    variant="outlined"
-                    color="black"
-                    onPress={handleLessonsConfermation}/>
-            <View style={styles.row}>
-                <Button style={styles.editButton}
-                        title="עריכת פרטים אישיים"
-                        variant="outlined"
-                        color="black"
-                        onPress={handleEditTeacher}/>
-                <Text style={styles.teacherCourses}>
-                    קורסים שאני מלמד
-                </Text>
+            <Button
+                title="עריכת פרטי מורה"
+                variant="outlined"
+                color="black"
+                titleStyle={{fontFamily: "Heebo-Regular"}}
+            />
+            <Button
+                title="אישור/דחיית שיעורים ממתינים"
+                variant="outlined"
+                color="black"
+                titleStyle={{fontFamily: "Heebo-Regular"}}
+            />
+            <View style={styles.divider} />
+            <Text style={styles.containerHeaderText}>השיעורים הקרובים שלי</Text>
+            <View style={styles.upcomingLessonsContainer}>
+                {bookedClasses.length === 0 && (
+                    <Text style={{textAlign: 'center', fontFamily: 'Heebo-Regular'}}>אין לך שיעורים קרובים</Text>
+                )}
+                {bookedClasses.length > 0 && (
+                    <>
+                        <View>
+                            <ClassesList classes={bookedClasses} horizantal={true} style={"row"} />
+                        </View>
+                    </>
+                )}
             </View>
-            <View style={styles.scrollView}>
-                <TeacherCoursesList courses={teacherCourses}/>
-            </View>
-            <Text style={styles.aviableTimes}>
-                הזמנים הפנויים שלי
-            </Text>
-            <View style={styles.scrollView}>
+            <View style={styles.divider} />
+            <Text style={styles.containerHeaderText}>הזמנים הפנויים שלי</Text>
+            <View style={styles.mySlotsContainer}>
                 <AviableTimesList availableTimes={availableTimes}/>
             </View>
-            <Text style={styles.teacherPrice}>
-                המחיר שלי לשיעור: {price} ש"ח
-            </Text>
+            <View style={styles.divider} />
+            <Text style={styles.containerHeaderText}>הקורסים שאני מלמד</Text>
+            <View style={styles.myCoursesContainer}>
+                <TeacherCoursesList courses={teacherCourses}/>
+            </View>
+            <View style={styles.divider} />
         </ScrollView>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        alignItems: "center",
-        flexDirection: "column",
-        flex: 1,
-        verticalAlign: "top",
+        padding: "5%",
     },
-    header: {
+    containerHeaderText: {
+        writingDirection: 'rtl',
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginBottom: 10,
+        fontFamily: "Heebo-Bold",
+        shadowOpacity: 0.2,
+        shadowRadius: 1,
+        shadowOffset: {height: 1, width: 0}
+    },
+    title: {
+        fontSize: 25,
+        fontWeight: 'bold',
+        fontFamily: "Heebo-Bold",
         marginBottom: 20,
-        fontFamily: "Heebo-Bold",
-        fontWeight: "bold",
-        fontSize: 30,
-        textAlign: "center",
+        textAlign: 'center',
     },
-    feutareLessons: {
-        fontSize: 20,
-        fontFamily: "Heebo-Bold",
-        right: 10,
-        alignSelf: "flex-end",
-        marginBottom: 20
+    upcomingLessonsContainer: {
+        backgroundColor: '#e1e1e1',
+        borderRadius: 10,
+        padding: 10,
     },
-    noClassesText: {
-        marginBottom: 20,
-        fontFamily: "Heebo-Bold",
-        fontWeight: "bold",
-        fontSize: 20,
-        textAlign: "center",
-        marginBottom: 100,
-        top: 30
+    mySlotsContainer: {
+        backgroundColor: '#e1e1e1',
+        borderRadius: 10,
+        paddingBottom: 10,
     },
-    scrollView: {
-        alignSelf: "flex-end",
-        width: "100%",
-        marginBottom: 10
+    myCoursesContainer: {
+        backgroundColor: '#e1e1e1',
+        borderRadius: 10,
     },
-    // waitingLessons: {
-    //     fontSize: 20,
-    //     fontFamily: "Heebo-Bold",
-    //     right: 10,
-    //     alignSelf: "flex-end",
-    //     marginBottom: -15
-    // },
-    ConfirmLessonsButton: {
-        position: "relative",
-        marginBottom: 30,
+    divider: {
+        height: 1,
+        backgroundColor: '#c2bbbb',
+        marginVertical: 10,
     },
-    row: {
-        flexDirection: "row",
-        marginBottom: 5,
-    },
-    editButton: {
-        position: "relative",
-        alignSelf: "flex-start",
-        left: 10,
-    },
-    teacherCourses: {
-        fontSize: 20,
-        fontFamily: "Heebo-Bold",
-        flex: 1,
-        textAlign: "right",
-        right: 10,
-    },
-    aviableTimes: {
-        fontSize: 20,
-        fontFamily: "Heebo-Bold",
-        right: 10,
-        alignSelf: "flex-end",
-        marginBottom: 5
-    },
-    teacherPrice: {
-        fontSize: 20,
-        fontFamily: "Heebo-Bold",
-        flex: 1,
-        textAlign: "right",
-        right: 10
-    },
-
 });
