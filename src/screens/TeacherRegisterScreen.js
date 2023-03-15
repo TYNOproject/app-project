@@ -10,7 +10,7 @@ import StudentContext from "../contexts/StudentContext";
 import CoursesList from "../components/CoursesList";
 import SelectOption from "../components/SelectOption";
 import * as constants from "../../constants";
-import {getCoursesByDepartment, searchCourses} from "../api/serviceCalls";
+import {getCoursesByDepartment, searchCourses,sendTeacherRequest} from "../api/serviceCalls";
 import {FontAwesome} from "@expo/vector-icons";
 import { set } from "react-native-reanimated";
 
@@ -27,7 +27,6 @@ export default function RegisterScreen({ navigation }) {
   const [isLoading, setIsLoading] = useState(true);
 
   const {items, getVal, addToStudent} = useContext(StudentContext);
-  const name = getVal(items, "studentDetails").name;
   useEffect(() => {
     addToStudent('coursesList',new Set());
       getCoursesByDepartment(getVal(items, "studentDetails").department.id)
@@ -69,7 +68,17 @@ export default function RegisterScreen({ navigation }) {
 };
 
   const handleRegister = () => {
-    navigation.navigate("TeacherProfile");
+    const CoursesId = Array.from(getVal(items,'coursesList'));
+    const studentId = getVal(items, "studentDetails").id;
+    //start dbug
+    console.log(studentId);
+    console.log(CoursesId);
+    console.log(price);
+    sendTeacherRequest(studentId,CoursesId,price,description).then((teacherRespone) => 
+    {
+      teacherRespone !== undefined ? navigation.navigate("TeacherProfile") : alert("error!");
+    }
+    ).catch((error) => console.log(error)); 
   };
 
   if (!fontsLoaded)

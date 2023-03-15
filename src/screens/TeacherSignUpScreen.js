@@ -3,6 +3,8 @@ import { StyleSheet, View, Text } from "react-native";
 import { useFonts } from "expo-font";
 import FileUploader from "../components/FileUploader";
 import StudentContext from "../contexts/StudentContext";
+import { Button } from "@react-native-material/core";
+import { AntDesign } from "@expo/vector-icons";
 
 export default function TeacherSignUpScreen({ navigation }) {
   const { items, getVal, addToStudent } = useContext(StudentContext);
@@ -40,6 +42,19 @@ export default function TeacherSignUpScreen({ navigation }) {
       <View style={styles.dropdown}>
         <FileUploader />
       </View>
+      <Button
+                        title="המשך להרשמה"
+                        titleStyle={{
+                            fontSize: 18,
+                            textAlign: "center",
+                            fontFamily: "Heebo-Bold",
+                        }} // Add this line to center the title
+                        leading={() => <AntDesign name="left" size={24} color="white"/>}
+                        style={{top: "100%"}}
+                        onPress={() => {
+                            navigation.navigate("TeacherRegister")
+                        }}
+                    />
     </View>
   );
 }

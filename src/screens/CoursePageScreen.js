@@ -29,13 +29,14 @@ export default function CoursePageScreen({navigation}) {
     }
 
     useEffect(() => {
+        console.log(teachers);
         getTeachersByCourseName(course)
             .then((response) =>
                 response !== undefined ? setTeachers(response.data) : setTeachers([])
             )
             .catch((error) => console.log(error))
             .finally(() => setIsLoading(false));
-    }, []);
+    },[course]);
 
     console.log(teachers);
         let [fontsLoaded] = useFonts({

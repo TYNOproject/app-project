@@ -44,45 +44,7 @@ export default function TeacherPageScreen({ navigation })
       setReviews(reviewsResponse.data);
     }).catch((error) => console.log(error));
       },[])
-  //need to take from the DB
-  console.log(courses);
-  const coursesDemo = [
-    {
-      name: "קומפילציה",
-      description:
-        "This course covers the fundamentals of computer programming and software development. Students will learn programming concepts such as data types, control structures, functions, and object-oriented programming.",
-    },
-    {
-      name: "מבנה נתונים",
-      description:
-        "This course covers the basics of calculus, including limits, derivatives, and integrals. Topics include differentiation and integration of functions, optimization problems, and applications of calculus to physics and engineering.",
-    },
-    {
-      name: "תולדות היופי",
-      description:
-        "This course focuses on developing writing skills through critical reading and analysis of texts. Students will learn how to write effective essays, research papers, and other types of academic writing.",
-    },
-  ];
 
-  const reviewsDemo = [
-    {
-      reat: "2",
-      name: "ישראל ישראלי",
-      description:
-    "מורה בןזונה"},
-    {
-      reat: "4",
-      name: "אני נוסבאום",
-      description:
-        " מורה נהדר לקורס נהדר!",
-    },
-    {
-      reat: "4",
-      name: "מנש אליהו",
-      description:
-        "יותם מרצה מעולה הגעתי לשיעור הראשון איתו לחוצה מאד מהחומר ויותם הרגיע אותי הוא מעביר את החומר בצורה נעימה וברורה....",
-    },
-  ];
 
 
   const avatarImage = require('../../assets/pics/avatarPic.png' );
