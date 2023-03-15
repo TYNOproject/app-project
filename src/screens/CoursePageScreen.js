@@ -37,7 +37,8 @@ export default function CoursePageScreen({navigation}) {
             .finally(() => setIsLoading(false));
     }, []);
 
-    let [fontsLoaded] = useFonts({
+    console.log(teachers);
+        let [fontsLoaded] = useFonts({
         "Heebo-Bold": require("../../assets/fonts/Heebo-Bold.ttf"),
         "Heebo-Regular": require("../../assets/fonts/Heebo-Regular.ttf")
     });
