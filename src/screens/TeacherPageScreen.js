@@ -43,7 +43,7 @@ export default function TeacherPageScreen({ navigation })
     {
       setReviews(reviewsResponse.data);
     }).catch((error) => console.log(error));
-      },{})
+      },[])
   //need to take from the DB
   console.log(courses);
   const coursesDemo = [
