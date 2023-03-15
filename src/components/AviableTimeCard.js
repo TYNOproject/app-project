@@ -5,7 +5,11 @@ import { Card } from "react-native-elements";
 const AviableTimeCard = ({ timeDetails }) => {
   return (
     <Card containerStyle={styles.CardContainer}>
-        <Text style = {styles.time}> {timeDetails.time} </Text>
+        <Text style = {styles.time}>
+          {"תאריך: " + new Date(timeDetails.date).toDateString()} {"\n"}
+          {"שעת התחלה: " + timeDetails.startTime} {"\n"}
+          {"שעת סיום: " + timeDetails.endTime}
+        </Text>
     </Card>
   );
 };
@@ -13,8 +17,8 @@ const AviableTimeCard = ({ timeDetails }) => {
 const styles = StyleSheet.create({
   CardContainer: {
     borderRadius: 10,
-    height: 60,
-    width: 140,
+    height: "auto",
+    width: "auto",
   },
   time: {
     fontSize: 10,

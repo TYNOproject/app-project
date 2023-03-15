@@ -9,8 +9,8 @@ const AviableTimesList = ({ availableTimes }) => {
     showsHorizontalScrollIndicator = {false}
     contentContainerStyle={styles.container}>
       <View style={styles.scrollView}>
-        {availableTimes.map((t) => (
-          <AviableTimeCard timeDetails={t} />
+        {availableTimes.map((t, index) => (
+          <AviableTimeCard timeDetails={t} key={index} />
         ))}
       </View>
     </ScrollView>

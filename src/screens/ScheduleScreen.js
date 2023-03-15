@@ -6,24 +6,21 @@ import { Calendar, CalendarList, Agenda } from "react-native-calendars";
 import TimeScrollBar from "../components/TimeScrollBar";
 import StudentContext from "../contexts/StudentContext";
 import ClassContext from "../contexts/ClassContext";
-import { getTeacherAvailableClasses,bookClass } from "../api/serviceCalls.js";
+import {getTeacherAvailableClasses, bookClass} from "../api/serviceCalls.js";
 
 
+export default function ScheduleScreen({navigation}) {
 
 
-export default function ScheduleScreen({ navigation })
-{
+    const {addToClass} = useContext(ClassContext);
+    const {itemsClass} = useContext(ClassContext);
+    const {getValClass} = useContext(ClassContext);
 
+    const {items, getVal} = useContext(StudentContext);
+    const studentId = getVal(items, "studentDetails").id;
 
-  const {addToClass} = useContext(ClassContext);
-  const {itemsClass} = useContext(ClassContext);
-  const {getValClass} = useContext(ClassContext);
-  
-  const {items,getVal} = useContext(StudentContext);
-  const studentId = getVal(items, "studentDetails").id;
-
-  const name = getValClass(itemsClass,'teacherName');
-  const teacherId = getValClass(itemsClass,'teacherId');
+    const name = getValClass(itemsClass, 'teacherName');
+    const teacherId = getValClass(itemsClass, 'teacherId');
 
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [markedDates, setMarkedDates] = useState({});
@@ -49,27 +46,27 @@ export default function ScheduleScreen({ navigation })
         ).catch((error) => console.log(error)); 
     },[]);
 
-  const updateMaps = (dates) => {
-    const myTimeMap = new Map();
+    const updateMaps = (dates) => {
+        const myTimeMap = new Map();
 
-    dates.forEach(item => {
-      const date = item.date.split('T')[0];
-      const time = item.startTime;
-      const classId = item.id; 
+        dates.forEach(item => {
+            const date = item.date.split('T')[0];
+            const time = item.startTime;
+            const classId = item.id;
 
 
-      if (myTimeMap.has(date)) {
-        const times = myTimeMap.get(date);
-        times.push([time,classId]);
-        myTimeMap.set(date, times);
-      } else {
-        myTimeMap.set(date, [[time,classId]]);
-      } 
+            if (myTimeMap.has(date)) {
+                const times = myTimeMap.get(date);
+                times.push([time, classId]);
+                myTimeMap.set(date, times);
+            } else {
+                myTimeMap.set(date, [[time, classId]]);
+            }
 
-      setTimeMap(myTimeMap);
-    });
-  }
- 
+            setTimeMap(myTimeMap);
+        });
+    }
+
 
   function handelPossibleTimes(day) {
     timesbuttons =[];
@@ -104,53 +101,53 @@ export default function ScheduleScreen({ navigation })
     ).catch((error) => console.log(error)); 
   };
 
-  let [fontsLoaded] = useFonts({
-    "Heebo-Bold": require("../../assets/fonts/Heebo-Bold.ttf"),
-    "Heebo-Regular": require("../../assets/fonts/Heebo-Regular.ttf"),
-  });
+    let [fontsLoaded] = useFonts({
+        "Heebo-Bold": require("../../assets/fonts/Heebo-Bold.ttf"),
+        "Heebo-Regular": require("../../assets/fonts/Heebo-Regular.ttf"),
+    });
 
 
-  if (!fontsLoaded)
+    if (!fontsLoaded)
+        return (
+            <View>
+                <Text>loading</Text>
+            </View>
+        );
+
     return (
-      <View>
-        <Text>loading</Text>
-      </View>
-    );
-
-    return(
         <View style={styles.container}>
             <View style={styles.topPart}>
                 <Text style={styles.header}>
-                  למתי לתאם עם {name} ?
+                    למתי לתאם עם {name} ?
                 </Text>
             </View>
             <View style={styles.bottomPart}>
                 <Calendar style={styles.calenderStyle}
-                    markedDates={markedDates}
-                    markingType="simple"
-                    onDayPress={handelPossibleTimes}
+                          markedDates={markedDates}
+                          markingType="simple"
+                          onDayPress={handelPossibleTimes}
                 />
-                            <View style={styles.TimeScrollBar}>
-                            <ScrollView contentContainerStyle={styles.containerTime} horizontal={true}>
-                              <View style={styles.row}>
-                              <ButtonGroup style={styles.timeButton}
-                                    buttons={timeButtons}
-                                    selectedIndex={selectedIndex}
-                                    onPress={(value) => {
-                                        setSelectedIndex(value);
-                                    }}
-                                    containerStyle={{ marginBottom: 20 }}
-                                />
-                              </View>
-                          </ScrollView>
-            </View>
+                <View style={styles.TimeScrollBar}>
+                    <ScrollView contentContainerStyle={styles.containerTime} horizontal={true}>
+                        <View style={styles.row}>
+                            <ButtonGroup style={styles.timeButton}
+                                         buttons={timeButtons}
+                                         selectedIndex={selectedIndex}
+                                         onPress={(value) => {
+                                             setSelectedIndex(value);
+                                         }}
+                                         containerStyle={{marginBottom: 20}}
+                            />
+                        </View>
+                    </ScrollView>
+                </View>
             </View>
             <View>
-            <TouchableOpacity style={styles.submitButton} onPress={handleScheduale}>
-                <Text style={styles.textstyle}>
-                     לקביעת שיעור עם {name}
-                </Text>
-            </TouchableOpacity>
+                <TouchableOpacity style={styles.submitButton} onPress={handleScheduale}>
+                    <Text style={styles.textstyle}>
+                        לקביעת שיעור עם {name}
+                    </Text>
+                </TouchableOpacity>
             </View>
         </View>
     );
@@ -158,35 +155,35 @@ export default function ScheduleScreen({ navigation })
 
 const styles = StyleSheet.create({
     container: {
-      alignItems:"center",
-      flexDirection: "column",
-      flex: 1,
-      
+        alignItems: "center",
+        flexDirection: "column",
+        flex: 1,
+
     },
     calenderStyle: {
-        top:150,
-        backgroundColor:"transparent",
-        backgroundCalender:"transparent",
-      },
+        top: 150,
+        backgroundColor: "transparent",
+        backgroundCalender: "transparent",
+    },
     topPart: {
-        alignItems:"center",
+        alignItems: "center",
         position: "absolute",
         left: "10%",
         top: 0,
         width: 320,
         direction: "rtl",
         paddingTop: 50,
-      },
+    },
     bottomPart: {
-        alignItems:"center",
+        alignItems: "center",
         position: "absolute",
         left: "10%",
         top: -50,
         width: 320,
         paddingTop: 50,
-        height:100
+        height: 100
     },
-      header: {
+    header: {
         fontFamily: "Heebo-Bold",
         fontWeight: "bold",
         fontSize: 30,
@@ -208,7 +205,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center"
     },
-      textstyle: {
+    textstyle: {
         fontFamily: "Heebo-Bold",
         fontSize: 24,
         fontWeight: "400",
@@ -218,23 +215,23 @@ const styles = StyleSheet.create({
         color: "#FFFFFF",
     },
     containerTime: {
-      flexDirection: "row",
-      height:30,
-      position:"relative"
+        flexDirection: "row",
+        height: 30,
+        position: "relative"
     },
     row: {
-      flexDirection: "row",
-      flex: 1,
-      padding: 10,
-      position:"relative",
+        flexDirection: "row",
+        flex: 1,
+        padding: 10,
+        position: "relative",
     },
     timeButton: {
         backgroundColor: 'lightgray',
         borderRadius: 4,
         padding: 8,
         marginVertical: 4,
-        height:40,
-        marginHorizontal:10,
-        position:"relative"
-      },
+        height: 40,
+        marginHorizontal: 10,
+        position: "relative"
+    },
 });

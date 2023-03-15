@@ -20,7 +20,8 @@ const HalfScreenClasses = ({ classes, horizantal, style, width}) => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    paddingBottom: 20,
+      alignItems: "center",
+      marginRight: "10%",
   },
 });
 
