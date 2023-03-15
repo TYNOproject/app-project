@@ -8,11 +8,9 @@ const AviableTimesList = ({ availableTimes }) => {
     <ScrollView horizontal={true} 
     showsHorizontalScrollIndicator = {false}
     contentContainerStyle={styles.container}>
-      <View style={styles.scrollView}>
         {availableTimes.map((t, index) => (
           <AviableTimeCard timeDetails={t} key={index} />
         ))}
-      </View>
     </ScrollView>
   );
 };
@@ -20,13 +18,7 @@ const AviableTimesList = ({ availableTimes }) => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    paddingBottom: 20,
-  },
-  scrollView: {
-    flex: 1,
-    flexDirection: "row",
-    padding: 10,
-  },
+  }
 });
 
 export default AviableTimesList;

@@ -49,7 +49,8 @@ export default function StudentProfileScreen({navigation}) {
         );
     return (
         <View style={styles.container}>
-                <Text style={styles.header}>
+            <View style={styles.header}>
+                <Text style={styles.headerText}>
                     פרופיל אישי{"\n"}
                     {name}
                 </Text>
@@ -76,8 +77,8 @@ export default function StudentProfileScreen({navigation}) {
                     style={{position: "relative", top: 10}}
                     onPress={handleTeacherPress}
                 />
-            <View style={styles.spacer}/>
-            <View style={styles.bottomHalf}>
+            </View>
+            <View style={styles.content}>
                 {isLoading ? (
                     <ActivityIndicator size="large" color="#0000ff"/>
                 ) : (
@@ -94,28 +95,22 @@ export default function StudentProfileScreen({navigation}) {
 
 const styles = StyleSheet.create({
     container: {
-        margin: "20%",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "space-between",
         flex: 1,
     },
-    topContainer: {
-
-    },
     header: {
+        alignItems: "center",
+        height: "30%",
+        justifyContent: "center",
+        flex: 1,
+    },
+    headerText: {
         fontSize: 30,
         fontFamily: "Heebo-Bold",
         textAlign: "center",
     },
-    spacer: {
+    content: {
+        justifyContent: 'center',
+        alignItems: 'center',
         flex: 2,
-    },
-    bottomHalf: {
-        alignSelf: "flex-end",
-        width: "100%",
-        flex: 4,
-        top: -80,
-        right: -20,
     },
 });
