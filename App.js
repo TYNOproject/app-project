@@ -70,8 +70,7 @@ function App() {
                 tabBarIcon: ({ color, size }) => (
                   <Ionicons name="log-out-outline" size={40} color={color} />
                 ),
-                //headerShown: false, // hide top title
-
+                headerShown: false, // hide top title
                 tabBarStyle: { display: "none" }, // hide bottom tab
               }}
             />

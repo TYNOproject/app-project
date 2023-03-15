@@ -34,9 +34,12 @@ export default function StudentProfileScreen({navigation}) {
             .then((response) =>
                 response !== undefined ? setClasses(response.data) : setClasses([])
             )
-            .catch((error) => console.log(error))
+            .catch((error) => {
+                console.log(" this is the error i got:", error);
+                setClasses([])
+            })
             .finally(() => setIsLoading(false));
-    }, []);
+    }, [name]);
 
     if (!fontsLoaded)
         return (
