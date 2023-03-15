@@ -18,11 +18,9 @@ export const addNewUser = async (studentDetails) => {
             password: studentDetails.password,
             faculty: studentDetails.faculty,
             degree: studentDetails.degree,
-            departmentId: studentDetails.departmentId,
+            department: studentDetails.department,
             year: studentDetails.year,
             isTeacher: false,
-            price: 0.0,
-            privateInfo: "",
         });
         return response;
     } catch (err) {
@@ -229,6 +227,19 @@ export const getTeacherAvailableClasses = async (teacherId) => {
     }
 };
 
+export const sendTeacherRequest = async (studentId, coursesIds, price, privateInfo) => {
+    try {
+        const response = await service.post(`/users/${studentId}/teacherRequest`, {
+            coursesIds,
+            price,
+            privateInfo
+        });
+        return response;
+    } catch (err) {
+        console.log("error in sendTeacherRequest function: " + err);
+    }
+};
+
 export default {
     addNewUser,
     addNewClass,
@@ -247,5 +258,6 @@ export default {
     getTeacherClasses,
     getTeacherAvailableClasses,
     getCoursesByDepartment,
-    getStudentClasses
+    getStudentClasses,
+    sendTeacherRequest
 };
