@@ -13,6 +13,7 @@ export default function StudentProfileScreen({navigation}) {
     const {items} = useContext(StudentContext);
     const {getVal} = useContext(StudentContext);
     const name = getVal(items, "studentDetails").name;
+    const isTeacher = getVal(items, "studentDetails").isTeacher;
     const [classes, setClasses] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -26,7 +27,8 @@ export default function StudentProfileScreen({navigation}) {
     }
 
     function handleTeacherPress() {
-        navigation.navigate("TeacherProfile");
+        console.log(getVal(items, "studentDetails"));
+        isTeacher ? navigation.navigate("TeacherProfile") : navigation.navigate("TeacherSignUp")
     }
 
     useEffect(() => {

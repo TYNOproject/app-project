@@ -5,12 +5,14 @@ import { AntDesign } from "@expo/vector-icons";
 import { useFonts } from "expo-font";
 import { SearchBar } from "react-native-elements";
 
+import ClassContext from "../contexts/ClassContext";
 import StudentContext from "../contexts/StudentContext";
 import CoursesList from "../components/CoursesList";
 import SelectOption from "../components/SelectOption";
 import * as constants from "../../constants";
-import {getCoursesByDepartment, searchCourses} from "../api/serviceCalls";
+import {getCoursesByDepartment, searchCourses,sendTeacherRequest} from "../api/serviceCalls";
 import {FontAwesome} from "@expo/vector-icons";
+import { set } from "react-native-reanimated";
 
 
 export default function RegisterScreen({ navigation }) {
@@ -25,8 +27,8 @@ export default function RegisterScreen({ navigation }) {
   const [isLoading, setIsLoading] = useState(true);
 
   const {items, getVal, addToStudent} = useContext(StudentContext);
-  const name = getVal(items, "studentDetails").name;
   useEffect(() => {
+    addToStudent('coursesList',new Set());
       getCoursesByDepartment(getVal(items, "studentDetails").department.id)
           .then((response) =>
               response !== undefined ? setCourses(response.data) : setCourses([])
@@ -39,6 +41,16 @@ export default function RegisterScreen({ navigation }) {
     "Heebo-Bold": require("../../assets/fonts/Heebo-Bold.ttf"),
     "Heebo-Regular": require("../../assets/fonts/Heebo-Regular.ttf"),
   });
+
+  function modifySet(id) {
+    let set = getVal(items,'coursesList')
+    if (set.has(id)) {
+      set.delete(id);
+    } else {
+      set.add(id);
+    }
+    addToStudent('coursesList',set);
+  }
 
   const handleSearch = (search) => {
     let searchDetails = {
@@ -56,7 +68,17 @@ export default function RegisterScreen({ navigation }) {
 };
 
   const handleRegister = () => {
-    navigation.navigate("TeacherProfile");
+    const CoursesId = Array.from(getVal(items,'coursesList'));
+    const studentId = getVal(items, "studentDetails").id;
+    //start dbug
+    console.log(studentId);
+    console.log(CoursesId);
+    console.log(price);
+    sendTeacherRequest(studentId,CoursesId,price,description).then((teacherRespone) => 
+    {
+      teacherRespone !== undefined ? navigation.navigate("TeacherProfile") : alert("error!");
+    }
+    ).catch((error) => console.log(error)); 
   };
 
   if (!fontsLoaded)
@@ -145,7 +167,7 @@ export default function RegisterScreen({ navigation }) {
                             courses={courses}
                             navigation={navigation}
                             changeColor = {true}
-                            callback={() => {}}
+                            callback={(id) => modifySet(id)}
                         />
                     )}
             </View>

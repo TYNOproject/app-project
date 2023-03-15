@@ -2,16 +2,18 @@ import React, { useContext, useState } from "react";
 import { Text, View, StyleSheet,TouchableOpacity  } from "react-native";
 import { Card } from "react-native-elements";
 import ClassContext from "../contexts/ClassContext";
+import StudentContext from "../contexts/StudentContext";
 
 
 const CourseCard = ({course, navigation, changeColor, callback }) => {
   const { addToClass} = useContext(ClassContext);
   const [isSelected, setIsSelected] = useState(false);
+  const {items, getVal,addToStudent} = useContext(StudentContext);
 
   const handlePress = () => {
     addToClass('courseName',course.courseName);
     addToClass('courseId',course.id);
-    callback();
+    callback(course.id);
     if(changeColor){
       setIsSelected(!isSelected);
     }

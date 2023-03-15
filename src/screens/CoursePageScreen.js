@@ -29,15 +29,17 @@ export default function CoursePageScreen({navigation}) {
     }
 
     useEffect(() => {
+        console.log(teachers);
         getTeachersByCourseName(course)
             .then((response) =>
                 response !== undefined ? setTeachers(response.data) : setTeachers([])
             )
             .catch((error) => console.log(error))
             .finally(() => setIsLoading(false));
-    }, []);
+    },[course]);
 
-    let [fontsLoaded] = useFonts({
+    console.log(teachers);
+        let [fontsLoaded] = useFonts({
         "Heebo-Bold": require("../../assets/fonts/Heebo-Bold.ttf"),
         "Heebo-Regular": require("../../assets/fonts/Heebo-Regular.ttf")
     });

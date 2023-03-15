@@ -22,6 +22,8 @@ import TeacherRegisterScreen from "./src/screens/TeacherRegisterScreen";
 import HomePageScreen from "./src/screens/HomePageScreen";
 import StudentEditDetailsScreen from "./src/screens/StudentEditDetailsScreen";
 import ReviewScreen from "./src/screens/ReviewScreen";
+import TeacherSignUpScreen from "./src/screens/TeacherSignUpScreen";
+
 const Tab = createBottomTabNavigator();
 
 
@@ -224,6 +226,15 @@ function App() {
             <Tab.Screen
               name="Review"
               component={ReviewScreen}
+              options={{
+                tabBarButton: () => null, // hides the button
+                tabBarVisibilityAnimationConfig: () => null,
+                headerShown: false, // hide top title
+              }}
+            />
+            <Tab.Screen
+              name="TeacherSignUp"
+              component={TeacherSignUpScreen}
               options={{
                 tabBarButton: () => null, // hides the button
                 tabBarVisibilityAnimationConfig: () => null,

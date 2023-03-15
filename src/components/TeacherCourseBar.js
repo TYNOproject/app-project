@@ -11,8 +11,8 @@ const TeacherCourseBar = ({ teacherCourses }) => {
     <View style={styles.viewcardContainer}>
         <ScrollView  horizontal={true} >
             <View style={styles.buttonContainer}>
-        {teacherCourses.map((course) => (
-            <Chip title={course} containerStyle={ styles.chipStyle} />
+        {teacherCourses.map((course,index) => (
+            <Chip title={course} containerStyle={ styles.chipStyle} key={index} />
         ))}
         </View>
         </ScrollView>
