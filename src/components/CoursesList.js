@@ -24,6 +24,7 @@ const HalfScreenCourses = ({ courses, navigation, changeColor, callback }) => {
             course={course}
             key={index}
             navigation={navigation}
+            changeColor={changeColor}
             callback={callback}
           />
         ))}

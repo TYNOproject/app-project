@@ -175,9 +175,11 @@ function App() {
               name="TeacherProfile"
               component={TeacherProfileScreen}
               options={{
+                tabBarStyle: { display: "none" }, // hide bottom tab
                 tabBarButton: () => null, // hides the button
-                tabBarVisibilityAnimationConfig: () => null,
-                headerShown: false, // hide top title
+                headerBackground: () => null, // hide header
+                headerTitle: () => null, // hide header title
+                headerLeft: () => <BackIcon pageName="Profile" />, // hide header back button
               }}
             />
             <Tab.Screen
@@ -193,9 +195,11 @@ function App() {
               name="ConfirmLessons"
               component={ConfirmLessonsScreen}
               options={{
+                tabBarStyle: { display: "none" }, // hide bottom tab
                 tabBarButton: () => null, // hides the button
-                tabBarVisibilityAnimationConfig: () => null,
-                headerShown: false, // hide top title
+                headerBackground: () => null, // hide header
+                headerTitle: () => null, // hide header title
+                headerLeft: () => <BackIcon pageName="TeacherProfile" />, // hide header back button
               }}
             />
             <Tab.Screen

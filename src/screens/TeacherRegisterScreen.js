@@ -1,71 +1,63 @@
-import React, { useState, useContext } from "react";
-import { View, Text, TextInput } from "react-native";
-import { StyleSheet } from "react-native";
+import React, { useState, useContext, useEffect } from "react";
+import { View, Text, TextInput, StyleSheet, ActivityIndicator } from "react-native";
 import { Button } from "@react-native-material/core";
 import { AntDesign } from "@expo/vector-icons";
 import { useFonts } from "expo-font";
+import { SearchBar } from "react-native-elements";
+
 import StudentContext from "../contexts/StudentContext";
 import CoursesList from "../components/CoursesList";
 import SelectOption from "../components/SelectOption";
-
+import * as constants from "../../constants";
+import {getCoursesByDepartment, searchCourses} from "../api/serviceCalls";
+import {FontAwesome} from "@expo/vector-icons";
 
 
 export default function RegisterScreen({ navigation }) {
-  const { addToStudent } = useContext(StudentContext);
   const { clearItems } = useContext(StudentContext);
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
-  const [password, setPassword] = useState("");
+  const [search, setSearch] = useState("");
+  const [faculty, setFaculty] = useState(0);
+  const [department, setDepartment] = useState(1);
+  const [year, setYear] = useState(1);
+  const [courses, setCourses] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const {items, getVal, addToStudent} = useContext(StudentContext);
+  const name = getVal(items, "studentDetails").name;
+  useEffect(() => {
+      getCoursesByDepartment(getVal(items, "studentDetails").department.id)
+          .then((response) =>
+              response !== undefined ? setCourses(response.data) : setCourses([])
+          )
+          .catch((error) => console.log(error))
+          .finally(() => setIsLoading(false));
+  }, []);
 
   let [fontsLoaded] = useFonts({
     "Heebo-Bold": require("../../assets/fonts/Heebo-Bold.ttf"),
     "Heebo-Regular": require("../../assets/fonts/Heebo-Regular.ttf"),
   });
 
-  const courses = [
-    {
-      id:1,
-      courseName: "תולדות היופי",
-      description:
-        "This course covers the fundamentals of computer programming and software development. Students will learn programming concepts such as data types, control structures, functions, and object-oriented programming.",
-    },
-    {
-      id:2,
-      courseName: "חדווא",
-      description:
-        "This course covers the basics of calculus, including limits, derivatives, and integrals. Topics include differentiation and integration of functions, optimization problems, and applications of calculus to physics and engineering.",
-    },
-    {
-      id:3,
-      courseName: "אלגברה",
-      description:
-        "This course focuses on developing writing skills through critical reading and analysis of texts. Students will learn how to write effective essays, research papers, and other types of academic writing.",
-    },
-    {
-      id:4,
-      courseName: "קומפי",
-      description:
-        "This course covers the major events and ideas of Western civilization from ancient Greece to the present. Topics include the rise of democracy, the Renaissance, the Enlightenment, and the World Wars.",
-    },
-    {
-      id:5,
-      courseName: "מודלים",
-      description:
-        "This course covers the major events and ideas of Western civilization from ancient Greece to the present. Topics include the rise of democracy, the Renaissance, the Enlightenment, and the World Wars.",
-    },
-    {
-      id:6,
-      courseName: "אלגו",
-      description:
-        "This course covers the major events and ideas of Western civilization from ancient Greece to the present. Topics include the rise of democracy, the Renaissance, the Enlightenment, and the World Wars.",
-    },
-    {
-      id:7,
-      courseName: "היסטוריה",
-      description:
-        "This course covers the major events and ideas of Western civilization from ancient Greece to the present. Topics include the rise of democracy, the Renaissance, the Enlightenment, and the World Wars.",
-    },
-  ];
+  const handleSearch = (search) => {
+    let searchDetails = {
+        courseName: search,
+        departmentId: department,
+        year: year,
+    };
+
+    searchCourses(searchDetails)
+        .then((response) => {
+            response !== undefined ? setCourses(response.data) : setCourses([]);
+        })
+        .catch((error) => console.log(error))
+        .finally(() => setIsLoading(false));
+};
+
+  const handleRegister = () => {
+    navigation.navigate("TeacherProfile");
+  };
 
   if (!fontsLoaded)
     return (
@@ -74,14 +66,11 @@ export default function RegisterScreen({ navigation }) {
       </View>
     );
 
-  const handleRegister = () => {
-    navigation.navigate("TeacherProfile");
-  };
 
   return (
     <View style={styles.container}>
+      <View style={styles.topPart}>
       <Text style={styles.header}>
-        טוב שבאת! {"\n"}
         כמה פרטים וסיימנו
       </Text>
       <Text style= {styles.description}>
@@ -98,6 +87,7 @@ export default function RegisterScreen({ navigation }) {
         מה המחיר שלך לשיעור?
       </Text>
       <TextInput
+        keyboardType="numeric"
         style={styles.priceinput}
         placeholder="מחיר לשיעור"
         onChangeText={setPrice}
@@ -106,21 +96,66 @@ export default function RegisterScreen({ navigation }) {
       <Text style= {styles.courses}>
         איזה קורסים אתה מעוניין ללמד?
       </Text>
-      <View style={styles.dropdown}>
-        <SelectOption options={["Op1", "Op2", "Op3"]} defaultText="פקולטה" buttonStyle= {styles.dropdownButtonStyle} />
-        <SelectOption options={["Op1", "Op2", "Op3"]} defaultText="מחלקה" buttonStyle= {styles.dropdownButtonStyle} />
-        <SelectOption options={["1", "2", "3", "4"]} defaultText="שנה" buttonStyle= {styles.dropdownButtonStyle} />
       </View>
-        <View style={styles.bottomHalf}>
-            <CoursesList courses={courses} navigation={navigation} changeColor = {true} callback = {()=> {}} />
-        </View>
+      <View style={styles.searchBar}>
+                <SearchBar
+                    placeholder="חיפוש לפי קורס..."
+                    containerStyle={{backgroundColor: "transparent"}}
+                    lightTheme
+                    round
+                    onChangeText={setSearch}
+                    value={search}
+                    autoCorrect={false}
+                    searchIcon={
+                        <FontAwesome
+                            name="search"
+                            size={24}
+                            color="black"
+                            onPress={() => {
+                                setIsLoading(true);
+                                handleSearch(search)
+                            }}
+                        />
+                    }
+                />
+            </View>
+            <View style={styles.dropdown}>
+                <SelectOption
+                    options={constants.departments.map(
+                        (department) => department.department_name
+                    )}
+                    defaultText="מחלקה"
+                    buttonStyle={styles.dropdownButtonStyle}
+                    onSelectOption={(option) => setDepartment(option.id)}
+                />
+                <SelectOption
+                    options={constants.years}
+                    defaultText="שנה"
+                    buttonStyle={styles.dropdownButtonStyle}
+                    onSelectOption={(option) => {
+                        console.log("option chosen in year: " + option);
+                        setYear(option);
+                    }}
+                />
+            </View>
+            <View style={styles.bottomHalf}>
+                {isLoading ? (<ActivityIndicator size="large" color="#0000ff" />) : (
+
+                        <CoursesList
+                            courses={courses}
+                            navigation={navigation}
+                            changeColor = {true}
+                            callback={() => {}}
+                        />
+                    )}
+            </View>
       <Button style = {styles.button}
         leading={() => <AntDesign name="left" size={24} />}
         title="אפשר להמשיך"
         variant="outlined"
         color="black"
         onPress={() => {
-          clearItems();
+          // clearItems();
           // addToStudent('username', name);
           handleRegister();
         }}
@@ -131,27 +166,30 @@ export default function RegisterScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "column",
+    flex: 1,
+    top: 5
+  },
+  topPart: {
+    flex: 2.5,
     alignItems: "center",
-    justifyContent: "space-between",
-    height: "80%",
-    flex: 1
+    justifyContent: "center",
+    padding: 30,
   },
   header: {
-    fontSize: 30,
     fontFamily: "Heebo-Bold",
+    fontSize: 28,
     textAlign: "center",
-    marginBottom:20
+    marginBottom: 10,
   },
   description: {
+    fontFamily: "Heebo-Regular",
     fontSize: 16,
-    fontFamily: "Heebo-Bold",
     textAlign: "center",
-    marginBottom: 10
+    marginBottom: 15,
   },
   descriptionInput: {
     width: 300,
-    height: 90,
+    height: 70,
     backgroundColor: "#fff",
     paddingVertical: 10,
     paddingHorizontal: 15,
@@ -165,10 +203,9 @@ const styles = StyleSheet.create({
     marginBottom: 20
   },
   price: {
+    fontFamily: "Heebo-Regular",
     fontSize: 16,
-    fontFamily: "Heebo-Bold",
-    textAlign: "center",
-    marginBottom: 10
+    marginBottom: 10,
   },
   priceinput: {
     width: 300,
@@ -183,30 +220,37 @@ const styles = StyleSheet.create({
     direction: "rtl",
     textAlign: "right",
     fontFamily: "Heebo-Regular",
-    marginBottom: 20
+    marginBottom: 10
   },
   courses: {
-    fontSize: 16,
     fontFamily: "Heebo-Bold",
-    textAlign: "center",
+    fontSize: 16,
+    marginBottom: -40
+  },
+  searchBar: {
+    marginBottom: 10,
+    marginHorizontal: 20,
+    direction: "rtl",
   },
   dropdown: {
-    flexDirection:"row",
-    justifyContent: "space-between",
-    alignItems: "center"
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+    marginBottom: 20,
   },
   dropdownButtonStyle: {
-    flexDirection:"row",
-    justifyContent : "center",
-    width:110,
+    flexDirection: "row",
+    justifyContent: "center",
+    width: 150,
+    height: 30,
+    marginBottom: - 10
   },
   bottomHalf: {
     alignSelf: "flex-end",
-    width: '100%',
-    flex: 1,
-    marginBottom: 20
+    width: "100%",
+    flex: 2,
   },
-  button: {
+    button: {
     position: "relative",
     marginBottom: 10
   }
