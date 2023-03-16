@@ -6,7 +6,7 @@ import { Card } from "react-native-elements";
 import ClassContext from "../contexts/ClassContext";
 import StudentContext from "../contexts/StudentContext";
 
-const ClassCard = ({ classDetails, callback }) => {
+const ClassCard = ({ classDetails, disabled, callback }) => {
   const { addToClass} = useContext(ClassContext);
   const [confirmed, setConfirmed] = useState(false);
   const [denied, setDenied] = useState(false);
@@ -30,7 +30,7 @@ const ClassCard = ({ classDetails, callback }) => {
   }
 
   return (
-    <TouchableOpacity onPress={handlePress}>
+    <TouchableOpacity disabled = {disabled} onPress={handlePress}>
     <Card containerStyle={[styles.cardContainer,
           confirmed && styles.cardSelected,
           denied && styles.cardDenied

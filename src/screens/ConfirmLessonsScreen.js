@@ -108,7 +108,8 @@ export default function ConfirmLessonsScreen({navigation}) {
                     <ActivityIndicator size="large" color="#0000ff"/>
                 ) : (
                     pendingClasses.length > 0 ? (
-                        <ClassesList classes={pendingClasses} horizantal={false} callback={(id) => handlePress(id)}/>
+                        <ClassesList classes={pendingClasses} horizantal={false} disabled={false}
+                        callback={(id) => handlePress(id)}/>
                     ) : (
                         <Text style={styles.noClasses}>לא נמצאו שיעורים</Text>
                     )

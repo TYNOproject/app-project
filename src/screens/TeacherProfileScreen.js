@@ -102,7 +102,7 @@ export default function TeacherProfileScreen({navigation}) {
                 {bookedClasses.length > 0 && (
                     <>
                         <View>
-                            <ClassesList classes={bookedClasses} horizantal={true} style={"row"} />
+                            <ClassesList classes={bookedClasses} horizantal={true} disabled={true}/>
                         </View>
                     </>
                 )}
