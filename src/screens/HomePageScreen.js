@@ -79,7 +79,7 @@ export default function HomePageScreen({navigation}) {
                         <FontAwesome
                             name="search"
                             size={24}
-                            color="black"
+                            color="#7521f3"
                             onPress={() => {
                                 setIsLoading(true);
                                 handleSearch(search)
@@ -143,6 +143,9 @@ const styles = StyleSheet.create({
         fontFamily: "Heebo-Bold",
         fontWeight: "bold",
         fontSize: 30,
+        shadowOpacity: 0.2,
+        shadowRadius: 1,
+        shadowOffset: {height: 1, width: 0},
         top: -20,
         textAlign: "center",
     },
@@ -168,7 +171,7 @@ const styles = StyleSheet.create({
     },
 
     spacer: {
-        flex: 1,
+        flex: 0.7,
     },
     bottomHalf: {
         alignSelf: "flex-end",

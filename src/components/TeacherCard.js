@@ -20,8 +20,9 @@ const TeacherCard = ({ teacher, navigation }) => {
     <TouchableOpacity onPress={handlePress}>
     <View style={styles.viewcardContainer}>
     <Avatar
+    size = {50}
     rounded
-    source={{uri: 'https://via.placeholder.com/150'}}
+    source={require("../../assets/pics/avatarPic.png")}
     containerStyle={styles.avatarContainer}
     />
   <Icon
@@ -31,10 +32,10 @@ const TeacherCard = ({ teacher, navigation }) => {
     containerStyle={styles.starContainer}/>
         <Card containerStyle={styles.cardContainer}>
           <Card.Title style={styles.name}>
-            {teacher.name}, {"\n"}
-            {teacher.year}{" "}
+            {teacher.name}{"\n"}
+            שנה: {teacher.year}{" "}
           </Card.Title>
-          <Text style={styles.starRatingText}>{teacher.rate}/5</Text>
+          <Text style={styles.starRatingText}>{teacher.rate}5/5</Text>
 
       <Card.Divider style={styles.cardDivider}/>
       <Text style={styles.description} numberOfLines={6}>
@@ -52,6 +53,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     height: 150,
     width: 370,
+    borderColor: "#7521f3", // added purple border color
+    borderWidth: 1, // increased border width for visibility
   },
   viewcardContainer: {
     position: "relative",
@@ -66,7 +69,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   description: {
-    fontSize: 10,
+    fontSize: 16,
     flex: 0,
   },
   starContainer: {
@@ -78,8 +81,8 @@ const styles = StyleSheet.create({
   },
   avatarContainer: {
     position: "absolute",
-    top: 30,
-    left: "60%",
+    top: 25,
+    left: "50%",
     transform: [{ translateX: -25 }],
     zIndex: 1,
   },

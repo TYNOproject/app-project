@@ -8,7 +8,8 @@ import {
 import { Icon } from "react-native-elements";
 import StudentContext from "../contexts/StudentContext";
 import ClassContext from "../contexts/ClassContext";
-
+import { Button } from "@react-native-material/core";
+import { AntDesign } from "@expo/vector-icons";
 export default function AfterScheduleScreen({ navigation })
 {
   const {items,getVal} = useContext(StudentContext);
@@ -56,15 +57,30 @@ export default function AfterScheduleScreen({ navigation })
       </View>
       <View style={styles.mainPart}>
         <Text style={styles.mainText}>בתאריך: {date}</Text>
-        <Icon name="calendar" type="font-awesome" />
+        <Icon name="calendar" type="font-awesome" size={30} />
         <Text style={styles.mainText}>משעה: {fromTime}</Text>
-        <Icon name="timer" style={{ right: 0 }} />
+        <Icon name="timer" style={{ right: 0 }}  size={40} />
         <Text style={styles.mainText}>עד שעה: {endTime}</Text>
-        <Icon name="timer" style={{ right: 0 }} />
+        <Icon name="timer" style={{ right: 0 }} size={40} />
       </View>
-      <TouchableOpacity style={styles.submitButton} onPress={() => navigation.navigate("HomePage")}>
-        <Text style={styles.textstyle}>סגור</Text>
-      </TouchableOpacity>
+      <Button
+        title="סגור"
+        onPress={() => navigation.navigate("HomePage")}
+        titleStyle={{
+          fontSize: 26,
+          textAlign: "center",
+          fontFamily: "Heebo-Bold",
+        }}
+        leading={() => <AntDesign name="left" size={24} color="white" />}
+        style={{
+          width: 400,
+          height: 60,
+          top: 700,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+        
+      />
     </View>
   );
 }
@@ -81,12 +97,13 @@ const styles = StyleSheet.create({
     top: 0,
     width: 320,
     direction: "rtl",
-    paddingTop: 40,
+    paddingTop: 30,
   },
+
   mainPart: {
     position: "absolute",
     left: 20,
-    top: 150,
+    top: 200,
     width: 320,
     direction: "rtl",
     paddingTop: 50,
@@ -95,38 +112,43 @@ const styles = StyleSheet.create({
   header: {
     fontFamily: "Heebo-Bold",
     fontWeight: "bold",
-    fontSize: 30,
+    fontSize: 40,
     top: 0,
     textAlign: "center",
+    textShadowColor: "#A1B2C3",
+    textShadowOffset: {width: 1},
+    textShadowRadius: 2,
   },
   subHeaderText: {
     fontFamily: "Heebo-Bold",
     fontWeight: "bold",
-    fontSize: 25,
+    fontSize: 30,
     top: 40,
     textAlign: "center",
+    textShadowColor: "#A1B2C3",
+    textShadowOffset: {width: 1},
+    textShadowRadius: 2,
   },
   mainText: {
     fontFamily: "Heebo-Bold",
-    fontSize: 20,
-    top: 20,
+    fontSize: 25,
+    top: 32,
     textAlign: "center",
-    left: 40,
+    left: 50,
   },
   submitButton: {
     height: 53,
-    width: 326,
+    width: 350,
     left: 0,
     top: 600,
     borderRadius: 5,
     padding: 16,
-    backgroundColor: "#006699",
     justifyContent: "center",
     alignItems: "center",
   },
   textstyle: {
     fontFamily: "Heebo-Bold",
-    fontSize: 24,
+    fontSize: 40,
     fontWeight: "400",
     lineHeight: 28,
     letterSpacing: 0,

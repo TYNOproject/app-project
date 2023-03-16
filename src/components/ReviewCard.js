@@ -23,16 +23,18 @@ const styles = StyleSheet.create({
   cardContainer: {
     borderRadius: 30,
     marginBottom: 10,
-    height: 200,
-    width: 200,
+    height: 230,
+    width: 220,
+    borderColor: "#7521f3", // added purple border color
+    borderWidth: 1, // increased border width for visibility
   },
   name: {
-    fontSize: 14,
+    fontSize: 20,
     fontWeight: "bold",
   },
   description: {
     direction: "rtl", //???!?!?!?
-    fontSize: 10,
+    fontSize: 12,
     flex: 0,
   },
   reating: {
