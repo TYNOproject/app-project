@@ -23,7 +23,7 @@ import HomePageScreen from "./src/screens/HomePageScreen";
 import StudentEditDetailsScreen from "./src/screens/StudentEditDetailsScreen";
 import ReviewScreen from "./src/screens/ReviewScreen";
 import TeacherSignUpScreen from "./src/screens/TeacherSignUpScreen";
-
+import StudentContext from "./src/contexts/StudentContext";
 const Tab = createBottomTabNavigator();
 
 
