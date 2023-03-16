@@ -27,10 +27,13 @@ export default function RegisterScreen({ navigation }) {
       </View>
     );
 
-  const handleRegister = () => {
-    navigation.navigate("StudentSignUp");
-  };
-
+    const handleRegister = () => {
+      setName("");
+      setEmail("");
+      setPassword("");
+      navigation.navigate("StudentSignUp");
+    };
+    
   return (
     
     <View style={styles.container}>

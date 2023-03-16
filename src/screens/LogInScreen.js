@@ -24,7 +24,7 @@ export default function LoginScreen({navigation}) {
         "Heebo-Bold": require("../../assets/fonts/Heebo-Bold.ttf"),
         "Heebo-Regular": require("../../assets/fonts/Heebo-Regular.ttf"),
     });
-
+    console.log(items);
     if (!fontsLoaded)
         return (
             <View>
@@ -86,6 +86,7 @@ export default function LoginScreen({navigation}) {
                         }} // Add this line to center the title
                         leading={() => <AntDesign name="left" size={24} color="white"/>}
                         onPress={() => {
+                            clearItems();
                             signIn({email, password}).then((res) => {
                                 addToStudent("studentDetails", res.data);
                                 navigation.navigate("HomePage");
@@ -104,6 +105,7 @@ export default function LoginScreen({navigation}) {
                         style={styles.registerButton}
                         onPress={() => {
                             clearItems();
+                            console.log(items);
                             navigation.navigate("Register")
                         }}
                     />

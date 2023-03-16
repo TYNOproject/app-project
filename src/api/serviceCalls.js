@@ -10,7 +10,7 @@ const service = axios.create({
     },
 });
 
-export const addNewUser = async (studentDetails) => {
+export const    addNewUser = async (studentDetails) => {
     try {
         const response = await service.post("/users/add", {
             name: studentDetails.name,

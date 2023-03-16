@@ -98,7 +98,10 @@ const styles = StyleSheet.create({
         fontFamily: "Heebo-Bold",
         fontWeight: "bold",
         fontSize: 30,
-        top: 0,
+        top: -40,
+        shadowOpacity: 0.2,
+        shadowRadius: 1,
+        shadowOffset: {height: 1, width: 0},
         textAlign: "center",
     },
     topPart: {

@@ -21,9 +21,15 @@ export function StudentProvider({ children }) {
     }
   };
 
-  const clearItems = () => {
-    setItems([]);
-  };
+  function clearItems() {
+    for (let i = 0; i < items.length; i++) {
+      for (let key in items[i].studentDetails) {
+        items[i].studentDetails[key] = "";
+      }
+    }
+    console.log("Items cleared successfully.");
+  }
+  
 
   const getVal = (objArray, name) => {
     const obj = objArray.find((obj) => obj[name]);
