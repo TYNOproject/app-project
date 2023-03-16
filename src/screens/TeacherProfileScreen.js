@@ -91,6 +91,7 @@ export default function TeacherProfileScreen({navigation}) {
                 variant="outlined"
                 color="black"
                 titleStyle={{fontFamily: "Heebo-Regular"}}
+                onPress = {()=> navigation.navigate("ConfirmLessons")}
             />
             <View style={styles.divider} />
             <Text style={styles.containerHeaderText}>השיעורים הקרובים שלי</Text>

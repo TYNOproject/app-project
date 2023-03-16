@@ -2,13 +2,13 @@ import React from "react";
 import {View, StyleSheet, ScrollView} from "react-native";
 import ClassCard from "./ClassCard";
 
-const HalfScreenClasses = ({classes, horizantal, style, width}) => {
+const HalfScreenClasses = ({classes, horizantal, callback}) => {
     return (
         <ScrollView horizontal={horizantal}
                     showsHorizontalScrollIndicator={false}
                     style={styles.container}>
                 {classes.map((classDetails, index) => (
-                    <ClassCard width={width} classDetails={classDetails} key={index}/>
+                    <ClassCard classDetails={classDetails} key={index} callback={callback}/>
                 ))}
 
         </ScrollView>
@@ -18,7 +18,7 @@ const HalfScreenClasses = ({classes, horizantal, style, width}) => {
 const styles = StyleSheet.create({
     container: {
         width: "100%",
-        flexDirection: "row",
+        // flexDirection: "row",
     },
 });
 
