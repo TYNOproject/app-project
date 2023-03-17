@@ -92,7 +92,7 @@ export default function ConfirmLessonsScreen({navigation}) {
         ).catch((error) => console.log(error))        
       ));
       deniedClasses.map((classId) => (
-        rejectClass({classId, teacherId}).then((response) =>
+        rejectClass({classId, teacherId}).then((response) => 
           {
             response !== undefined ? alert("working") : alert("error!");
           }
