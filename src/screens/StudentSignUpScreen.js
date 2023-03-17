@@ -113,6 +113,7 @@ export default function StudentSignUpScreen({navigation}) {
                         addNewUser(getVal(items, "studentDetails"))
                             .then(() => {
                                 setVisible(true);
+                                clearItems(); // clear the dropdown menu
                                 navigation.navigate("LogIn");
                             })
                             .catch((err) => alert("אירעה שגיאה, אנא נסה שנית"))

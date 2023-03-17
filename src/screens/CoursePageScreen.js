@@ -9,14 +9,15 @@ import {getTeachersByCourseName} from "../api/serviceCalls.js";
 
 export default function CoursePageScreen({navigation}) {
     const [teachers, setTeachers] = useState([]);
+    const [changeFlag, setchangeFlag] = useState(false);
 
     const {itemsClass, getValClass} = useContext(ClassContext);
     const course = getValClass(itemsClass, 'courseName');
-    const filterOptions = ["rate", "year", "price"];
     const sortOptions = ["rate", "year", "price"];
     const [isLoading, setIsLoading] = useState(true);
 
     function sortByProperty(list, property) {
+        setchangeFlag(!changeFlag);
         return list.sort((a, b) => {
             if (a[property] < b[property]) {
                 return -1;
@@ -36,9 +37,8 @@ export default function CoursePageScreen({navigation}) {
             )
             .catch((error) => console.log(error))
             .finally(() => setIsLoading(false));
-    },[course]);
+    },[course,changeFlag]);
 
-    console.log(teachers);
         let [fontsLoaded] = useFonts({
         "Heebo-Bold": require("../../assets/fonts/Heebo-Bold.ttf"),
         "Heebo-Regular": require("../../assets/fonts/Heebo-Regular.ttf")
@@ -62,14 +62,8 @@ export default function CoursePageScreen({navigation}) {
                     defaultText="מיון"
                     buttonStyle={styles.dropdownButtonStyle}
                     onSelectOption={(option) => {
-                        console.log("option chosen in year: " + option);
                         setTeachers(sortByProperty(teachers, option));
                     }}
-                />
-                <SelectOption
-                    options={filterOptions}
-                    defaultText="סינון"
-                    buttonStyle={styles.dropdownButtonStyle}
                 />
             </View>
             <View style={styles.spacer}/>
@@ -98,7 +92,10 @@ const styles = StyleSheet.create({
         fontFamily: "Heebo-Bold",
         fontWeight: "bold",
         fontSize: 30,
-        top: 0,
+        top: -40,
+        shadowOpacity: 0.2,
+        shadowRadius: 1,
+        shadowOffset: {height: 1, width: 0},
         textAlign: "center",
     },
     topPart: {
@@ -111,9 +108,10 @@ const styles = StyleSheet.create({
     },
     dropdown: {
         flexDirection: "row",
-        top: 120,
+        top: "35%",
         justifyContent: "space-between",
         alignItems: "center",
+        alignSelf: "center",
     },
     dropdownButtonStyle: {
         flexDirection: "row",

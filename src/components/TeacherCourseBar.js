@@ -12,7 +12,8 @@ const TeacherCourseBar = ({ teacherCourses }) => {
         <ScrollView  horizontal={true} >
             <View style={styles.buttonContainer}>
         {teacherCourses.map((course,index) => (
-            <Chip title={course} containerStyle={ styles.chipStyle} key={index} />
+            <Chip title={course} color='transparent'   titleStyle={{ color: 'black' }}
+            containerStyle={ styles.chipStyle} key={index} />
         ))}
         </View>
         </ScrollView>
@@ -35,14 +36,16 @@ const styles = StyleSheet.create({
   chipStyle: {
     flexDirection: 'row',
     height: 50,
-    marginHorizontal:10
+    marginHorizontal:10,
+    borderColor: "#7521f3", // added purple border color
+    borderWidth: 2, // increased border width for visibility
   },
   viewcardContainer: {
     position: 'relative',
   },
   cardDivider: {
     marginHorizontal: 10,
-    orientation:"vertical"
+    orientation:"vertical",
   },
   name: {
     left:100,

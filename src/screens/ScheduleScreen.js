@@ -6,6 +6,8 @@ import { Calendar, CalendarList, Agenda } from "react-native-calendars";
 import TimeScrollBar from "../components/TimeScrollBar";
 import StudentContext from "../contexts/StudentContext";
 import ClassContext from "../contexts/ClassContext";
+import { Button } from "@react-native-material/core";
+import { AntDesign } from "@expo/vector-icons";
 import {getTeacherAvailableClasses, bookClass} from "../api/serviceCalls.js";
 
 
@@ -122,11 +124,13 @@ export default function ScheduleScreen({navigation}) {
                 </Text>
             </View>
             <View style={styles.bottomPart}>
-                <Calendar style={styles.calenderStyle}
-                          markedDates={markedDates}
-                          markingType="simple"
-                          onDayPress={handelPossibleTimes}
+                <Calendar
+                    style={{ height: 350, width: 400}}
+                    markedDates={markedDates}
+                    markingType="simple"
+                    onDayPress={handelPossibleTimes}
                 />
+
                 <View style={styles.TimeScrollBar}>
                     <ScrollView contentContainerStyle={styles.containerTime} horizontal={true}>
                         <View style={styles.row}>
@@ -142,13 +146,23 @@ export default function ScheduleScreen({navigation}) {
                     </ScrollView>
                 </View>
             </View>
-            <View>
-                <TouchableOpacity style={styles.submitButton} onPress={handleScheduale}>
-                    <Text style={styles.textstyle}>
-                        לקביעת שיעור עם {name}
-                    </Text>
-                </TouchableOpacity>
-            </View>
+            <Button
+        title={`לקביעת שיעור עם ${name}`}
+        titleStyle={{
+          fontSize: 18,
+          textAlign: "center",
+          fontFamily: "Heebo-Bold",
+        }} // Add this line to center the title
+        leading={() => <AntDesign name="left" size={24} color="white" />}
+        style={{
+          width: 400,
+          height: 60,
+          top: 700,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+        onPress={handleScheduale}
+      />
         </View>
     );
 }
@@ -164,6 +178,7 @@ const styles = StyleSheet.create({
         top: 150,
         backgroundColor: "transparent",
         backgroundCalender: "transparent",
+        
     },
     topPart: {
         alignItems: "center",
@@ -178,7 +193,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         position: "absolute",
         left: "10%",
-        top: -50,
+        top: 80,
         width: 320,
         paddingTop: 50,
         height: 100
@@ -187,12 +202,12 @@ const styles = StyleSheet.create({
         fontFamily: "Heebo-Bold",
         fontWeight: "bold",
         fontSize: 30,
-        top: 0,
+        top: -30,
         textAlign: "center",
       },
       TimeScrollBar: {
         position:"relative",
-        top:180
+        top:100
       },
       submitButton: {
         height: 53,
@@ -216,7 +231,7 @@ const styles = StyleSheet.create({
     },
     containerTime: {
         flexDirection: "row",
-        height: 30,
+        height: 60,
         position: "relative"
     },
     row: {
@@ -224,14 +239,16 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 10,
         position: "relative",
+        height: 20
     },
     timeButton: {
         backgroundColor: 'lightgray',
         borderRadius: 4,
         padding: 8,
         marginVertical: 4,
-        height: 40,
+        height: 50,
         marginHorizontal: 10,
         position: "relative"
     },
 });
+
