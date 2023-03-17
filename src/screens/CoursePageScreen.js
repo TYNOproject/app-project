@@ -54,8 +54,7 @@ export default function CoursePageScreen({navigation}) {
     return (
         <View style={styles.container}>
             <View style={styles.topPart}>
-                <Text style={styles.header}>מורים בקורס {course}</Text>
-            </View>
+                <Text style={styles.header}> מורים בקורס {course}</Text>
             <View style={styles.dropdown}>
                 <SelectOption
                     options={sortOptions}
@@ -66,11 +65,7 @@ export default function CoursePageScreen({navigation}) {
                         setTeachers(sortByProperty(teachers, option));
                     }}
                 />
-                <SelectOption
-                    options={filterOptions}
-                    defaultText="סינון"
-                    buttonStyle={styles.dropdownButtonStyle}
-                />
+            </View>
             </View>
             <View style={styles.spacer}/>
             <View style={styles.bottomHalf}>
@@ -86,34 +81,25 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         flex: 1,
     },
-    searchBar: {
-        position: "absolute",
-        direction: "rtl",
-        top: 150,
-        left: 60,
-        height: 60,
-        width: 300,
-    },
     header: {
         fontFamily: "Heebo-Bold",
         fontWeight: "bold",
         fontSize: 30,
-        top: 0,
         textAlign: "center",
     },
     topPart: {
         position: "absolute",
         left: "10%",
-        top: 0,
         width: 320,
         direction: "rtl",
         paddingTop: 50,
     },
     dropdown: {
         flexDirection: "row",
-        top: 120,
+        top: "10%",
         justifyContent: "space-between",
         alignItems: "center",
+        alignSelf: "center",
     },
     dropdownButtonStyle: {
         flexDirection: "row",
@@ -122,7 +108,7 @@ const styles = StyleSheet.create({
     },
 
     spacer: {
-        flex: 1,
+        flex: 2,
     },
     bottomHalf: {
         alignSelf: "flex-end",

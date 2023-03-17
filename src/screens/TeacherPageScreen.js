@@ -41,9 +41,9 @@ export default function TeacherPageScreen({ navigation })
     ).catch((error) => console.log(error));
     getTeacherReviews(teacherId).then((reviewsResponse) =>
     {
-      setReviews(reviewsResponse.data);
+      reviewsResponse !== undefined ? setReviews(reviewsResponse.data) : alert("error! reviewsResponse");
     }).catch((error) => console.log(error));
-      },[])
+      },[teacherId])
 
 
 

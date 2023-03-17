@@ -7,6 +7,9 @@ import TimeScrollBar from "../components/TimeScrollBar";
 import StudentContext from "../contexts/StudentContext";
 import ClassContext from "../contexts/ClassContext";
 import {getTeacherAvailableClasses, bookClass} from "../api/serviceCalls.js";
+import {Button} from "@react-native-material/core";
+import {AntDesign} from "@expo/vector-icons";
+import { color } from "react-native-reanimated";
 
 
 export default function ScheduleScreen({navigation}) {
@@ -143,12 +146,26 @@ export default function ScheduleScreen({navigation}) {
                 </View>
             </View>
             <View>
-                <TouchableOpacity style={styles.submitButton} onPress={handleScheduale}>
+                {/* <TouchableOpacity style={styles.submitButton} onPress={handleScheduale}>
                     <Text style={styles.textstyle}>
                         לקביעת שיעור עם {name}
                     </Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
+
             </View>
+            <Button
+                        title="לקביעת שיעור"
+                        titleStyle={{
+                            fontSize: 18,
+                            textAlign: "center",
+                            fontFamily: "Heebo-Bold",
+                        }} // Add this line to center the title
+                        leading={() => <AntDesign name="left" size={24} color="white"/>}
+                        style={{top:"80%"}}
+                        onPress={() => {
+                            handleScheduale
+                        }}
+                    />
         </View>
     );
 }
