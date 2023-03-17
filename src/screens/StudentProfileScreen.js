@@ -85,7 +85,7 @@ export default function StudentProfileScreen({navigation}) {
                     <ActivityIndicator size="large" color="#0000ff"/>
                 ) : (
                     classes.length > 0 ? (
-                        <ClassesList classes={classes}/>
+                        <ClassesList classes={classes} disabled={true}/>
                     ) : (
                         <Text style={{fontSize: 20, fontFamily: 'Heebo-Bold', textAlign: "center"}}>לא נמצאו שיעורים</Text>
                     )

@@ -68,6 +68,30 @@ export const bookClass = async (bookingDetails) => {
     }
 };
 
+export const approveClass = async (approveDetails) => {
+    try {
+        const response = await service.post("/classes/approve", {
+            classId: approveDetails.classId,
+            teacherId: approveDetails.teacherId,
+        });
+        return response;
+    } catch (err) {
+        console.log("error in approveClass function: " + err);
+    }
+};
+
+export const rejectClass = async (rejectDetails) => {
+    try {
+        const response = await service.post("/classes/reject", {
+            classId: rejectDetails.classId,
+            teacherId: rejectDetails.teacherId,
+        });
+        return response;
+    } catch (err) {
+        console.log("error in rejectClass function: " + err);
+    }
+};
+
 export const addReviewToClass = async (addReviewDetails) => {
     try {
         const response = await service.post("/classes/addReview", {
@@ -245,6 +269,8 @@ export default {
     addNewClass,
     searchCourses,
     bookClass,
+    approveClass,
+    rejectClass,
     addReviewToClass,
     updatePersonalDetails,
     getTeachersByCourseName,

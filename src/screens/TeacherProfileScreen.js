@@ -85,12 +85,14 @@ export default function TeacherProfileScreen({navigation}) {
                 variant="outlined"
                 color="black"
                 titleStyle={{fontFamily: "Heebo-Regular"}}
+                onPress = {()=> navigation.navigate("TeacherRegister")}
             />
             <Button
                 title="אישור/דחיית שיעורים ממתינים"
                 variant="outlined"
                 color="black"
                 titleStyle={{fontFamily: "Heebo-Regular"}}
+                onPress = {()=> navigation.navigate("ConfirmLessons")}
             />
             <View style={styles.divider} />
             <Text style={styles.containerHeaderText}>השיעורים הקרובים שלי</Text>
@@ -101,7 +103,7 @@ export default function TeacherProfileScreen({navigation}) {
                 {bookedClasses.length > 0 && (
                     <>
                         <View>
-                            <ClassesList classes={bookedClasses} horizantal={true} style={"row"} />
+                            <ClassesList classes={bookedClasses} horizantal={true} disabled={true}/>
                         </View>
                     </>
                 )}
