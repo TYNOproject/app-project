@@ -64,15 +64,6 @@ export default function TeacherProfileScreen({navigation}) {
             </View>
         );
 
-    const handleLessonsConfermation = () => {
-        navigation.navigate("ConfirmLessons");
-    };
-
-    const handleEditTeacher = () => {
-        navigation.navigate("TeacherRegister");
-    };
-
-
     return (
         <ScrollView contentContainerStyle={styles.container} style={{flex: 1}}>
             <Text style={styles.title}>
