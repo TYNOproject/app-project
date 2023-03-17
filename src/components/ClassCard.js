@@ -40,10 +40,11 @@ const ClassCard = ({ classDetails, disabled, callback }) => {
         {classDetails.teacher.name} מלמד/ת את {classDetails.student.name}
       </Text>
       <Card.Divider />
-      <Text style={styles.date} numberOfLines={3}>
+      <Text style={styles.date} numberOfLines={4}>
         {"תאריך: " + new Date(classDetails.date).toDateString()} {"\n"}
         {"שעת התחלה: " + classDetails.startTime} {"\n"}
-        {"שעת סיום: " + classDetails.endTime}
+        {"שעת סיום: " + classDetails.endTime} {"\n"}
+        {"סטטוס: " + classDetails.status} 
       </Text>
     </Card>
     </TouchableOpacity>

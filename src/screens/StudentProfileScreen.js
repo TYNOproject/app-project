@@ -113,5 +113,6 @@ const styles = StyleSheet.create({
     content: {
         justifyContent: 'center',
         alignItems: 'center',
+        right: "-5%"
     },
 });

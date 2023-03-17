@@ -188,7 +188,7 @@ export default function RegisterScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    top: 5
+    top: -20
   },
   topPart: {
     flex: 2.5,

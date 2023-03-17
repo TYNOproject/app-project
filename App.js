@@ -220,7 +220,9 @@ function App() {
               options={{
                 tabBarButton: () => null, // hides the button
                 tabBarVisibilityAnimationConfig: () => null,
-                headerShown: false, // hide top title
+                headerBackground: () => null, // hide header
+                headerTitle: () => null, // hide header title
+                headerLeft: () => <BackIcon pageName="TeacherProfile" />, // hide header back button
               }}
             />
             <Tab.Screen
