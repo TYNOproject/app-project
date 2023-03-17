@@ -85,7 +85,7 @@ export default function ConfirmLessonsScreen({navigation}) {
       const deniedClasses = Array.from(getVal(items,'deniedClasses'));
       const teacherId = getVal(items, "studentDetails").id;
       confirmedClasses.map((classId) => (
-        approveClass(classId, teacherId).then((response) => 
+        approveClass({classId, teacherId}).then((response) =>
           {
             response !== undefined ? alert("working") : alert("error!");
           }
