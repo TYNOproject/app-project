@@ -30,18 +30,19 @@ export default function TeacherPageScreen({ navigation }) {
 
 
   useEffect(() => {
-    console.log(teacherId);
     getTeacherCourses(teacherId).then((CoursesResponse) => {
-      console.log(CoursesResponse.data);
-      const teacherCourses = CoursesResponse.data.map(item => { return item.courseName });
-      console.log(teacherCourses);
-      setCourses(teacherCourses);
+      if (CoursesResponse === undefined)
+        setCourses([]);
+      else{
+        const teacherCourses = CoursesResponse.data.map(item => { return item.courseName });
+        setCourses(teacherCourses);
+      }
     }
     ).catch((error) => console.log(error));
     getTeacherReviews(teacherId).then((reviewsResponse) => {
-      setReviews(reviewsResponse.data);
+      reviewsResponse !== undefined ? setReviews(reviewsResponse.data) : setReviews([]);
     }).catch((error) => console.log(error));
-  }, [])
+  }, [teacherId])
 
 
 
@@ -89,7 +90,10 @@ export default function TeacherPageScreen({ navigation }) {
       </View>
       <View style={styles.spacer} />
       <View style={styles.bottomHalf}>
-        <ReviewBar reviews={reviews} />
+        {reviews.length === 0 && (
+                    <Text style={{textAlign: 'center', fontFamily: 'Heebo-Regular'}}>אין ביקורות זמינות כרגע</Text>
+                )}
+      <ReviewBar reviews={reviews} />
       </View>
       <Button
         title={`לקביעת שיעור עם ${name}`}

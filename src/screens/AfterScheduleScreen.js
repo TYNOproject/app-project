@@ -19,22 +19,11 @@ export default function AfterScheduleScreen({ navigation })
 
 
   const name = getVal(items, "studentDetails").name;
+  const course = getValClass(itemsClass, 'courseName');
   const teacherName = getValClass(itemsClass,'teacherName');
   const date = getValClass(itemsClass,'classDate');
   const fromTime = getValClass(itemsClass,'startTime');
   const endTime = addHourToTime(fromTime);
-  console.log(fromTime);
-
-  // useEffect(() => {
-  //   const timeString = fromTime;
-  //   const [hours, minutes, seconds] = timeString.split(':'); // split the time string into hours, minutes, and seconds
-  //   let hour = parseInt(hours); // convert hours to a number
-  //   let minute = parseInt(minutes); // convert minutes to a number
-  //   let second = parseInt(seconds); // convert seconds to a number
-  //   hour = (hour + 1) % 24; // add an hour and wrap around to the next day if needed
-  //   const newTimeString = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}:${second.toString().padStart(2, '0')}`; // format the new time as a string
-  //   setEndTime(newTimeString);
-  // },{});
   
   function addHourToTime(timeString) {
     const [hours, minutes, seconds] = timeString.split(':'); // split the time string into hours, minutes, and seconds
@@ -52,7 +41,7 @@ export default function AfterScheduleScreen({ navigation })
       <View style={styles.topPart}>
         <Text style={styles.header}>בהצלחה {name}!</Text>
         <View>
-          <Text style={styles.subHeaderText}>קבעת שיעור עם {teacherName}</Text>
+          <Text style={styles.subHeaderText}>קבעת שיעור עם {teacherName} {"\n"} בקורס {course}</Text>
         </View>
       </View>
       <View style={styles.mainPart}>
@@ -75,7 +64,7 @@ export default function AfterScheduleScreen({ navigation })
         style={{
           width: 400,
           height: 60,
-          top: 700,
+          top: "80%",
           justifyContent: "center",
           alignItems: "center",
         }}
@@ -103,7 +92,7 @@ const styles = StyleSheet.create({
   mainPart: {
     position: "absolute",
     left: 20,
-    top: 200,
+    top: "40%",
     width: 320,
     direction: "rtl",
     paddingTop: 50,
@@ -123,7 +112,7 @@ const styles = StyleSheet.create({
     fontFamily: "Heebo-Bold",
     fontWeight: "bold",
     fontSize: 30,
-    top: 40,
+    top: "10%",
     textAlign: "center",
     textShadowColor: "#A1B2C3",
     textShadowOffset: {width: 1},

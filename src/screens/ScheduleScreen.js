@@ -28,7 +28,7 @@ export default function ScheduleScreen({navigation}) {
   const [markedDates, setMarkedDates] = useState({});
   const [timeButtons, setTimeButtons] = useState([]);
   const [chosenTime, setChosenTime] = useState(null);
-  const [timeMap, setTimeMap] = useState({});
+  const [timeMap, setTimeMap] = useState(new Map());
 
 
     useEffect(() => {
@@ -44,9 +44,10 @@ export default function ScheduleScreen({navigation}) {
           setMarkedDates(datestoMark);
           updateMaps(timeResponse.data);
         }
+        else setMarkedDates({});
         }
         ).catch((error) => console.log(error)); 
-    },[]);
+    },[teacherId]);
 
     const updateMaps = (dates) => {
         const myTimeMap = new Map();
@@ -56,7 +57,6 @@ export default function ScheduleScreen({navigation}) {
             const time = item.startTime;
             const classId = item.id;
 
-
             if (myTimeMap.has(date)) {
                 const times = myTimeMap.get(date);
                 times.push([time, classId]);
@@ -64,9 +64,8 @@ export default function ScheduleScreen({navigation}) {
             } else {
                 myTimeMap.set(date, [[time, classId]]);
             }
-
-            setTimeMap(myTimeMap);
         });
+        setTimeMap(myTimeMap);
     }
 
 
@@ -88,12 +87,11 @@ export default function ScheduleScreen({navigation}) {
 
   async function handleScheduale () {
     const classId_ = timeMap.get(chosenTime)[selectedIndex][1];
-    console.log(classId_);
     let bookDetails = {
       classId: classId_,
       studentId: studentId,
     };
-    //start dbug
+
     bookClass(bookDetails).then((bookRespone) => 
     {
       addToClass('startTime', timeButtons[selectedIndex]);
@@ -124,12 +122,16 @@ export default function ScheduleScreen({navigation}) {
                 </Text>
             </View>
             <View style={styles.bottomPart}>
-                <Calendar
+              {Object.keys(markedDates).length === 0 && (
+                    <Text style={{textAlign: 'center', fontFamily: 'Heebo-Regular' , fontSize:20, top:"50%"}}>אין תאריכים זמינים כרגע</Text>
+                )}
+                {Object.keys(markedDates).length > 0 && (<Calendar
                     style={{ height: 350, width: 400}}
                     markedDates={markedDates}
                     markingType="simple"
                     onDayPress={handelPossibleTimes}
-                />
+                />)}
+
 
                 <View style={styles.TimeScrollBar}>
                     <ScrollView contentContainerStyle={styles.containerTime} horizontal={true}>

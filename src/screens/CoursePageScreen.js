@@ -30,7 +30,6 @@ export default function CoursePageScreen({navigation}) {
     }
 
     useEffect(() => {
-        console.log(teachers);
         getTeachersByCourseName(course)
             .then((response) =>
                 response !== undefined ? setTeachers(response.data) : setTeachers([])
@@ -68,8 +67,10 @@ export default function CoursePageScreen({navigation}) {
             </View>
             <View style={styles.spacer}/>
             <View style={styles.bottomHalf}>
-                {isLoading ? (<ActivityIndicator size="large" color="#0000ff"/>) : (
-                    <TeachersList teachers={teachers} navigation={navigation}/>)}
+                {isLoading ? (<ActivityIndicator size="large" color="#0000ff"/>) : teachers.length > 0 ? (
+                    <TeachersList teachers={teachers} navigation={navigation}/>) :  (
+                    <Text style={{textAlign: 'center', fontFamily: 'Heebo-Regular' , fontSize:20, top:"20%"}}>אין מורים זמינים כרגע</Text>    
+                    )}
             </View>
         </View>);
 }

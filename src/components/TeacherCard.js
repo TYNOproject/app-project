@@ -33,7 +33,8 @@ const TeacherCard = ({ teacher, navigation }) => {
         <Card containerStyle={styles.cardContainer}>
           <Card.Title style={styles.name}>
             {teacher.name}{"\n"}
-            שנה: {teacher.year}{" "}
+            שנה: {teacher.year}{"\n"}
+            מחיר: {teacher.price}{"\n"}
           </Card.Title>
           <Text style={styles.starRatingText}>{teacher.rate}5/5</Text>
 
