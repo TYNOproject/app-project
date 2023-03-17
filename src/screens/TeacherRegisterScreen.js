@@ -109,7 +109,6 @@ export default function RegisterScreen({ navigation }) {
         מה המחיר שלך לשיעור?
       </Text>
       <TextInput
-        keyboardType="numeric"
         style={styles.priceinput}
         placeholder="מחיר לשיעור"
         onChangeText={setPrice}

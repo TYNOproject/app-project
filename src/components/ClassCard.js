@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     borderColor: "#7521f3", // added purple border color
     borderWidth: 2, // increased border width for visibility
     alignContent: 'center',
-    marginBottom: 80
+    marginBottom: 10
   },
   cardSelected: {
     backgroundColor: "#8FBC8F",

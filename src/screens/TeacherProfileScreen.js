@@ -85,6 +85,7 @@ export default function TeacherProfileScreen({navigation}) {
                 variant="outlined"
                 color="black"
                 titleStyle={{fontFamily: "Heebo-Regular"}}
+                onPress = {()=> navigation.navigate("TeacherRegister")}
             />
             <Button
                 title="אישור/דחיית שיעורים ממתינים"

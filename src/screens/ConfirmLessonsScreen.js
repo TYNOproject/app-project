@@ -9,7 +9,7 @@ import {useFonts} from "expo-font";
 import ClassesList from "../components/ClassesList";
 import StudentContext from "../contexts/StudentContext";
 import ClassContext from "../contexts/ClassContext";
-import {getTeacherClasses} from "../api/serviceCalls";
+import {getTeacherClasses, approveClass, rejectClass} from "../api/serviceCalls";
 
 export default function ConfirmLessonsScreen({navigation}) {
     const {items, getVal, addToStudent} = useContext(StudentContext);
@@ -38,31 +38,66 @@ export default function ConfirmLessonsScreen({navigation}) {
     });
 
     function modifyConfirmedSet(id) {
-      let set = getVal(items,'confirmedClasses');
-      if (set.has(id)) {
-        set.delete(id);
+      let confirmedSet = getVal(items, 'confirmedClasses');
+      let deniedSet = getVal(items, 'deniedClasses');
+      if (confirmedSet.has(id)) {
+        confirmedSet.delete(id);
       } else {
-        set.add(id);
+        confirmedSet.add(id);
       }
-      addToStudent('confirmedClasses',set);
+      if (deniedSet.has(id)) {
+        deniedSet.delete(id);
+      }
+      addToStudent('confirmedClasses',confirmedSet);
+      addToStudent('deniedClasses',deniedSet);
     }
 
     function modifyDeniedSet(id) {
-      let set = getVal(items,'deniedClasses');
-      if (set.has(id)) {
-        set.delete(id);
+      let confirmedSet = getVal(items, 'confirmedClasses');
+      let deniedSet = getVal(items, 'deniedClasses');
+      if (deniedSet.has(id)) {
+        deniedSet.delete(id);
       } else {
-        set.add(id);
+        deniedSet.add(id);
       }
-      addToStudent('deniedClasses',set);
+      if (confirmedSet.has(id)) {
+        confirmedSet.delete(id);
+      }
+      addToStudent('confirmedClasses',confirmedSet);
+      addToStudent('deniedClasses',deniedSet);
+    }
+
+    function cancel(id){
+      let confirmedSet = getVal(items, 'confirmedClasses');
+      let deniedSet = getVal(items, 'deniedClasses');
+      if (confirmedSet.has(id)) {
+        confirmedSet.delete(id);
+      }
+      if (deniedSet.has(id)) {
+        deniedSet.delete(id);
+      }
+      addToStudent('confirmedClasses',confirmedSet);
+      addToStudent('deniedClasses',deniedSet);
     }
 
     function handleRegister() {
       const confirmedClasses = Array.from(getVal(items,'confirmedClasses'));
       const deniedClasses = Array.from(getVal(items,'deniedClasses'));
-      const studentId = getVal(items, "studentDetails").id;
-      console.log(confirmedClasses);
-      console.log(deniedClasses);
+      const teacherId = getVal(items, "studentDetails").id;
+      confirmedClasses.map((classId) => (
+        approveClass(classId, teacherId).then((response) => 
+          {
+            response !== undefined ? alert("working") : alert("error!");
+          }
+        ).catch((error) => console.log(error))        
+      ));
+      deniedClasses.map((classId) => (
+        rejectClass(classId, teacherId).then((response) => 
+          {
+            response !== undefined ? alert("working") : alert("error!");
+          }
+        ).catch((error) => console.log(error))        
+      ));
       navigation.navigate("TeacherProfile");
     }
 
@@ -86,7 +121,10 @@ export default function ConfirmLessonsScreen({navigation}) {
           {
             text: 'חזרה',
             style: 'cancel',
-            onPress: () => resolve(0),
+            onPress: () => {
+              cancel(id);
+              resolve(0);
+            }
           },
         ]);
       });
