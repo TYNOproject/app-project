@@ -42,8 +42,7 @@ export default function TeacherProfileScreen({navigation}) {
 
     const [bookedClasses, setBookedClasses] = useState([]);
     const [availableTimes, setAvailableTimes] = useState([]);
-    useEffect(() => setBookedClasses(classes.filter((item) => item.status === "booked")), [isFocused]);
-    useEffect(() => setPendingClasses(classes.filter((item) => item.status === "pending")), [isFocused]);
+    useEffect(() => setBookedClasses(classes.filter((item) => item.status === "booked" && item.over === false)), [isFocused]);
     useEffect(() => {
         const available = classes.filter((item) => item.status === "available").map((item) => {
             return {date: item.date, startTime: item.startTime, endTime: item.endTime}
@@ -113,16 +112,15 @@ export default function TeacherProfileScreen({navigation}) {
                 {isLoading ? (
                     <ActivityIndicator size="large" color="#0000ff"/>
                 ) : (
+                    <>
                     {availableTimes.length === 0 && (
                     <Text style={styles.noAviableTimes}>אין לך זמנים פנויים</Text>
                 )}
                 {availableTimes.length > 0 && (
-                    <>
                         <View>
                             <AviableTimesList availableTimes={availableTimes}/>
-                )}
                         </View>
-
+                        )}
                     </>
                 )}
             </View>
@@ -132,15 +130,15 @@ export default function TeacherProfileScreen({navigation}) {
                 {isLoading ? (
                     <ActivityIndicator size="large" color="#0000ff"/>
                 ) : (
+                    <>
                     {teacherCourses.length === 0 && (
                     <Text style={styles.noCourses}>עוד לא בחרת קורסים ללמד</Text>
                 )}
                 {teacherCourses.length > 0 && (
-                    <>
                         <View>
                         <TeacherCoursesList courses={teacherCourses}/>
-                )}
                         </View>
+                 )}
                     </>
                 )}
             </View>

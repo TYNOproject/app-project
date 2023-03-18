@@ -190,7 +190,6 @@ export default function RegisterScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: '15%',
     flex: 1,
   },
   topPart: {
@@ -198,7 +197,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     padding: 30,
-    marginBottom:10
+    marginBottom:20
   },
   header: {
     fontFamily: "Heebo-Bold",
@@ -250,7 +249,7 @@ const styles = StyleSheet.create({
   courses: {
     fontFamily: "Heebo-Bold",
     fontSize: 16,
-    marginBottom: 15
+    marginBottom: 20
   },
   searchBar: {
     marginBottom: 10,

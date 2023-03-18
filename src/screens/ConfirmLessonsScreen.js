@@ -35,8 +35,7 @@ export default function ConfirmLessonsScreen({navigation}) {
     }, [name, changeFlag, isFocused]);
 
     const [pendingClasses, setPendingClasses] = useState([]);
-    useEffect(() => setPendingClasses(classes.filter((item) => item.status === "pending")), [isFocused]);
-    useEffect(() => setPendingClasses(classes.filter((item) => item.status === "pending" && item.over === false)), [classes]);
+    useEffect(() => setPendingClasses(classes.filter((item) => item.status === "pending" && item.over === false)), [isFocused]);
 
     let [fontsLoaded] = useFonts({
         "Heebo-Bold": require("../../assets/fonts/Heebo-Bold.ttf"),

@@ -5,21 +5,25 @@ import {Button, Icon} from "@react-native-material/core";
 import {AntDesign} from "@expo/vector-icons";
 import {useFonts} from "expo-font";
 import StudentContext from "../contexts/StudentContext";
-import {getTeacherCourses,getTeacherAvailableClasses, addNewClass} from "../api/serviceCalls";
+import {getTeacherCourses,getTeacherAvailableClasses, addNewClass, getTeacherClasses} from "../api/serviceCalls";
 import { Alert } from 'react-native';
+import {useIsFocused} from "@react-navigation/native";
+
 
 
 
 export default function ChooseAvaibleTimes({navigation}) {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTimes, setSelectedTimes] = useState([]);
-  const [markedTimes, setMarkedTimes] = useState([]);
+  const [classes, setClasses] = useState([]);
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [teacherCourses, setTeacherCourses] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const {items, getVal} = useContext(StudentContext);
   const name = getVal(items, "studentDetails").name;
   const teacherId = getVal(items, "studentDetails").id;
+  const isFocused = useIsFocused();
+
 
   let [fontsLoaded] = useFonts({
     "Heebo-Bold": require("../../assets/fonts/Heebo-Bold.ttf"),
@@ -36,26 +40,24 @@ export default function ChooseAvaibleTimes({navigation}) {
 }, [name]);
 
 useEffect(() => {
-  getTeacherAvailableClasses(teacherId).then((timeResponse)=>
-  {
-    if (timeResponse !== undefined){
-      timeResponse.data.forEach(item => {
-        const date = item.date.split('T')[0];
-        const startTime = item.startTime;
-        const endTime = item.endTime;
-        const selectedDateTime = {'date': date, 'startTime': startTime, 'endTime': endTime, 'new': false};
-        setSelectedTimes([...selectedTimes, selectedDateTime]);
-      })
-    }
-  }
-  ).catch((error) => console.log(error)); 
-},[]);
+  setIsLoading(true);
+  getTeacherClasses(getVal(items, "studentDetails").id)
+      .then((response) =>
+          response !== undefined ? setClasses(response.data) : setClasses([])
+      )
+      .catch((error) => console.log(error))
+      .finally(() => setIsLoading(false));
+}, [isFocused]);
 
+useEffect(() => {
+  const available = classes.filter((item) => item.status === "available").map((item) => {
+      return {date: item.date, startTime: item.startTime, endTime: item.endTime}
+  });
+  setSelectedTimes(available);
+}, [isFocused]);
 
 
   function handleTimeSelect(date, time) {
-    console.log("here");
-    console.log(selectedTimes);
     const [startTime, endTime] = time.split("-");
     if (selectedTimes.some(dateTime => dateTime.date === date && dateTime.startTime === startTime)) {
       setSelectedTimes(selectedTimes.filter((dateTime) => dateTime.date !== date || dateTime.startTime !== startTime));
@@ -67,31 +69,37 @@ useEffect(() => {
   };
 
   function handleRegister() {
-    if(selectedCourse === null){
-      Alert.alert('שכחת לבחור את הקורס אותו אתה רוצה ללמד','', [
-        {
-          text: 'חזרה',
-          style: 'cancel',
-        },
-      ]);
-    }
-    else{
-    selectedTimes.filter((dateTime) => dateTime.new === true).map((newTime) => (
-      addNewClass({
-        selectedCourse,
-        teacherId,
-        date: newTime.date,
-        startTime: newTime.startTime,
-        endTime: newTime.endTime
-      })
-      .then((response) => {
-        response !== undefined ? {} : alert("error!");
-      })
-      .catch((error) => console.log(error))
-    ));
-    navigation.navigate("TeacherProfile");
-    }
+    selectedTimes
+      .filter((dateTime) => dateTime.new === true)
+      .map((newTime) => {
+        if (selectedCourse === null) {
+          Alert.alert(
+            'שכחת לבחור את הקורס אותו אתה רוצה ללמד',
+            '',
+            [
+              {
+                text: 'חזרה',
+                style: 'cancel',
+              },
+            ],
+          );
+        } else {
+          addNewClass({
+            courseId: selectedCourse,
+            teacherId,
+            date: newTime.date,
+            startTime: newTime.startTime,
+            endTime: newTime.endTime,
+          })
+            .then((response) => {
+              response !== undefined ? {} : alert('error!');
+            })
+            .catch((error) => console.log(error));
+        }
+      });
+    navigation.navigate('TeacherProfile');
   }
+  
   
 
   const hours = [
@@ -131,14 +139,10 @@ useEffect(() => {
       <Text style={styles.title}>מתי?</Text>
       <CalendarPicker
         onDateChange={(date) => {
-          const formattedDate = new Date(date).toLocaleDateString('en-CA', {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-          }).replace(/(\d+)\/(\d+)\/(\d+)/, '$3-$1-$2');
-          setSelectedDate(formattedDate);
-          }
-        }
+        const formattedDate = new Date(date).toISOString().slice(0, 10);
+        setSelectedDate(formattedDate);
+        console.log(formattedDate);
+        }}
       />
       {selectedDate && (
         <View>
