@@ -27,7 +27,6 @@ export default function StudentProfileScreen({navigation}) {
     }
 
     function handleTeacherPress() {
-        console.log(getVal(items, "studentDetails"));
         isTeacher ? navigation.navigate("TeacherProfile") : navigation.navigate("TeacherSignUp")
     }
 

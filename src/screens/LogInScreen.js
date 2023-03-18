@@ -42,7 +42,6 @@ export default function LoginScreen({navigation}) {
         }
         if (signInResponse.status === 200) {
             addToStudent("studentDetails", signInResponse.data);
-            console.log(getVal(items, "studentDetails"));
             navigation.navigate("HomePage");
         }
     };
