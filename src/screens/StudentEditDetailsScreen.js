@@ -46,8 +46,7 @@ export default function StudentEditDetailsScreen({navigation}) {
 
 
     return (
-        <ScrollView contentContainerStyle={styles.container} automaticallyAdjustKeyboardInsets={true}
-                    showsVerticalScrollIndicator={false}>
+        <ScrollView contentContainerStyle={styles.container} style={{flex: 1}}>
             <Text style={styles.header}>
                 <MaterialCommunityIcons
                     name="card-account-details-outline"
@@ -57,7 +56,6 @@ export default function StudentEditDetailsScreen({navigation}) {
                 {"\n"}
                 עריכת פרטים אישיים
             </Text>
-            <View style={styles.optionsContainer}>
                 <SelectOption
                     options={constants.faculties.map((faculty) => faculty.faculty_name)}
                     defaultText="בחר פקולטה"
@@ -113,16 +111,15 @@ export default function StudentEditDetailsScreen({navigation}) {
                         });
                     }}
                 />
+                <TextInput
+                    value={privateInfo}
+                    onChangeText={(info) => setPrivateInfo(info)}
+                    placeholder={"הכנס תיאור אישי..."}
+                    style={styles.input}
+                    editable
+                    multiline
+                />
 
-            </View>
-            <TextInput
-                value={privateInfo}
-                onChangeText={(info) => setPrivateInfo(info)}
-                placeholder={"הכנס תיאור אישי..."}
-                style={styles.input}
-                editable
-                multiline
-            />
             <Button
                 title="שלח"
                 titleStyle={{
@@ -177,33 +174,14 @@ export default function StudentEditDetailsScreen({navigation}) {
 
 const styles = StyleSheet.create({
     container: {
-        flexDirection: "column",
         alignItems: "center",
-        justifyContent: "space-between",
-    },
-    optionsContainer: {
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "space-between",
-    },
-    topContainer: {
-        flex: 2,
-        height: 200,
+        height: "100%",
+        padding: "5%",
     },
     header: {
         fontSize: 30,
         fontFamily: "Heebo-Bold",
         textAlign: "center",
-    },
-    spacer: {
-        flex: 1,
-    },
-    bottomHalf: {
-        alignSelf: "flex-end",
-        width: "100%",
-        flex: 4,
-        top: -80,
-        right: -20,
     },
     selectOptionStyle: {
         margin: "3%",
@@ -211,14 +189,13 @@ const styles = StyleSheet.create({
         borderColor: "#7521f3",
         width: "80%",
         borderWidth: 2, // increased border width for visibility
-        top: 20,
-        paddingBottom: 0,
     },
     input: {
         width: "80%",
         height: "30%",
-        margin: "10%",
+        margin: "3%",
         writingDirection: "rtl",
+        textAlign: "right",
         borderWidth: 2,
         borderColor: "#7521f3",
         backgroundColor: "#e8e8e8",
