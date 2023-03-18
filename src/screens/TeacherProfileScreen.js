@@ -8,12 +8,13 @@ import TeacherCoursesList from "../components/TeacherCoursesList";
 import StudentContext from "../contexts/StudentContext";
 import ClassesList from "../components/ClassesList";
 import AviableTimesList from "../components/AviableTimesList";
-import {getTeacherClasses, getTeacherCourses} from "../api/serviceCalls";
+import {getTeacherClasses, getTeacherCourses, getTeacherPrice} from "../api/serviceCalls";
 
 
 export default function TeacherProfileScreen({navigation}) {
     const {items, getVal} = useContext(StudentContext);
     const name = getVal(items, "studentDetails").name;
+    const teacherPrice = getVal(items, "studentDetails").price;
     const [classes, setClasses] = useState([]);
     const [teacherCourses, setTeacherCourses] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -36,10 +37,8 @@ export default function TeacherProfileScreen({navigation}) {
     }, [name]);
 
     const [bookedClasses, setBookedClasses] = useState([]);
-    const [pendingClasses, setPendingClasses] = useState([]);
     const [availableTimes, setAvailableTimes] = useState([]);
-    useEffect(() => setBookedClasses(classes.filter((item) => item.status === "booked")), [classes]);
-    useEffect(() => setPendingClasses(classes.filter((item) => item.status === "pending")), [classes]);
+    useEffect(() => setBookedClasses(classes.filter((item) => item.status === "booked" && item.over === false)), [classes]);
     useEffect(() => {
         const available = classes.filter((item) => item.status === "available").map((item) =>
         {
@@ -47,10 +46,6 @@ export default function TeacherProfileScreen({navigation}) {
         });
         setAvailableTimes(available);
     }, [classes]);
-
-    //need to take from the DB
-    const price = getVal(items, "studentDetails").price;
-
 
     let [fontsLoaded] = useFonts({
         "Heebo-Bold": require("../../assets/fonts/Heebo-Bold.ttf"),
@@ -63,14 +58,6 @@ export default function TeacherProfileScreen({navigation}) {
                 <Text>loading</Text>
             </View>
         );
-
-    const handleLessonsConfermation = () => {
-        navigation.navigate("ConfirmLessons");
-    };
-
-    const handleEditTeacher = () => {
-        navigation.navigate("TeacherRegister");
-    };
 
 
     return (
@@ -98,7 +85,7 @@ export default function TeacherProfileScreen({navigation}) {
             <Text style={styles.containerHeaderText}>השיעורים הקרובים שלי</Text>
             <View style={styles.upcomingLessonsContainer}>
                 {bookedClasses.length === 0 && (
-                    <Text style={{textAlign: 'center', fontFamily: 'Heebo-Regular'}}>אין לך שיעורים קרובים</Text>
+                    <Text style={styles.noClasses}>אין לך שיעורים קרובים</Text>
                 )}
                 {bookedClasses.length > 0 && (
                     <>
@@ -111,12 +98,42 @@ export default function TeacherProfileScreen({navigation}) {
             <View style={styles.divider} />
             <Text style={styles.containerHeaderText}>הזמנים הפנויים שלי</Text>
             <View style={styles.mySlotsContainer}>
-                <AviableTimesList availableTimes={availableTimes}/>
+                {availableTimes.length === 0 && (
+                    <Text style={styles.noAviableTimes}>אין לך זמנים פנויים</Text>
+                )}
+                {availableTimes.length > 0 && (
+                    <>
+                        <View>
+                            <AviableTimesList availableTimes={availableTimes}/>
+                        </View>
+                    </>
+                )}
             </View>
             <View style={styles.divider} />
             <Text style={styles.containerHeaderText}>הקורסים שאני מלמד</Text>
             <View style={styles.myCoursesContainer}>
-                <TeacherCoursesList courses={teacherCourses}/>
+                {teacherCourses.length === 0 && (
+                    <Text style={styles.noCourses}>עוד לא בחרת קורסים ללמד</Text>
+                )}
+                {teacherCourses.length > 0 && (
+                    <>
+                        <View>
+                        <TeacherCoursesList courses={teacherCourses}/>
+                        </View>
+                    </>
+                )}
+            </View>
+            <View style={styles.divider} />
+            <Text style={styles.containerHeaderText}>המחיר שלי לשיעור</Text>
+            <View style={styles.myPriceContainer}>
+                {teacherPrice === 0 && (
+                    <Text style={styles.noPrice}>עוד לא בחרת את המחיר שלך לשיעור</Text>
+                )}
+                {teacherPrice > 0 && (
+                    <>
+                        <Text style = {styles.price}>{teacherPrice} ש"ח</Text>
+                    </>
+                )}
             </View>
             <View style={styles.divider} />
         </ScrollView>
@@ -149,14 +166,44 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         padding: 10,
     },
+    noClasses: {
+        textAlign: 'center',
+        fontFamily: 'Heebo-Regular',
+        padding: 10
+    },
     mySlotsContainer: {
         backgroundColor: '#e1e1e1',
         borderRadius: 10,
         paddingBottom: 10,
     },
+    noAviableTimes: {
+        textAlign: 'center',
+        fontFamily: 'Heebo-Regular',
+        padding: 10
+    },
     myCoursesContainer: {
         backgroundColor: '#e1e1e1',
         borderRadius: 10,
+    },
+    noCourses: {
+        textAlign: 'center',
+        fontFamily: 'Heebo-Regular',
+        padding: 10
+    },
+    myPriceContainer: {
+        backgroundColor: '#e1e1e1',
+        borderRadius: 10,
+    },
+    price: {
+        textAlign: 'center',
+        fontFamily: 'Heebo-Regular',
+        fontSize: 16,
+        padding: 10
+    },
+    noPrice: {
+        textAlign: 'center',
+        fontFamily: 'Heebo-Regular',
+        padding: 10
     },
     divider: {
         height: 1,

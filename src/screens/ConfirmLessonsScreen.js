@@ -2,13 +2,11 @@ import React, {useEffect, useState} from "react";
 import {useContext} from "react";
 import { set } from "react-native-reanimated";
 import {View, Text, StyleSheet, ActivityIndicator, Alert} from "react-native";
-import {Button, Dialog, DialogHeader, DialogContent, DialogActions} from "@react-native-material/core";
-import {AntDesign, FontAwesome5} from "@expo/vector-icons";
-import {MaterialCommunityIcons} from "@expo/vector-icons";
+import {Button} from "@react-native-material/core";
+import {AntDesign} from "@expo/vector-icons";
 import {useFonts} from "expo-font";
 import ClassesList from "../components/ClassesList";
 import StudentContext from "../contexts/StudentContext";
-import ClassContext from "../contexts/ClassContext";
 import {getTeacherClasses, approveClass, rejectClass} from "../api/serviceCalls";
 
 export default function ConfirmLessonsScreen({navigation}) {
@@ -30,7 +28,7 @@ export default function ConfirmLessonsScreen({navigation}) {
   }, [name]);
 
     const [pendingClasses, setPendingClasses] = useState([]);
-    useEffect(() => setPendingClasses(classes.filter((item) => item.status === "pending")), [classes]);
+    useEffect(() => setPendingClasses(classes.filter((item) => item.status === "pending" && item.over === false)), [classes]);
 
     let [fontsLoaded] = useFonts({
         "Heebo-Bold": require("../../assets/fonts/Heebo-Bold.ttf"),
@@ -87,14 +85,14 @@ export default function ConfirmLessonsScreen({navigation}) {
       confirmedClasses.map((classId) => (
         approveClass({classId, teacherId}).then((response) =>
           {
-            response !== undefined ? alert("working") : alert("error!");
+            response !== undefined ? {} : alert("error!");
           }
         ).catch((error) => console.log(error))        
       ));
       deniedClasses.map((classId) => (
         rejectClass({classId, teacherId}).then((response) => 
           {
-            response !== undefined ? alert("working") : alert("error!");
+            response !== undefined ? {} : alert("error!");
           }
         ).catch((error) => console.log(error))        
       ));
