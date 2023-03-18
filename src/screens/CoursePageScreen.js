@@ -30,7 +30,6 @@ export default function CoursePageScreen({navigation}) {
     }
 
     useEffect(() => {
-        console.log(teachers);
         setIsLoading(true);
         getTeachersByCourseName(course)
             .then((response) =>

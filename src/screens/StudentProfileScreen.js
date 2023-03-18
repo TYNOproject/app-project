@@ -36,7 +36,6 @@ export default function StudentProfileScreen({navigation}) {
                 response !== undefined ? setClasses(response.data) : setClasses([])
             )
             .catch((error) => {
-                console.log(" this is the error i got:", error);
                 setClasses([])
             })
             .finally(() => setIsLoading(false));

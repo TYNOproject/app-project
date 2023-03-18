@@ -70,10 +70,6 @@ export default function RegisterScreen({ navigation }) {
   const handleRegister = () => {
     const CoursesId = Array.from(getVal(items,'coursesList'));
     const studentId = getVal(items, "studentDetails").id;
-    //start dbug
-    console.log(studentId);
-    console.log(CoursesId);
-    console.log(price);
     sendTeacherRequest(studentId,CoursesId,price,description).then((teacherRespone) => 
     {
       teacherRespone !== undefined ? navigation.navigate("TeacherProfile") : alert("error!");
@@ -154,7 +150,6 @@ export default function RegisterScreen({ navigation }) {
                     defaultText="שנה"
                     buttonStyle={styles.dropdownButtonStyle}
                     onSelectOption={(option) => {
-                        console.log("option chosen in year: " + option);
                         setYear(option);
                     }}
                 />

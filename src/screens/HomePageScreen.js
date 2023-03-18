@@ -103,7 +103,6 @@ export default function HomePageScreen({navigation}) {
                     defaultText="שנה"
                     buttonStyle={styles.dropdownButtonStyle}
                     onSelectOption={(option) => {
-                        console.log("option chosen in year: " + option);
                         setYear(option);
                     }}
                 />

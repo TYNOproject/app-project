@@ -30,11 +30,8 @@ export default function TeacherPageScreen({ navigation }) {
 
 
   useEffect(() => {
-    console.log(teacherId);
     getTeacherCourses(teacherId).then((CoursesResponse) => {
-      console.log(CoursesResponse.data);
       const teacherCourses = CoursesResponse.data.map(item => { return item.courseName });
-      console.log(teacherCourses);
       setCourses(teacherCourses);
     }
     ).catch((error) => console.log(error));

@@ -36,7 +36,7 @@ export const signIn = async (studentDetails) => {
         });
         return response;
     } catch (err) {
-        console.log("error in addNewUser function: " + err);
+        console.log("error in SignIn function: " + err);
         return err;
     }
 };
@@ -106,7 +106,6 @@ export const addReviewToClass = async (addReviewDetails) => {
 };
 export const updatePersonalDetails = async (updateDetails) => {
     try {
-        console.log(updateDetails);
         const response = await service.post("/users/updatePrivateInfo", {
             studentId: updateDetails.studentId,
             faculty: updateDetails.faculty,

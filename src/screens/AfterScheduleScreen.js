@@ -20,8 +20,7 @@ export default function AfterScheduleScreen({ navigation })
   const date = getValClass(itemsClass,'classDate');
   const fromTime = getValClass(itemsClass,'startTime');
   const endTime = addHourToTime(fromTime);
-  console.log(fromTime);
-  
+
   function addHourToTime(timeString) {
     const [hours, minutes, seconds] = timeString.split(':'); // split the time string into hours, minutes, and seconds
     let hour = parseInt(hours); // convert hours to a number
