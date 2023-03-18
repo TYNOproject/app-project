@@ -1,9 +1,11 @@
 import React, { useState, useContext, useEffect } from "react";
-import { View, Text, TextInput, StyleSheet, ActivityIndicator } from "react-native";
+import { View, Text, TextInput, StyleSheet, ActivityIndicator, ScrollView } from "react-native";
 import { Button } from "@react-native-material/core";
 import { AntDesign } from "@expo/vector-icons";
 import { useFonts } from "expo-font";
 import { SearchBar } from "react-native-elements";
+import Icon from 'react-native-vector-icons/FontAwesome';
+
 
 import ClassContext from "../contexts/ClassContext";
 import StudentContext from "../contexts/StudentContext";
@@ -86,7 +88,7 @@ export default function RegisterScreen({ navigation }) {
 
 
   return (
-    <View style={styles.container}>
+    <View style= {styles.container}>
       <View style={styles.topPart}>
       <Text style={styles.header}>
         כמה פרטים וסיימנו
@@ -110,6 +112,14 @@ export default function RegisterScreen({ navigation }) {
         onChangeText={setPrice}
         value={price}
       />
+      <Button style={{marginBottom:10}}
+        title="מתי אתה פנוי ללמד?"
+        color="black"
+        variant="outlined"
+        titleStyle={styles.timeButton}
+        icon={<Icon name="calendar" size={20} color="black" />}
+        onPress={() => navigation.navigate("ChooseAvaibleTimes")}
+        />
       <Text style= {styles.courses}>
         איזה קורסים אתה מעוניין ללמד?
       </Text>
@@ -165,14 +175,12 @@ export default function RegisterScreen({ navigation }) {
                         />
                     )}
             </View>
-      <Button style = {styles.button}
+      <Button
         leading={() => <AntDesign name="left" size={24} />}
         title="אפשר להמשיך"
         variant="outlined"
         color="black"
         onPress={() => {
-          // clearItems();
-          // addToStudent('username', name);
           handleRegister();
         }}
       />
@@ -183,13 +191,13 @@ export default function RegisterScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    top: -20
   },
   topPart: {
     flex: 2.5,
     alignItems: "center",
     justifyContent: "center",
     padding: 30,
+    marginBottom:20
   },
   header: {
     fontFamily: "Heebo-Bold",
@@ -241,7 +249,7 @@ const styles = StyleSheet.create({
   courses: {
     fontFamily: "Heebo-Bold",
     fontSize: 16,
-    marginBottom: -40
+    marginBottom: 20
   },
   searchBar: {
     marginBottom: 10,
@@ -266,8 +274,10 @@ const styles = StyleSheet.create({
     width: "100%",
     flex: 2,
   },
-    button: {
-    position: "relative",
-    marginBottom: 10
+    timeButton: {
+    fontFamily: 'Heebo-Regular',
+    fontSize: 18,
+    padding:6,
+    borderWidth: 3
   }
 });

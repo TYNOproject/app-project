@@ -2,13 +2,11 @@ import React, {useEffect, useState} from "react";
 import {useContext} from "react";
 import {set} from "react-native-reanimated";
 import {View, Text, StyleSheet, ActivityIndicator, Alert} from "react-native";
-import {Button, Dialog, DialogHeader, DialogContent, DialogActions} from "@react-native-material/core";
-import {AntDesign, FontAwesome5} from "@expo/vector-icons";
-import {MaterialCommunityIcons} from "@expo/vector-icons";
+import {Button} from "@react-native-material/core";
+import {AntDesign} from "@expo/vector-icons";
 import {useFonts} from "expo-font";
 import ClassesList from "../components/ClassesList";
 import StudentContext from "../contexts/StudentContext";
-import ClassContext from "../contexts/ClassContext";
 import {getTeacherClasses, approveClass, rejectClass} from "../api/serviceCalls";
 import {useIsFocused} from "@react-navigation/native";
 
@@ -37,7 +35,7 @@ export default function ConfirmLessonsScreen({navigation}) {
     }, [name, changeFlag, isFocused]);
 
     const [pendingClasses, setPendingClasses] = useState([]);
-    useEffect(() => setPendingClasses(classes.filter((item) => item.status === "pending")), [isFocused]);
+    useEffect(() => setPendingClasses(classes.filter((item) => item.status === "pending" && item.over === false)), [isFocused]);
 
     let [fontsLoaded] = useFonts({
         "Heebo-Bold": require("../../assets/fonts/Heebo-Bold.ttf"),
