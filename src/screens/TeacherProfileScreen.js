@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Button} from "@react-native-material/core";
 import {StyleSheet, Text, View, ScrollView, ActivityIndicator} from "react-native";
 import {useFonts} from "expo-font";
@@ -9,44 +9,47 @@ import StudentContext from "../contexts/StudentContext";
 import ClassesList from "../components/ClassesList";
 import AviableTimesList from "../components/AviableTimesList";
 import {getTeacherClasses, getTeacherCourses} from "../api/serviceCalls";
+import {useIsFocused} from '@react-navigation/native';
 
 
 export default function TeacherProfileScreen({navigation}) {
+    const isFocused = useIsFocused();
     const {items, getVal} = useContext(StudentContext);
     const name = getVal(items, "studentDetails").name;
     const [classes, setClasses] = useState([]);
     const [teacherCourses, setTeacherCourses] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     useEffect(() => {
+        setIsLoading(true);
         getTeacherClasses(getVal(items, "studentDetails").id)
             .then((response) =>
                 response !== undefined ? setClasses(response.data) : setClasses([])
             )
             .catch((error) => console.log(error))
             .finally(() => setIsLoading(false));
-    }, [name]);
+    }, [isFocused]);
 
     useEffect(() => {
+        setIsLoading(true);
         getTeacherCourses(getVal(items, "studentDetails").id)
             .then((response) =>
                 response !== undefined ? setTeacherCourses(response.data) : setTeacherCourses([])
             )
             .catch((error) => console.log(error))
             .finally(() => setIsLoading(false));
-    }, [name]);
+    }, [isFocused]);
 
     const [bookedClasses, setBookedClasses] = useState([]);
     const [pendingClasses, setPendingClasses] = useState([]);
     const [availableTimes, setAvailableTimes] = useState([]);
-    useEffect(() => setBookedClasses(classes.filter((item) => item.status === "booked")), [classes]);
-    useEffect(() => setPendingClasses(classes.filter((item) => item.status === "pending")), [classes]);
+    useEffect(() => setBookedClasses(classes.filter((item) => item.status === "booked")), [isFocused]);
+    useEffect(() => setPendingClasses(classes.filter((item) => item.status === "pending")), [isFocused]);
     useEffect(() => {
-        const available = classes.filter((item) => item.status === "available").map((item) =>
-        {
+        const available = classes.filter((item) => item.status === "available").map((item) => {
             return {date: item.date, startTime: item.startTime, endTime: item.endTime}
         });
         setAvailableTimes(available);
-    }, [classes]);
+    }, [isFocused]);
 
     //need to take from the DB
     const price = getVal(items, "studentDetails").price;
@@ -60,7 +63,7 @@ export default function TeacherProfileScreen({navigation}) {
     if (!fontsLoaded)
         return (
             <View>
-                <Text>loading</Text>
+                <ActivityIndicator size="large" color="#0000ff"/>
             </View>
         );
 
@@ -76,40 +79,54 @@ export default function TeacherProfileScreen({navigation}) {
                 variant="outlined"
                 color="black"
                 titleStyle={{fontFamily: "Heebo-Regular"}}
-                onPress = {()=> navigation.navigate("TeacherRegister")}
+                onPress={() => navigation.navigate("TeacherRegister")}
             />
             <Button
                 title="אישור/דחיית שיעורים ממתינים"
                 variant="outlined"
                 color="black"
                 titleStyle={{fontFamily: "Heebo-Regular"}}
-                onPress = {()=> navigation.navigate("ConfirmLessons")}
+                onPress={() => navigation.navigate("ConfirmLessons")}
             />
-            <View style={styles.divider} />
+            <View style={styles.divider}/>
             <Text style={styles.containerHeaderText}>השיעורים הקרובים שלי</Text>
             <View style={styles.upcomingLessonsContainer}>
-                {bookedClasses.length === 0 && (
-                    <Text style={{textAlign: 'center', fontFamily: 'Heebo-Regular'}}>אין לך שיעורים קרובים</Text>
-                )}
-                {bookedClasses.length > 0 && (
+                {isLoading ? (
+                    <ActivityIndicator size="large" color="#0000ff"/>
+                ) : (
                     <>
-                        <View>
-                            <ClassesList classes={bookedClasses} horizantal={true} disabled={true}/>
-                        </View>
+                        {bookedClasses.length === 0 && (
+                            <Text style={{textAlign: 'center', fontFamily: 'Heebo-Regular'}}>אין לך שיעורים
+                                קרובים</Text>
+                        )}
+                        {bookedClasses.length > 0 && (
+                            <View>
+                                <ClassesList classes={bookedClasses} horizantal={true} disabled={true}/>
+                            </View>
+                        )}
                     </>
                 )}
             </View>
-            <View style={styles.divider} />
+            <View style={styles.divider}/>
             <Text style={styles.containerHeaderText}>הזמנים הפנויים שלי</Text>
             <View style={styles.mySlotsContainer}>
-                <AviableTimesList availableTimes={availableTimes}/>
+                {isLoading ? (
+                    <ActivityIndicator size="large" color="#0000ff"/>
+                ) : (
+                    <AviableTimesList availableTimes={availableTimes}/>
+                )}
             </View>
-            <View style={styles.divider} />
+
+            <View style={styles.divider}/>
             <Text style={styles.containerHeaderText}>הקורסים שאני מלמד</Text>
             <View style={styles.myCoursesContainer}>
-                <TeacherCoursesList courses={teacherCourses}/>
+                {isLoading ? (
+                    <ActivityIndicator size="large" color="#0000ff"/>
+                ) : (
+                    <TeacherCoursesList courses={teacherCourses}/>
+                )}
             </View>
-            <View style={styles.divider} />
+            <View style={styles.divider}/>
         </ScrollView>
     );
 }

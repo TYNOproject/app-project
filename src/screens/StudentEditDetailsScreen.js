@@ -1,6 +1,6 @@
 import React from "react";
-import {useContext, useState, useCallback} from "react";
-import {View, Text, StyleSheet, TextInput, ScrollView, TouchableOpacity} from "react-native";
+import {useContext, useState, useEffect, useCallback} from "react";
+import {View, Text, StyleSheet, TextInput, ScrollView, TouchableOpacity, ActivityIndicator} from "react-native";
 import {AntDesign, FontAwesome5, MaterialCommunityIcons} from "@expo/vector-icons";
 import {useFonts} from "expo-font";
 import StudentContext from "../contexts/StudentContext";
@@ -10,24 +10,41 @@ import {Button} from "@react-native-material/core";
 import {updatePersonalDetails} from "../api/serviceCalls";
 import {FancyAlert} from "react-native-expo-fancy-alerts";
 
+
 export default function StudentEditDetailsScreen({navigation}) {
     const {items, getVal, addToStudent} = useContext(StudentContext);
     const name = getVal(items, "studentDetails").name;
     const [privateInfo, setPrivateInfo] = useState("");
     const [visible, setVisible] = useState(false);
+    const [selectedFaculty, setSelectedFaculty] = useState(null);
+    const [departments, setDepartments] = useState([]);
 
     let [fontsLoaded] = useFonts({
         "Heebo-Bold": require("../../assets/fonts/Heebo-Bold.ttf"),
         "Heebo-Regular": require("../../assets/fonts/Heebo-Regular.ttf"),
     });
 
+    useEffect(() => {
+        if (selectedFaculty) {
+            const filteredDepartments = constants.departments.filter(
+                dep => dep.faculty_id === selectedFaculty.id
+            );
+            setDepartments(filteredDepartments);
+        } else {
+            setDepartments([]);
+        }
+    }, [selectedFaculty]);
+
 
     if (!fontsLoaded)
         return (
             <View>
-                <Text>loading</Text>
+                <ActivityIndicator size="large" color="#0000ff"/>
             </View>
         );
+
+
+
     return (
         <ScrollView contentContainerStyle={styles.container} automaticallyAdjustKeyboardInsets={true}
                     showsVerticalScrollIndicator={false}>
@@ -46,22 +63,29 @@ export default function StudentEditDetailsScreen({navigation}) {
                     defaultText="בחר פקולטה"
                     buttonStyle={styles.selectOptionStyle}
                     onSelectOption={(selectedItem) => {
+                        const selectedFaculty = constants.faculties.find(
+                            (faculty) => faculty.faculty_name === selectedItem
+                        );
+                        setSelectedFaculty(selectedFaculty)
                         let studentDetails = getVal(items, "studentDetails");
                         addToStudent("studentDetails", {
                             ...studentDetails,
-                            faculty: constants.faculties.find((faculty) => faculty.faculty_name === selectedItem),
+                            faculty: selectedFaculty,
                         });
                     }}
                 />
                 <SelectOption
-                    options={constants.departments.map((dep) => dep.department_name)}
+                    options={departments.map(dep => dep.department_name)}
                     defaultText="בחר מחלקה"
                     buttonStyle={styles.selectOptionStyle}
                     onSelectOption={(selectedItem) => {
+                        const selectedDepartment = departments.find(
+                            (dep) => dep.department_name === selectedItem
+                        );
                         let studentDetails = getVal(items, "studentDetails");
                         addToStudent("studentDetails", {
                             ...studentDetails,
-                            department: constants.departments.find((dep) => dep.department_name === selectedItem),
+                            department: selectedDepartment,
                         });
                     }}
                 />

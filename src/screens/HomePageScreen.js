@@ -8,6 +8,7 @@ import StudentContext from "../contexts/StudentContext";
 import * as constants from "../../constants";
 import {getCoursesByDepartment, searchCourses} from "../api/serviceCalls";
 import {FontAwesome} from "@expo/vector-icons";
+import {useIsFocused} from "@react-navigation/native";
 
 
 export default function HomePageScreen({navigation}) {
@@ -17,6 +18,7 @@ export default function HomePageScreen({navigation}) {
     const [year, setYear] = useState(1);
     const [courses, setCourses] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const isFocused = useIsFocused();
 
     const {items, getVal, addToStudent} = useContext(StudentContext);
     const name = getVal(items, "studentDetails").name;
@@ -27,8 +29,7 @@ export default function HomePageScreen({navigation}) {
             )
             .catch((error) => console.log(error))
             .finally(() => setIsLoading(false));
-    }, []);
-    //need to take from the DB
+    }, [isFocused]);
 
     let [fontsLoaded] = useFonts({
         "Heebo-Bold": require("../../assets/fonts/Heebo-Bold.ttf"),
@@ -36,6 +37,7 @@ export default function HomePageScreen({navigation}) {
     });
 
     const handleSearch = (search) => {
+        setIsLoading(true)
         let searchDetails = {
             courseName: search,
             departmentId: department,
@@ -81,7 +83,6 @@ export default function HomePageScreen({navigation}) {
                             size={24}
                             color="#7521f3"
                             onPress={() => {
-                                setIsLoading(true);
                                 handleSearch(search)
                             }}
                         />
