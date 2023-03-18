@@ -66,7 +66,6 @@ export default function StudentSignUpScreen({navigation}) {
                             (department) => department.department_name === selectedItem
                         ).id;
                         let studentDetails = getVal(items, "studentDetails");
-                        console.log("selectedItem" + selectedItem);
                         addToStudent("studentDetails", {
                             ...studentDetails,
                             department: depId,

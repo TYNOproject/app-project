@@ -8,6 +8,7 @@ import {useFonts} from "expo-font";
 import ClassesList from "../components/ClassesList";
 import StudentContext from "../contexts/StudentContext";
 import {getStudentClasses} from "../api/serviceCalls";
+import {useIsFocused} from "@react-navigation/native";
 
 export default function StudentProfileScreen({navigation}) {
     const {items} = useContext(StudentContext);
@@ -16,6 +17,7 @@ export default function StudentProfileScreen({navigation}) {
     const isTeacher = getVal(items, "studentDetails").isTeacher;
     const [classes, setClasses] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const isFocused = useIsFocused();
 
     let [fontsLoaded] = useFonts({
         "Heebo-Bold": require("../../assets/fonts/Heebo-Bold.ttf"),
@@ -27,21 +29,20 @@ export default function StudentProfileScreen({navigation}) {
     }
 
     function handleTeacherPress() {
-        console.log(getVal(items, "studentDetails"));
         isTeacher ? navigation.navigate("TeacherProfile") : navigation.navigate("TeacherSignUp")
     }
 
     useEffect(() => {
+        setIsLoading(true);
         getStudentClasses(getVal(items, "studentDetails").id)
             .then((response) =>
                 response !== undefined ? setClasses(response.data) : setClasses([])
             )
             .catch((error) => {
-                console.log(" this is the error i got:", error);
                 setClasses([])
             })
             .finally(() => setIsLoading(false));
-    }, [name]);
+    }, [isFocused]);
 
     if (!fontsLoaded)
         return (
@@ -84,7 +85,7 @@ export default function StudentProfileScreen({navigation}) {
                 {isLoading ? (
                     <ActivityIndicator size="large" color="#0000ff"/>
                 ) : (
-                    classes.length > 0 ? (
+                    classes.length !== 0 ? (
                         <ClassesList classes={classes} disabled={true}/>
                     ) : (
                         <Text style={{fontSize: 20, fontFamily: 'Heebo-Bold', textAlign: "center"}}>לא נמצאו שיעורים</Text>

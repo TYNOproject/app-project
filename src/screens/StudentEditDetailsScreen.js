@@ -1,6 +1,6 @@
 import React from "react";
-import {useContext, useState, useCallback} from "react";
-import {View, Text, StyleSheet, TextInput, ScrollView, TouchableOpacity} from "react-native";
+import {useContext, useState, useEffect, useCallback} from "react";
+import {View, Text, StyleSheet, TextInput, ScrollView, TouchableOpacity, ActivityIndicator} from "react-native";
 import {AntDesign, FontAwesome5, MaterialCommunityIcons} from "@expo/vector-icons";
 import {useFonts} from "expo-font";
 import StudentContext from "../contexts/StudentContext";
@@ -10,27 +10,43 @@ import {Button} from "@react-native-material/core";
 import {updatePersonalDetails} from "../api/serviceCalls";
 import {FancyAlert} from "react-native-expo-fancy-alerts";
 
+
 export default function StudentEditDetailsScreen({navigation}) {
     const {items, getVal, addToStudent} = useContext(StudentContext);
     const name = getVal(items, "studentDetails").name;
     const [privateInfo, setPrivateInfo] = useState("");
     const [visible, setVisible] = useState(false);
+    const [selectedFaculty, setSelectedFaculty] = useState(null);
+    const [departments, setDepartments] = useState([]);
 
     let [fontsLoaded] = useFonts({
         "Heebo-Bold": require("../../assets/fonts/Heebo-Bold.ttf"),
         "Heebo-Regular": require("../../assets/fonts/Heebo-Regular.ttf"),
     });
 
+    useEffect(() => {
+        if (selectedFaculty) {
+            const filteredDepartments = constants.departments.filter(
+                dep => dep.faculty_id === selectedFaculty.id
+            );
+            setDepartments(filteredDepartments);
+        } else {
+            setDepartments([]);
+        }
+    }, [selectedFaculty]);
+
 
     if (!fontsLoaded)
         return (
             <View>
-                <Text>loading</Text>
+                <ActivityIndicator size="large" color="#0000ff"/>
             </View>
         );
+
+
+
     return (
-        <ScrollView contentContainerStyle={styles.container} automaticallyAdjustKeyboardInsets={true}
-                    showsVerticalScrollIndicator={false}>
+        <ScrollView contentContainerStyle={styles.container} style={{flex: 1}}>
             <Text style={styles.header}>
                 <MaterialCommunityIcons
                     name="card-account-details-outline"
@@ -40,28 +56,34 @@ export default function StudentEditDetailsScreen({navigation}) {
                 {"\n"}
                 עריכת פרטים אישיים
             </Text>
-            <View style={styles.optionsContainer}>
                 <SelectOption
                     options={constants.faculties.map((faculty) => faculty.faculty_name)}
                     defaultText="בחר פקולטה"
                     buttonStyle={styles.selectOptionStyle}
                     onSelectOption={(selectedItem) => {
+                        const selectedFaculty = constants.faculties.find(
+                            (faculty) => faculty.faculty_name === selectedItem
+                        );
+                        setSelectedFaculty(selectedFaculty)
                         let studentDetails = getVal(items, "studentDetails");
                         addToStudent("studentDetails", {
                             ...studentDetails,
-                            faculty: constants.faculties.find((faculty) => faculty.faculty_name === selectedItem),
+                            faculty: selectedFaculty,
                         });
                     }}
                 />
                 <SelectOption
-                    options={constants.departments.map((dep) => dep.department_name)}
+                    options={departments.map(dep => dep.department_name)}
                     defaultText="בחר מחלקה"
                     buttonStyle={styles.selectOptionStyle}
                     onSelectOption={(selectedItem) => {
+                        const selectedDepartment = departments.find(
+                            (dep) => dep.department_name === selectedItem
+                        );
                         let studentDetails = getVal(items, "studentDetails");
                         addToStudent("studentDetails", {
                             ...studentDetails,
-                            department: constants.departments.find((dep) => dep.department_name === selectedItem),
+                            department: selectedDepartment,
                         });
                     }}
                 />
@@ -89,16 +111,15 @@ export default function StudentEditDetailsScreen({navigation}) {
                         });
                     }}
                 />
+                <TextInput
+                    value={privateInfo}
+                    onChangeText={(info) => setPrivateInfo(info)}
+                    placeholder={"הכנס תיאור אישי..."}
+                    style={styles.input}
+                    editable
+                    multiline
+                />
 
-            </View>
-            <TextInput
-                value={privateInfo}
-                onChangeText={(info) => setPrivateInfo(info)}
-                placeholder={"הכנס תיאור אישי..."}
-                style={styles.input}
-                editable
-                multiline
-            />
             <Button
                 title="שלח"
                 titleStyle={{
@@ -153,33 +174,14 @@ export default function StudentEditDetailsScreen({navigation}) {
 
 const styles = StyleSheet.create({
     container: {
-        flexDirection: "column",
         alignItems: "center",
-        justifyContent: "space-between",
-    },
-    optionsContainer: {
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "space-between",
-    },
-    topContainer: {
-        flex: 2,
-        height: 200,
+        height: "100%",
+        padding: "5%",
     },
     header: {
         fontSize: 30,
         fontFamily: "Heebo-Bold",
         textAlign: "center",
-    },
-    spacer: {
-        flex: 1,
-    },
-    bottomHalf: {
-        alignSelf: "flex-end",
-        width: "100%",
-        flex: 4,
-        top: -80,
-        right: -20,
     },
     selectOptionStyle: {
         margin: "3%",
@@ -187,14 +189,13 @@ const styles = StyleSheet.create({
         borderColor: "#7521f3",
         width: "80%",
         borderWidth: 2, // increased border width for visibility
-        top: 20,
-        paddingBottom: 0,
     },
     input: {
         width: "80%",
         height: "30%",
-        margin: "10%",
+        margin: "3%",
         writingDirection: "rtl",
+        textAlign: "right",
         borderWidth: 2,
         borderColor: "#7521f3",
         backgroundColor: "#e8e8e8",

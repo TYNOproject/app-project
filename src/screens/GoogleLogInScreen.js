@@ -32,7 +32,6 @@ export default function GoogleLogInScreen() {
       setAccessToken(response.authentication.accessToken);
       accessToken && fetchUserInfo();
     } else {
-      console.log("response: " + response);
     }
   }, [response, accessToken]);
 
