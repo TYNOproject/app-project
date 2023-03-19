@@ -17,6 +17,7 @@ export default function AfterScheduleScreen({ navigation })
 
   const name = getVal(items, "studentDetails").name;
   const course = getValClass(itemsClass, 'courseName');
+  const course = getValClass(itemsClass, 'courseName');
   const teacherName = getValClass(itemsClass,'teacherName');
   const date = getValClass(itemsClass,'classDate');
   const fromTime = getValClass(itemsClass,'startTime');
