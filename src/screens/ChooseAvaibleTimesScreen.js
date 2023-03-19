@@ -64,7 +64,7 @@ useEffect(() => {
     if (selectedTimes.some(dateTime => dateTime.date === date && dateTime.startTime === startTime)) {
       setSelectedTimes(selectedTimes.filter((dateTime) => dateTime.date !== date || dateTime.startTime !== startTime));
     } else {
-      const selectedDateTime = {'date': date, 'startTime': startTime, 'endTime': endTime, 'new': true};
+      const selectedDateTime = {'date': date, 'startTime': startTime, 'endTime': endTime};
       setSelectedTimes([...selectedTimes, selectedDateTime]);
       console.log(selectedTimes);
     }
@@ -72,7 +72,6 @@ useEffect(() => {
 
   function handleRegister() {
     selectedTimes
-      .filter((dateTime) => dateTime.new === true)
       .map((newTime) => {
         if (selectedCourse === null) {
           Alert.alert(
