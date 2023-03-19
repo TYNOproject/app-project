@@ -17,7 +17,7 @@ export default function ScheduleScreen({navigation}) {
     const [markedDates, setMarkedDates] = useState({});
     const [timeButtons, setTimeButtons] = useState([]);
     const [chosenTime, setChosenTime] = useState(null);
-    const [timeMap, setTimeMap] = useState({});
+    const [timeMap, setTimeMap] = useState(new Map());
     const [isLoading, setIsLoading] = useState(true);
     const isFocused = useIsFocused();
     const {addToClass, itemsClass, getValClass} = useContext(ClassContext);
@@ -39,10 +39,13 @@ export default function ScheduleScreen({navigation}) {
                     setMarkedDates(datestoMark);
                     updateMaps(timeResponse.data);
                 }
+                else
+                setMarkedDates({});
+
             }
         ).catch((error) => console.log(error))
             .finally(() => setIsLoading(false));
-    }, [isFocused]);
+    }, [isFocused,teacherId]);
 
     const updateMaps = (dates) => {
         const myTimeMap = new Map();
@@ -52,7 +55,6 @@ export default function ScheduleScreen({navigation}) {
             const time = item.startTime;
             const classId = item.id;
 
-
             if (myTimeMap.has(date)) {
                 const times = myTimeMap.get(date);
                 times.push([time, classId]);
@@ -60,9 +62,8 @@ export default function ScheduleScreen({navigation}) {
             } else {
                 myTimeMap.set(date, [[time, classId]]);
             }
-
-            setTimeMap(myTimeMap);
         });
+        setTimeMap(myTimeMap);
     }
 
 
@@ -80,20 +81,21 @@ export default function ScheduleScreen({navigation}) {
     }
 
 
-    async function handleScheduale() {
-        const classId_ = timeMap.get(chosenTime)[selectedIndex][1];
-        let bookDetails = {
-            classId: classId_,
-            studentId: studentId,
-        };
-        //start dbug
-        bookClass(bookDetails).then((bookRespone) => {
-                addToClass('startTime', timeButtons[selectedIndex]);
-                addToClass('classDate', chosenTime);
-                navigation.navigate("AfterSchedule");
-            }
-        ).catch((error) => console.log(error));
+  async function handleScheduale () {
+    const classId_ = timeMap.get(chosenTime)[selectedIndex][1];
+    let bookDetails = {
+      classId: classId_,
+      studentId: studentId,
     };
+
+    bookClass(bookDetails).then((bookRespone) => 
+    {
+      addToClass('startTime', timeButtons[selectedIndex]);
+      addToClass('classDate', chosenTime);
+      navigation.navigate("AfterSchedule");
+    }
+    ).catch((error) => console.log(error)); 
+  };
 
     let [fontsLoaded] = useFonts({
         "Heebo-Bold": require("../../assets/fonts/Heebo-Bold.ttf"),
@@ -116,12 +118,16 @@ export default function ScheduleScreen({navigation}) {
                 </Text>
             </View>
             <View style={styles.bottomPart}>
-                <Calendar
-                    style={{height: 350, width: 400}}
+              {Object.keys(markedDates).length === 0 && (
+                    <Text style={{textAlign: 'center', fontFamily: 'Heebo-Regular' , fontSize:20, top:"50%"}}>אין תאריכים זמינים כרגע</Text>
+                )}
+                {Object.keys(markedDates).length > 0 && (<Calendar
+                    style={{ height: 350, width: 400}}
                     markedDates={markedDates}
                     markingType="simple"
                     onDayPress={handelPossibleTimes}
-                />
+                />)}
+
 
                 <View style={styles.TimeScrollBar}>
                     <ScrollView contentContainerStyle={styles.containerTime} horizontal={true}>

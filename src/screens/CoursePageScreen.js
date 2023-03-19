@@ -37,7 +37,7 @@ export default function CoursePageScreen({navigation}) {
             )
             .catch((error) => console.log(error))
             .finally(() => setIsLoading(false));
-    },[course,changeFlag, teachers]);
+    },[course,changeFlag]);
 
         let [fontsLoaded] = useFonts({
         "Heebo-Bold": require("../../assets/fonts/Heebo-Bold.ttf"),
@@ -68,8 +68,10 @@ export default function CoursePageScreen({navigation}) {
             </View>
             <View style={styles.spacer}/>
             <View style={styles.bottomHalf}>
-                {isLoading ? (<ActivityIndicator size="large" color="#0000ff"/>) : (
-                    <TeachersList teachers={teachers} navigation={navigation}/>)}
+                {isLoading ? (<ActivityIndicator size="large" color="#0000ff"/>) : teachers.length > 0 ? (
+                    <TeachersList teachers={teachers} navigation={navigation}/>) :  (
+                    <Text style={{textAlign: 'center', fontFamily: 'Heebo-Regular' , fontSize:20, top:"20%"}}>אין מורים זמינים כרגע</Text>    
+                    )}
             </View>
         </View>);
 }

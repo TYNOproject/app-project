@@ -31,14 +31,18 @@ export default function TeacherPageScreen({ navigation }) {
 
   useEffect(() => {
     getTeacherCourses(teacherId).then((CoursesResponse) => {
-      const teacherCourses = CoursesResponse.data.map(item => { return item.courseName });
-      setCourses(teacherCourses);
+      if (CoursesResponse === undefined)
+        setCourses([]);
+      else{
+        const teacherCourses = CoursesResponse.data.map(item => { return item.courseName });
+        setCourses(teacherCourses);
+      }
     }
     ).catch((error) => console.log(error));
     getTeacherReviews(teacherId).then((reviewsResponse) => {
-      setReviews(reviewsResponse.data);
+      reviewsResponse !== undefined ? setReviews(reviewsResponse.data) : setReviews([]);
     }).catch((error) => console.log(error));
-  }, [])
+  }, [teacherId])
 
 
 
@@ -67,7 +71,6 @@ export default function TeacherPageScreen({ navigation }) {
           containerStyle={styles.avatarContainer} />
         <Text style={styles.header}>
           {name} {"\n"}
-          {year}
         </Text>
       </View>
       <View style={styles.dropdown}>
@@ -86,7 +89,10 @@ export default function TeacherPageScreen({ navigation }) {
       </View>
       <View style={styles.spacer} />
       <View style={styles.bottomHalf}>
-        <ReviewBar reviews={reviews} />
+        {reviews.length === 0 && (
+                    <Text style={{textAlign: 'center', fontFamily: 'Heebo-Regular'}}>אין ביקורות זמינות כרגע</Text>
+                )}
+      <ReviewBar reviews={reviews} />
       </View>
       <Button
         title={`לקביעת שיעור עם ${name}`}
