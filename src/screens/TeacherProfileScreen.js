@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Button} from "@react-native-material/core";
 import {StyleSheet, Text, View, ScrollView, ActivityIndicator} from "react-native";
 import {useFonts} from "expo-font";
@@ -8,45 +8,47 @@ import TeacherCoursesList from "../components/TeacherCoursesList";
 import StudentContext from "../contexts/StudentContext";
 import ClassesList from "../components/ClassesList";
 import AviableTimesList from "../components/AviableTimesList";
-import {getTeacherClasses, getTeacherCourses} from "../api/serviceCalls";
+import {getTeacherClasses, getTeacherCourses, getTeacherPrice} from "../api/serviceCalls";
+import {useIsFocused} from '@react-navigation/native';
 
 
 export default function TeacherProfileScreen({navigation}) {
+    const isFocused = useIsFocused();
     const {items, getVal} = useContext(StudentContext);
     const name = getVal(items, "studentDetails").name;
+    const teacherPrice = getVal(items, "studentDetails").price;
     const [classes, setClasses] = useState([]);
     const [teacherCourses, setTeacherCourses] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     useEffect(() => {
+        setIsLoading(true);
         getTeacherClasses(getVal(items, "studentDetails").id)
             .then((response) =>
                 response !== undefined ? setClasses(response.data) : setClasses([])
             )
             .catch((error) => console.log(error))
             .finally(() => setIsLoading(false));
-    }, [name]);
+    }, [isFocused]);
 
     useEffect(() => {
+        setIsLoading(true);
         getTeacherCourses(getVal(items, "studentDetails").id)
             .then((response) =>
                 response !== undefined ? setTeacherCourses(response.data) : setTeacherCourses([])
             )
             .catch((error) => console.log(error))
             .finally(() => setIsLoading(false));
-    }, [name]);
+    }, [isFocused]);
 
     const [bookedClasses, setBookedClasses] = useState([]);
-    const [pendingClasses, setPendingClasses] = useState([]);
     const [availableTimes, setAvailableTimes] = useState([]);
-    useEffect(() => setBookedClasses(classes.filter((item) => item.status === "booked")), [classes]);
-    useEffect(() => setPendingClasses(classes.filter((item) => item.status === "pending")), [classes]);
+    useEffect(() => setBookedClasses(classes.filter((item) => item.status === "booked" && item.over === false)), [isFocused]);
     useEffect(() => {
-        const available = classes.filter((item) => item.status === "available").map((item) =>
-        {
+        const available = classes.filter((item) => item.status === "available").map((item) => {
             return {date: item.date, startTime: item.startTime, endTime: item.endTime}
         });
         setAvailableTimes(available);
-    }, [classes]);
+    }, [isFocused]);
 
     //need to take from the DB
     const price = getVal(items, "studentDetails").price;
@@ -60,18 +62,9 @@ export default function TeacherProfileScreen({navigation}) {
     if (!fontsLoaded)
         return (
             <View>
-                <Text>loading</Text>
+                <ActivityIndicator size="large" color="#0000ff"/>
             </View>
         );
-
-    const handleLessonsConfermation = () => {
-        navigation.navigate("ConfirmLessons");
-    };
-
-    const handleEditTeacher = () => {
-        navigation.navigate("TeacherRegister");
-    };
-
 
     return (
         <ScrollView contentContainerStyle={styles.container} style={{flex: 1}}>
@@ -85,40 +78,83 @@ export default function TeacherProfileScreen({navigation}) {
                 variant="outlined"
                 color="black"
                 titleStyle={{fontFamily: "Heebo-Regular"}}
-                onPress = {()=> navigation.navigate("TeacherRegister")}
+                onPress={() => navigation.navigate("TeacherRegister")}
             />
             <Button
                 title="אישור/דחיית שיעורים ממתינים"
                 variant="outlined"
                 color="black"
                 titleStyle={{fontFamily: "Heebo-Regular"}}
-                onPress = {()=> navigation.navigate("ConfirmLessons")}
+                onPress={() => navigation.navigate("ConfirmLessons")}
             />
-            <View style={styles.divider} />
+            <View style={styles.divider}/>
             <Text style={styles.containerHeaderText}>השיעורים הקרובים שלי</Text>
             <View style={styles.upcomingLessonsContainer}>
-                {bookedClasses.length === 0 && (
-                    <Text style={{textAlign: 'center', fontFamily: 'Heebo-Regular'}}>אין לך שיעורים קרובים</Text>
-                )}
-                {bookedClasses.length > 0 && (
+                {isLoading ? (
+                    <ActivityIndicator size="large" color="#0000ff"/>
+                ) : (
                     <>
+                        {bookedClasses.length === 0 && (
+                            <Text style={{textAlign: 'center', fontFamily: 'Heebo-Regular'}}>אין לך שיעורים
+                                קרובים</Text>
+                        )}
+                        {bookedClasses.length > 0 && (
+                            <View>
+                                <ClassesList classes={bookedClasses} horizantal={true} disabled={true}/>
+                            </View>
+                        )}
+                    </>
+                )}
+            </View>
+            <View style={styles.divider}/>
+            <Text style={styles.containerHeaderText}>הזמנים הפנויים שלי</Text>
+            <View style={styles.mySlotsContainer}>
+                {isLoading ? (
+                    <ActivityIndicator size="large" color="#0000ff"/>
+                ) : (
+                    <>
+                    {availableTimes.length === 0 && (
+                    <Text style={styles.noAviableTimes}>אין לך זמנים פנויים</Text>
+                )}
+                {availableTimes.length > 0 && (
                         <View>
-                            <ClassesList classes={bookedClasses} horizantal={true} disabled={true}/>
+                            <AviableTimesList availableTimes={availableTimes}/>
                         </View>
+                        )}
+                    </>
+                )}
+            </View>
+            <View style={styles.divider}/>
+            <Text style={styles.containerHeaderText}>הקורסים שאני מלמד</Text>
+            <View style={styles.myCoursesContainer}>
+                {isLoading ? (
+                    <ActivityIndicator size="large" color="#0000ff"/>
+                ) : (
+                    <>
+                    {teacherCourses.length === 0 && (
+                    <Text style={styles.noCourses}>עוד לא בחרת קורסים ללמד</Text>
+                )}
+                {teacherCourses.length > 0 && (
+                        <View>
+                        <TeacherCoursesList courses={teacherCourses}/>
+                        </View>
+                 )}
                     </>
                 )}
             </View>
             <View style={styles.divider} />
-            <Text style={styles.containerHeaderText}>הזמנים הפנויים שלי</Text>
-            <View style={styles.mySlotsContainer}>
-                <AviableTimesList availableTimes={availableTimes}/>
+            <Text style={styles.containerHeaderText}>המחיר שלי לשיעור</Text>
+            <View style={styles.myPriceContainer}>
+                {teacherPrice === 0 && (
+                    <Text style={styles.noPrice}>עוד לא בחרת את המחיר שלך לשיעור</Text>
+                )}
+                {teacherPrice > 0 && (
+                    <>
+                        <Text style = {styles.price}>{teacherPrice} ש"ח</Text>
+                    </>
+                )}
             </View>
-            <View style={styles.divider} />
-            <Text style={styles.containerHeaderText}>הקורסים שאני מלמד</Text>
-            <View style={styles.myCoursesContainer}>
-                <TeacherCoursesList courses={teacherCourses}/>
-            </View>
-            <View style={styles.divider} />
+            <View style={styles.divider}/>
         </ScrollView>
     );
 }
@@ -149,14 +185,44 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         padding: 10,
     },
+    noClasses: {
+        textAlign: 'center',
+        fontFamily: 'Heebo-Regular',
+        padding: 10
+    },
     mySlotsContainer: {
         backgroundColor: '#e1e1e1',
         borderRadius: 10,
         paddingBottom: 10,
     },
+    noAviableTimes: {
+        textAlign: 'center',
+        fontFamily: 'Heebo-Regular',
+        padding: 10
+    },
     myCoursesContainer: {
         backgroundColor: '#e1e1e1',
         borderRadius: 10,
+    },
+    noCourses: {
+        textAlign: 'center',
+        fontFamily: 'Heebo-Regular',
+        padding: 10
+    },
+    myPriceContainer: {
+        backgroundColor: '#e1e1e1',
+        borderRadius: 10,
+    },
+    price: {
+        textAlign: 'center',
+        fontFamily: 'Heebo-Regular',
+        fontSize: 16,
+        padding: 10
+    },
+    noPrice: {
+        textAlign: 'center',
+        fontFamily: 'Heebo-Regular',
+        padding: 10
     },
     divider: {
         height: 1,

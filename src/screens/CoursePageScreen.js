@@ -30,13 +30,14 @@ export default function CoursePageScreen({navigation}) {
     }
 
     useEffect(() => {
+        setIsLoading(true);
         getTeachersByCourseName(course)
             .then((response) =>
                 response !== undefined ? setTeachers(response.data) : setTeachers([])
             )
             .catch((error) => console.log(error))
             .finally(() => setIsLoading(false));
-    },[course,changeFlag]);
+    },[course,changeFlag, teachers]);
 
         let [fontsLoaded] = useFonts({
         "Heebo-Bold": require("../../assets/fonts/Heebo-Bold.ttf"),

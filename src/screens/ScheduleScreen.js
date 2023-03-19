@@ -1,26 +1,28 @@
-import React, { Component,useState,useContext,useEffect } from "react";
-import { StyleSheet, Text, View, FlatList,TouchableOpacity,ScrollView } from "react-native";
-import { ListItem, SearchBar,Card,ButtonGroup } from "react-native-elements";
-import { useFonts } from "expo-font";
-import { Calendar, CalendarList, Agenda } from "react-native-calendars";
+import React, {Component, useState, useContext, useEffect} from "react";
+import {StyleSheet, Text, View, FlatList, TouchableOpacity, ScrollView, ActivityIndicator} from "react-native";
+import {ListItem, SearchBar, Card, ButtonGroup} from "react-native-elements";
+import {useFonts} from "expo-font";
+import {Calendar, CalendarList, Agenda} from "react-native-calendars";
 import TimeScrollBar from "../components/TimeScrollBar";
 import StudentContext from "../contexts/StudentContext";
 import ClassContext from "../contexts/ClassContext";
-import { Button } from "@react-native-material/core";
-import { AntDesign } from "@expo/vector-icons";
+import {Button} from "@react-native-material/core";
+import {AntDesign} from "@expo/vector-icons";
 import {getTeacherAvailableClasses, bookClass} from "../api/serviceCalls.js";
+import {useIsFocused} from "@react-navigation/native";
 
 
 export default function ScheduleScreen({navigation}) {
-
-
-    const {addToClass} = useContext(ClassContext);
-    const {itemsClass} = useContext(ClassContext);
-    const {getValClass} = useContext(ClassContext);
-
+    const [selectedIndex, setSelectedIndex] = useState(0);
+    const [markedDates, setMarkedDates] = useState({});
+    const [timeButtons, setTimeButtons] = useState([]);
+    const [chosenTime, setChosenTime] = useState(null);
+    const [timeMap, setTimeMap] = useState({});
+    const [isLoading, setIsLoading] = useState(true);
+    const isFocused = useIsFocused();
+    const {addToClass, itemsClass, getValClass} = useContext(ClassContext);
     const {items, getVal} = useContext(StudentContext);
     const studentId = getVal(items, "studentDetails").id;
-
     const name = getValClass(itemsClass, 'teacherName');
     const teacherId = getValClass(itemsClass, 'teacherId');
 
@@ -32,22 +34,22 @@ export default function ScheduleScreen({navigation}) {
 
 
     useEffect(() => {
-        getTeacherAvailableClasses(teacherId).then((timeResponse)=>
-        {
-          if (timeResponse !== undefined){
-          const dates = timeResponse.data.map(item => item.date.split('T')[0]);
-          const datestoMark = dates.reduce((obj, date) =>{
-            obj[date] = { marked: true };
-            return obj;
-          }
-          ,{});
-          setMarkedDates(datestoMark);
-          updateMaps(timeResponse.data);
-        }
-        else setMarkedDates({});
-        }
-        ).catch((error) => console.log(error)); 
-    },[teacherId]);
+        setIsLoading(true);
+        getTeacherAvailableClasses(teacherId).then((timeResponse) => {
+                if (timeResponse !== undefined) {
+                    const dates = timeResponse.data.map(item => item.date.split('T')[0]);
+                    const datestoMark = dates.reduce((obj, date) => {
+                            obj[date] = {marked: true};
+                            return obj;
+                        }
+                        , {});
+                    setMarkedDates(datestoMark);
+                    updateMaps(timeResponse.data);
+                }
+            }
+        ).catch((error) => console.log(error))
+            .finally(() => setIsLoading(false));
+    }, [isFocused]);
 
     const updateMaps = (dates) => {
         const myTimeMap = new Map();
@@ -69,20 +71,18 @@ export default function ScheduleScreen({navigation}) {
     }
 
 
-  function handelPossibleTimes(day) {
-    timesbuttons =[];
-    if (timeMap.size === 0 ||timeMap.get(day.dateString) === undefined) {
-      timesbuttons = [];
+    function handelPossibleTimes(day) {
+        let timesbuttons = [];
+        if (timeMap.size === 0 || timeMap.get(day.dateString) === undefined) {
+            timesbuttons = [];
+        } else {
+            timesbuttons = timeMap.get(day.dateString).map((timeAndId) => timeAndId[0]);
+            setChosenTime(day.dateString);
+        }
+        setTimeButtons(timesbuttons);
+        setChosenTime(day.dateString);
+        setSelectedIndex(0);
     }
-    else
-    {
-      timesbuttons = timeMap.get(day.dateString).map((timeAndId)=> timeAndId[0]);
-      setChosenTime(day.dateString);
-    }
-    setTimeButtons(timesbuttons);
-    setChosenTime(day.dateString);
-    setSelectedIndex(0);
-  }
 
 
   async function handleScheduale () {
@@ -110,7 +110,7 @@ export default function ScheduleScreen({navigation}) {
     if (!fontsLoaded)
         return (
             <View>
-                <Text>loading</Text>
+                <ActivityIndicator size="large" color="#0000ff"/>
             </View>
         );
 
@@ -149,22 +149,22 @@ export default function ScheduleScreen({navigation}) {
                 </View>
             </View>
             <Button
-        title={`לקביעת שיעור עם ${name}`}
-        titleStyle={{
-          fontSize: 18,
-          textAlign: "center",
-          fontFamily: "Heebo-Bold",
-        }} // Add this line to center the title
-        leading={() => <AntDesign name="left" size={24} color="white" />}
-        style={{
-          width: 400,
-          height: 60,
-          top: 700,
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-        onPress={handleScheduale}
-      />
+                title={`לקביעת שיעור עם ${name}`}
+                titleStyle={{
+                    fontSize: 18,
+                    textAlign: "center",
+                    fontFamily: "Heebo-Bold",
+                }} // Add this line to center the title
+                leading={() => <AntDesign name="left" size={24} color="white"/>}
+                style={{
+                    width: 400,
+                    height: 60,
+                    top: 700,
+                    justifyContent: "center",
+                    alignItems: "center",
+                }}
+                onPress={handleScheduale}
+            />
         </View>
     );
 }
@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
         top: 150,
         backgroundColor: "transparent",
         backgroundCalender: "transparent",
-        
+
     },
     topPart: {
         alignItems: "center",
@@ -206,12 +206,12 @@ const styles = StyleSheet.create({
         fontSize: 30,
         top: -30,
         textAlign: "center",
-      },
-      TimeScrollBar: {
-        position:"relative",
-        top:100
-      },
-      submitButton: {
+    },
+    TimeScrollBar: {
+        position: "relative",
+        top: 100
+    },
+    submitButton: {
         height: 53,
         width: 326,
         left: 0,

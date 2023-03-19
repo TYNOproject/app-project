@@ -24,7 +24,6 @@ export default function LoginScreen({navigation}) {
         "Heebo-Bold": require("../../assets/fonts/Heebo-Bold.ttf"),
         "Heebo-Regular": require("../../assets/fonts/Heebo-Regular.ttf"),
     });
-    console.log(items);
     if (!fontsLoaded)
         return (
             <View>
@@ -35,14 +34,12 @@ export default function LoginScreen({navigation}) {
         //check if the user exists in the database, if so -> nvaigate to home page
         //else, pop up that says that he's not registered
         let signInResponse = await signIn({email, password});
-        console.log(signInResponse.data);
         if (signInResponse.status !== 200) {
             alert("אירעה שגיאה, אנא נסה שנית");
             return;
         }
         if (signInResponse.status === 200) {
             addToStudent("studentDetails", signInResponse.data);
-            console.log(getVal(items, "studentDetails"));
             navigation.navigate("HomePage");
         }
     };
@@ -102,10 +99,8 @@ export default function LoginScreen({navigation}) {
                             fontFamily: "Heebo-Bold",
                         }} // Add this line to center the title
                         leading={() => <AntDesign name="left" size={24} color="white"/>}
-                        style={styles.registerButton}
                         onPress={() => {
                             clearItems();
-                            console.log(items);
                             navigation.navigate("Register")
                         }}
                     />

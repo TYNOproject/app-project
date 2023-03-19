@@ -14,9 +14,6 @@ export default function AfterScheduleScreen({ navigation })
 {
   const {items,getVal} = useContext(StudentContext);
   const {itemsClass,getValClass} = useContext(ClassContext);
-  
-  // const [endTime, setEndTime] = useState("");
-
 
   const name = getVal(items, "studentDetails").name;
   const course = getValClass(itemsClass, 'courseName');

@@ -27,7 +27,6 @@ export function StudentProvider({ children }) {
         items[i].studentDetails[key] = "";
       }
     }
-    console.log("Items cleared successfully.");
   }
   
 

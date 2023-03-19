@@ -23,6 +23,7 @@ import HomePageScreen from "./src/screens/HomePageScreen";
 import StudentEditDetailsScreen from "./src/screens/StudentEditDetailsScreen";
 import ReviewScreen from "./src/screens/ReviewScreen";
 import TeacherSignUpScreen from "./src/screens/TeacherSignUpScreen";
+import ChooseAvaibleTimesScreen from "./src/screens/ChooseAvaibleTimesScreen";
 import StudentContext from "./src/contexts/StudentContext";
 const Tab = createBottomTabNavigator();
 
@@ -220,7 +221,9 @@ function App() {
               options={{
                 tabBarButton: () => null, // hides the button
                 tabBarVisibilityAnimationConfig: () => null,
-                headerShown: false, // hide top title
+                headerBackground: () => null, // hide header
+                headerTitle: () => null, // hide header title
+                headerLeft: () => <BackIcon pageName="TeacherProfile" />, // hide header back button
               }}
             />
             <Tab.Screen
@@ -235,6 +238,15 @@ function App() {
             <Tab.Screen
               name="TeacherSignUp"
               component={TeacherSignUpScreen}
+              options={{
+                tabBarButton: () => null, // hides the button
+                tabBarVisibilityAnimationConfig: () => null,
+                headerShown: false, // hide top title
+              }}
+            />
+            <Tab.Screen
+              name="ChooseAvaibleTimes"
+              component={ChooseAvaibleTimesScreen}
               options={{
                 tabBarButton: () => null, // hides the button
                 tabBarVisibilityAnimationConfig: () => null,
