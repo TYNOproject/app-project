@@ -132,14 +132,15 @@ export default function ScheduleScreen({navigation}) {
                 <View style={styles.TimeScrollBar}>
                     <ScrollView contentContainerStyle={styles.containerTime} horizontal={true}>
                         <View style={styles.row}>
-                            <ButtonGroup style={styles.timeButton}
-                                         buttons={timeButtons}
-                                         selectedIndex={selectedIndex}
-                                         onPress={(value) => {
-                                             setSelectedIndex(value);
-                                         }}
-                                         containerStyle={{marginBottom: 20}}
-                            />
+                          {timeButtons.length === 0 ? (<Text style={styles.timeButton}>אין שעה פנויה בתאריך זה</Text>):
+                          <ButtonGroup style={styles.timeButton}
+                              buttons={timeButtons}
+                              selectedIndex={selectedIndex}
+                              onPress={(value) => {
+                                  setSelectedIndex(value);
+                              }}
+                              containerStyle={{marginBottom: 20}}
+                          />}
                         </View>
                     </ScrollView>
                 </View>
@@ -153,9 +154,9 @@ export default function ScheduleScreen({navigation}) {
                 }} // Add this line to center the title
                 leading={() => <AntDesign name="left" size={24} color="white"/>}
                 style={{
-                    width: 400,
-                    height: 60,
-                    top: 700,
+                    width: "90%",
+                    height: "8%",
+                    top: "85%",
                     justifyContent: "center",
                     alignItems: "center",
                 }}
@@ -172,29 +173,19 @@ const styles = StyleSheet.create({
         flex: 1,
 
     },
-    calenderStyle: {
-        top: 150,
-        backgroundColor: "transparent",
-        backgroundCalender: "transparent",
-
-    },
     topPart: {
         alignItems: "center",
         position: "absolute",
-        left: "10%",
-        top: 0,
-        width: 320,
+        width: "100%",
         direction: "rtl",
-        paddingTop: 50,
+        paddingTop: "10%",
     },
     bottomPart: {
         alignItems: "center",
         position: "absolute",
-        left: "10%",
-        top: 80,
-        width: 320,
-        paddingTop: 50,
-        height: 100
+        top: "10%",
+        width: "100%",
+        paddingTop: "10%",
     },
     header: {
         fontFamily: "Heebo-Bold",
@@ -240,13 +231,13 @@ const styles = StyleSheet.create({
         height: 20
     },
     timeButton: {
-        backgroundColor: 'lightgray',
         borderRadius: 4,
         padding: 8,
         marginVertical: 4,
         height: 50,
         marginHorizontal: 10,
-        position: "relative"
+        position: "relative",
+        fontSize:24,
     },
 });
 

@@ -103,9 +103,9 @@ export default function TeacherPageScreen({ navigation }) {
         }} // Add this line to center the title
         leading={() => <AntDesign name="left" size={24} color="white" />}
         style={{
-          width: 400,
-          height: 60,
-          top: -40,
+          width: "90%",
+          height: "7%",
+          bottom: "10%",
           justifyContent: "center",
           alignItems: "center",
         }}
@@ -156,26 +156,21 @@ const styles = StyleSheet.create({
     fontFamily: "Heebo-Bold",
     fontWeight: "bold",
     fontSize: 26,
-    top: 70,
+    top: "100%",
     textAlign: "center",
   },
   topPart: {
     position: "absolute",
     left: "10%",
-    top: 0,
-    width: 320,
+    width: "80%",
     direction: "rtl",
-    paddingTop: 50,
+    paddingTop: "15%",
   },
   dropdown: {
     flexDirection: "row",
-    top: 190,
+    top: "45%",
     justifyContent: "space-between",
     alignItems: "center"
-  },
-  reviewBar: {
-    position: "absolute",
-    top: 50
   },
   spacer: {
     flex: 1,
@@ -186,17 +181,6 @@ const styles = StyleSheet.create({
   ReviewBar: {
     alignSelf: "flex-end",
     flex: 1,
-  },
-  button: {
-    backgroundColor: '#2196F3',
-    borderRadius: 10,
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-    marginVertical: 10,
-    minWidth: 100,
-    alignItems: 'center',
-    justifyContent: 'center',
-    top: -30
   },
 
 });

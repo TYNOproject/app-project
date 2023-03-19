@@ -59,8 +59,8 @@ export default function AfterScheduleScreen({ navigation })
         }}
         leading={() => <AntDesign name="left" size={24} color="white" />}
         style={{
-          width: 400,
-          height: 60,
+          width: "80%",
+          height: "7%",
           top: "80%",
           justifyContent: "center",
           alignItems: "center",
@@ -79,27 +79,23 @@ const styles = StyleSheet.create({
   },
   topPart: {
     position: "absolute",
-    left: "10%",
-    top: 0,
-    width: 320,
+    width: "95%",
     direction: "rtl",
     paddingTop: 30,
   },
 
   mainPart: {
     position: "absolute",
-    left: 20,
-    top: "40%",
-    width: 320,
+    top: "35%",
+    width: "80%",
     direction: "rtl",
-    paddingTop: 50,
+    paddingTop: "10%",
     alignItems: "flex-start",
   },
   header: {
     fontFamily: "Heebo-Bold",
     fontWeight: "bold",
     fontSize: 40,
-    top: 0,
     textAlign: "center",
     textShadowColor: "#A1B2C3",
     textShadowOffset: {width: 1},
@@ -118,19 +114,9 @@ const styles = StyleSheet.create({
   mainText: {
     fontFamily: "Heebo-Bold",
     fontSize: 25,
-    top: 32,
+    top: "20%",
     textAlign: "center",
-    left: 50,
-  },
-  submitButton: {
-    height: 53,
-    width: 350,
-    left: 0,
-    top: 600,
-    borderRadius: 5,
-    padding: 16,
-    justifyContent: "center",
-    alignItems: "center",
+    left: "20%",
   },
   textstyle: {
     fontFamily: "Heebo-Bold",

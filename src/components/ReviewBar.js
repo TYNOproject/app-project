@@ -26,7 +26,6 @@ const ReviewBar = ({ reviews }) => {
         row: {
           flexDirection: "row",
           flex: 1,
-          padding: 10,
         },
       });
 
