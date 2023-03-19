@@ -71,7 +71,6 @@ export default function TeacherPageScreen({ navigation }) {
           containerStyle={styles.avatarContainer} />
         <Text style={styles.header}>
           {name} {"\n"}
-          {year}
         </Text>
       </View>
       <View style={styles.dropdown}>

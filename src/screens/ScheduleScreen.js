@@ -17,7 +17,7 @@ export default function ScheduleScreen({navigation}) {
     const [markedDates, setMarkedDates] = useState({});
     const [timeButtons, setTimeButtons] = useState([]);
     const [chosenTime, setChosenTime] = useState(null);
-    const [timeMap, setTimeMap] = useState({});
+    const [timeMap, setTimeMap] = useState(new Map());
     const [isLoading, setIsLoading] = useState(true);
     const isFocused = useIsFocused();
     const {addToClass, itemsClass, getValClass} = useContext(ClassContext);
@@ -25,13 +25,6 @@ export default function ScheduleScreen({navigation}) {
     const studentId = getVal(items, "studentDetails").id;
     const name = getValClass(itemsClass, 'teacherName');
     const teacherId = getValClass(itemsClass, 'teacherId');
-
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const [markedDates, setMarkedDates] = useState({});
-  const [timeButtons, setTimeButtons] = useState([]);
-  const [chosenTime, setChosenTime] = useState(null);
-  const [timeMap, setTimeMap] = useState(new Map());
-
 
     useEffect(() => {
         setIsLoading(true);
@@ -46,10 +39,13 @@ export default function ScheduleScreen({navigation}) {
                     setMarkedDates(datestoMark);
                     updateMaps(timeResponse.data);
                 }
+                else
+                setMarkedDates({});
+
             }
         ).catch((error) => console.log(error))
             .finally(() => setIsLoading(false));
-    }, [isFocused]);
+    }, [isFocused,teacherId]);
 
     const updateMaps = (dates) => {
         const myTimeMap = new Map();
