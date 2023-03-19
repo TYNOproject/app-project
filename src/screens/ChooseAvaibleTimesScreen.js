@@ -16,6 +16,7 @@ export default function ChooseAvaibleTimes({navigation}) {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTimes, setSelectedTimes] = useState([]);
   const [classes, setClasses] = useState([]);
+  const [takenTimes, setTakenTimes] = useState([]);
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [teacherCourses, setTeacherCourses] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -31,6 +32,7 @@ export default function ChooseAvaibleTimes({navigation}) {
   });
 
   useEffect(() => {
+    setIsLoading(true);
     getTeacherCourses(getVal(items, "studentDetails").id)
         .then((response) =>
             response !== undefined ? setTeacherCourses(response.data) : setTeacherCourses([])
@@ -53,7 +55,7 @@ useEffect(() => {
   const available = classes.filter((item) => item.status === "available").map((item) => {
       return {date: item.date, startTime: item.startTime, endTime: item.endTime}
   });
-  setSelectedTimes(available);
+  setTakenTimes(available);
 }, [isFocused]);
 
 
@@ -122,8 +124,12 @@ useEffect(() => {
 
   return (
     <ScrollView contentContainerStyle={styles.container} style={{flex: 1}}>
-        <Text style={styles.title}>איזה קורס אתה רוצה ללמד?</Text>
-        <View style={styles.coursesContainer}>
+      {teacherCourses.length === 0 ? (
+        <Text style={styles.title}>עוד לא בחרת קורסים ללמד,{'\n'}ניתן להוסיף קורסים בעמוד "עריכת פרטים אישיים"</Text>
+      ) : (
+        <View>
+          <Text style={styles.title}>איזה קורס אתה רוצה ללמד?</Text>
+          <View style={styles.coursesContainer}>
             {teacherCourses.map((course, index) => (
               <TouchableOpacity
                 key={index}
@@ -141,34 +147,50 @@ useEffect(() => {
         onDateChange={(date) => {
         const formattedDate = new Date(date).toISOString().slice(0, 10);
         setSelectedDate(formattedDate);
-        console.log(formattedDate);
         }}
       />
       {selectedDate && (
         <View>
           <Text style={styles.subtitle}>זמנים פנויים:</Text>
           <View style={styles.timeContainer}>
-            {hours.map((time) => (
-              <TouchableOpacity
-                key={time}
-                style={[
-                  styles.timeButton,
-                  selectedTimes.some(selectedDateTime => 
-                    selectedDateTime.date === selectedDate &&
-                    selectedDateTime.startTime === time.split('-')[0]) &&
-                    styles.selectedTimeButton,
-                ]}
-                onPress={() => handleTimeSelect(selectedDate, time)}
-              >
-                <Text style={[
-                  styles.timeButtonText,
-                  selectedTimes.some(selectedDateTime =>
-                    selectedDateTime.date === selectedDate &&
-                    selectedDateTime.startTime === time.split('-')[0]) &&
-                  styles.selectedTimeButtonText,
-                  ]}>{time}</Text>
-              </TouchableOpacity>
-            ))}
+            {hours.map((time) => {
+              if(takenTimes.some(takenTime => (
+                takenTime.date === selectedDate &&
+                takenTime.startTime === time.split('-')[0]))) {
+                  return(
+                  <TouchableOpacity disabled={true}
+                  key={time}
+                  style={[styles.timeButton,styles.takenTimeButton]}
+                >
+                  <Text style={[styles.timeButtonText, styles.takenTimeButtonText,]}>
+                    {time}</Text>
+                </TouchableOpacity>
+                  )
+                }
+                else{
+                  return(
+                  <TouchableOpacity
+                  key={time}
+                  style={[
+                    styles.timeButton,
+                    selectedTimes.some(selectedDateTime => 
+                      selectedDateTime.date === selectedDate &&
+                      selectedDateTime.startTime === time.split('-')[0]) &&
+                      styles.selectedTimeButton,
+                  ]}
+                  onPress={() => handleTimeSelect(selectedDate, time)}
+                >
+                  <Text style={[
+                    styles.timeButtonText,
+                    selectedTimes.some(selectedDateTime =>
+                      selectedDateTime.date === selectedDate &&
+                      selectedDateTime.startTime === time.split('-')[0]) &&
+                    styles.selectedTimeButtonText,
+                    ]}>{time}</Text>
+                </TouchableOpacity>
+                  )
+                }
+            })}
           </View>
         </View>
       )}
@@ -181,9 +203,10 @@ useEffect(() => {
                   handleRegister();
                 }}
             />
-    </ScrollView>
-  );
-};
+      </View>
+    )}
+  </ScrollView>
+)};
 
 const styles = StyleSheet.create({
   container: {
@@ -255,6 +278,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#ddd',
     marginBottom: 8,
     marginHorizontal: 4
+  },
+  takenTimeButton: {
+    backgroundColor: "#FFC0CB",
+  },
+  takenTimeButtonText: {
+    color: '#fff',
   },
   selectedTimeButton: {
     backgroundColor: "#b27bf0",
