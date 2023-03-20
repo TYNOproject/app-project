@@ -23,7 +23,7 @@ import HomePageScreen from "./src/screens/HomePageScreen";
 import StudentEditDetailsScreen from "./src/screens/StudentEditDetailsScreen";
 import ReviewScreen from "./src/screens/ReviewScreen";
 import TeacherSignUpScreen from "./src/screens/TeacherSignUpScreen";
-import ChooseAvaibleTimesScreen from "./src/screens/ChooseAvaibleTimesScreen";
+import ChooseAvailableTimesScreen from "./src/screens/ChooseAvailableTimesScreen";
 import StudentContext from "./src/contexts/StudentContext";
 const Tab = createBottomTabNavigator();
 
@@ -245,8 +245,8 @@ function App() {
               }}
             />
             <Tab.Screen
-              name="ChooseAvaibleTimes"
-              component={ChooseAvaibleTimesScreen}
+              name="ChooseAvailableTimes"
+              component={ChooseAvailableTimesScreen}
               options={{
                 tabBarButton: () => null, // hides the button
                 tabBarVisibilityAnimationConfig: () => null,

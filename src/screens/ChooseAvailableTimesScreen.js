@@ -12,7 +12,7 @@ import {useIsFocused} from "@react-navigation/native";
 
 
 
-export default function ChooseAvaibleTimes({navigation}) {
+export default function ChooseAvailableTimes({navigation}) {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTimes, setSelectedTimes] = useState([]);
   const [classes, setClasses] = useState([]);

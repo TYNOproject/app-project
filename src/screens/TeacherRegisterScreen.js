@@ -4,8 +4,6 @@ import { Button } from "@react-native-material/core";
 import { AntDesign } from "@expo/vector-icons";
 import { useFonts } from "expo-font";
 import { SearchBar } from "react-native-elements";
-import Icon from 'react-native-vector-icons/FontAwesome';
-
 
 import ClassContext from "../contexts/ClassContext";
 import StudentContext from "../contexts/StudentContext";
@@ -109,18 +107,16 @@ export default function RegisterScreen({ navigation }) {
         מה המחיר שלך לשיעור?
       </Text>
       <TextInput
-        style={styles.priceinput}
+        style={styles.priceInput}
         placeholder="מחיר לשיעור"
         onChangeText={setPrice}
         value={price}
       />
       <Button style={{marginBottom:10}}
         title="מתי אתה פנוי ללמד?"
-        color="black"
-        variant="outlined"
         titleStyle={styles.timeButton}
-        icon={<Icon name="calendar" size={20} color="black" />}
-        onPress={() => navigation.navigate("ChooseAvaibleTimes")}
+              leading={<AntDesign name="calendar" size={24} color="white" />}
+        onPress={() => navigation.navigate("ChooseAvailableTimes")}
         />
       <Text style= {styles.courses}>
         איזה קורסים אתה מעוניין ללמד?
@@ -193,9 +189,10 @@ export default function RegisterScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+      paddingTop:"5%",
   },
   topPart: {
-    flex: 2.5,
+    flex: 0.5,
     alignItems: "center",
     justifyContent: "center",
     padding: 30,
@@ -233,7 +230,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 10,
   },
-  priceinput: {
+  priceInput: {
     width: 300,
     height: 40,
     backgroundColor: "#fff",
@@ -254,7 +251,7 @@ const styles = StyleSheet.create({
     marginBottom: 20
   },
   searchBar: {
-    marginBottom: 10,
+    marginTop: "15%",
     marginHorizontal: 20,
     direction: "rtl",
   },
@@ -274,12 +271,11 @@ const styles = StyleSheet.create({
   bottomHalf: {
     alignSelf: "flex-end",
     width: "100%",
-    flex: 2,
+    flex: 0.5,
   },
     timeButton: {
     fontFamily: 'Heebo-Regular',
     fontSize: 18,
     padding:6,
-    borderWidth: 3
   }
 });
