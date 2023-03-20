@@ -56,7 +56,7 @@ useEffect(() => {
       return {date: item.date, startTime: item.startTime, endTime: item.endTime}
   });
   setTakenTimes(available);
-}, [isFocused]);
+}, [isFocused, classes]);
 
 
   function handleTimeSelect(date, time) {

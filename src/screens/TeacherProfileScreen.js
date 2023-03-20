@@ -42,13 +42,13 @@ export default function TeacherProfileScreen({navigation}) {
 
     const [bookedClasses, setBookedClasses] = useState([]);
     const [availableTimes, setAvailableTimes] = useState([]);
-    useEffect(() => setBookedClasses(classes.filter((item) => item.status === "booked" && item.over === false)), [isFocused]);
+    useEffect(() => setBookedClasses(classes.filter((item) => item.status === "booked" && item.over === false)), [classes, isFocused]);
     useEffect(() => {
         const available = classes.filter((item) => item.status === "available").map((item) => {
             return {date: item.date, startTime: item.startTime, endTime: item.endTime}
         });
         setAvailableTimes(available);
-    }, [isFocused]);
+    }, [isFocused, classes]);
 
     //need to take from the DB
     const price = getVal(items, "studentDetails").price;
