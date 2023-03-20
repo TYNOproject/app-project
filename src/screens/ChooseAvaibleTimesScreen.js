@@ -96,9 +96,9 @@ useEffect(() => {
               response !== undefined ? {} : alert('error!');
             })
             .catch((error) => console.log(error));
+            navigation.navigate('TeacherProfile');
         }
       });
-    navigation.navigate('TeacherProfile');
   }
   
   
