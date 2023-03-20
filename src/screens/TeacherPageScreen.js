@@ -133,6 +133,7 @@ const styles = StyleSheet.create({
   },
   moneyText:{
     position: 'relative',
+    fontFamily: "Heebo-Regular",
     fontSize: 22,
   },
   reatingLocatioin: {
@@ -176,7 +177,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   bottomHalf: {
-    flex: 1.3,
+    flex: 1.5,
   },
   ReviewBar: {
     alignSelf: "flex-end",
