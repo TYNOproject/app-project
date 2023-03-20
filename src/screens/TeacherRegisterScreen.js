@@ -15,6 +15,7 @@ import * as constants from "../../constants";
 import {getCoursesByDepartment, searchCourses,sendTeacherRequest} from "../api/serviceCalls";
 import {FontAwesome} from "@expo/vector-icons";
 import { set } from "react-native-reanimated";
+import {useIsFocused} from "@react-navigation/native";
 
 
 export default function RegisterScreen({ navigation }) {
@@ -27,6 +28,7 @@ export default function RegisterScreen({ navigation }) {
   const [year, setYear] = useState(1);
   const [courses, setCourses] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const isFocused = useIsFocused();
 
   const {items, getVal, addToStudent} = useContext(StudentContext);
   useEffect(() => {
@@ -37,7 +39,7 @@ export default function RegisterScreen({ navigation }) {
           )
           .catch((error) => console.log(error))
           .finally(() => setIsLoading(false));
-  }, []);
+  }, [isFocused]);
 
   let [fontsLoaded] = useFonts({
     "Heebo-Bold": require("../../assets/fonts/Heebo-Bold.ttf"),
