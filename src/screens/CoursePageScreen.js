@@ -89,6 +89,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.2,
         shadowRadius: 1,
         textAlign: "center",
+        flex: 0.5,
     },
     topPart: {
         position: "absolute",
@@ -112,8 +113,8 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     bottomHalf: {
-        alignSelf: "flex-end",
         width: "100%",
-        flex: 4,
+        flex: 3,
+
     },
 });

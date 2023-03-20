@@ -52,8 +52,8 @@ const styles = StyleSheet.create({
   cardContainer: {
     borderRadius: 10,
     marginBottom: 10,
-    height: 150,
-    width: 370,
+    height: "auto",
+    width: "auto",
     borderColor: "#7521f3", // added purple border color
     borderWidth: 1, // increased border width for visibility
   },
