@@ -91,13 +91,13 @@ export default function ConfirmLessonsScreen({navigation}) {
         const teacherId = getVal(items, "studentDetails").id;
         confirmedClasses.map((classId) => (
             approveClass({classId, teacherId}).then((response) => {
-                    response !== undefined ? alert("working") : alert("error!");
+                    response !== undefined ? {} : alert("error!");
                 }
             ).catch((error) => console.log(error))
         ));
         deniedClasses.map((classId) => (
             rejectClass({classId, teacherId}).then((response) => {
-                    response !== undefined ? alert("working") : alert("error!");
+                    response !== undefined ? {} : alert("error!");
                 }
             ).catch((error) => console.log(error))
         ));
