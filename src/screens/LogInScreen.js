@@ -28,26 +28,57 @@ export default function LoginScreen({ navigation }) {
   const [token, setToken] = useState("");
   const [userInfo, setUserInfo] = useState(null);
 
-  const [request, response, promptAsync] = Google.useAuthRequest({
-    androidClientId:
-      "689467618406-8toie32jg1ef47frm598uognap6hgmfc.apps.googleusercontent.com",
-    iosClientId:
-      "689467618406-ke3kpj2krhu3sl9g59l240t8o8n230vp.apps.googleusercontent.com",
-    expoClientId:
-      "689467618406-scpe9ik85l7uom2kelebldu2oh4uhpa2.apps.googleusercontent.com",
-  });
+  const [request, response, promptAsync] = Google.useAuthRequest(
+    {
+      androidClientId:
+        "689467618406-8toie32jg1ef47frm598uognap6hgmfc.apps.googleusercontent.com",
+      iosClientId:
+        "689467618406-ke3kpj2krhu3sl9g59l240t8o8n230vp.apps.googleusercontent.com",
+      expoClientId:
+        "689467618406-scpe9ik85l7uom2kelebldu2oh4uhpa2.apps.googleusercontent.com",
+    },
+    {
+      projectNameForProxy: "@omrichen70/app-project",
+    }
+  );
 
   useEffect(() => {
     if (response?.type === "success") {
       setToken(response.authentication.accessToken);
       getUserInfo()
-        .then((res) => {
-          addToStudent("studentDetails", res.data);
-          navigation.navigate("HomePage");
+        .then((user) => {
+          if (user.email.endsWith("@post.bgu.ac.il")) {
+            signInWithGoogle({ email: user.email })
+              .then((res) => {
+                if (res?.status === 200) {
+                  console.log("entered if of status");
+                  console.log(res.data);
+                  console.log(res);
+                  addToStudent("studentDetails", res.data);
+                  navigation.navigate("HomePage");
+                } else if (res?.status === 204) {
+                  console.log("entered if of user not found");
+                  addToStudent("studentDetails", {
+                    name: user.name,
+                    email: user.email,
+                  });
+                  navigation.navigate("StudentSignUp");
+                }
+              })
+              .catch((err) => {
+                console.log(err);
+                alert("אירעה שגיאה, אנא נסה שנית");
+              });
+          } else {
+            console.log("not a valid email address");
+            alert(
+              "סיומת המייל אינה תקינה, האפליקציה זמינה לסטודנטים בבן גוריון בלבד"
+            );
+          }
         })
         .catch((err) => {});
     }
-  }, [response, token]);
+  }, [response]);
 
   const getUserInfo = async () => {
     try {
@@ -59,10 +90,10 @@ export default function LoginScreen({ navigation }) {
       );
 
       const user = await response.json();
-      console.log(user);
-      setUserInfo(user);
+      return user;
     } catch (error) {
-      // Add your own error handler here
+      console.log("error in getUserInfo");
+      console.log(error);
     }
   };
 
