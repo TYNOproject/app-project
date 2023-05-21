@@ -1,11 +1,13 @@
-import React, {useContext } from "react";
+import React, { useContext } from "react";
 import {
   StyleSheet,
   Text,
   View,
   TouchableOpacity,
+  Platform,
 } from "react-native";
 import { Icon } from "react-native-elements";
+import * as Calendar from "expo-calendar";
 import StudentContext from "../contexts/StudentContext";
 import ClassContext from "../contexts/ClassContext";
 import { Button } from "@react-native-material/core";
@@ -31,6 +33,54 @@ export default function AfterScheduleScreen({ navigation })
     const newTimeString = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}:${second.toString().padStart(2, '0')}`; // format the new time as a string
     return (newTimeString);
   } 
+  async function addToCalendar() {
+    try {
+      const { status } = await Calendar.requestCalendarPermissionsAsync();
+      if (status === "granted") {
+        const { status: remindersStatus } =
+          await Calendar.requestRemindersPermissionsAsync();
+        if (remindersStatus === "granted") {
+          const calendars = await Calendar.getCalendarsAsync();
+          const defaultCalendar =
+            Platform.OS === "ios"
+              ? calendars.find((cal) => cal.allowsModifications)
+              : calendars.find((cal) => cal.isPrimary);
+  
+          const startDate = new Date(date);
+          const endDate = new Date(date);
+          const [startHour, startMinute] = fromTime.split(":");
+          const [endHour, endMinute] = endTime.split(":");
+          startDate.setHours(parseInt(startHour), parseInt(startMinute), 0);
+          endDate.setHours(parseInt(endHour), parseInt(endMinute), 0);
+  
+          const eventDetails = {
+            title: `שיעור עם ${teacherName}`,
+            startDate,
+            endDate,
+            timeZone: "Asia/Jerusalem",
+          };
+  
+          const eventId = await Calendar.createEventAsync(
+            defaultCalendar.id,
+            eventDetails
+          );
+          if (eventId) {
+            alert("השיעור נוסף ליומן בהצלחה!");
+          } else {
+            alert("אירעה שגיאה בהוספת האירוע ליומן");
+          }
+        } else {
+          alert("לא ניתן גישה להוספת תזכורות ליומן");
+        }
+      } else {
+        alert("לא ניתן גישה ליומן");
+      }
+    } catch (error) {
+      console.log("Error adding event to calendar:", error);
+      alert("אירעה שגיאה בהוספת האירוע ליומן");
+    }
+  }
+  
   
   
   return (
@@ -61,12 +111,17 @@ export default function AfterScheduleScreen({ navigation })
         style={{
           width: "80%",
           height: "7%",
-          top: "80%",
+          top: "85%",
           justifyContent: "center",
           alignItems: "center",
         }}
-        
       />
+      <View style={styles.addButtonContainer}>
+        <TouchableOpacity style={styles.addButton} onPress={addToCalendar}>
+          <AntDesign name="calendar" size={24} color="white" />
+          <Text style={styles.addButtonText}>הוספה ליומן</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -127,4 +182,28 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "#FFFFFF",
   },
+  addButtonContainer: {
+    position: "absolute",
+    top: "72%",
+    alignItems: "center",
+  },
+  
+  addButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#1E90FF",
+    width: "80%",
+    height: 60,
+    borderRadius: 10,
+    marginBottom: 10,
+  },
+  
+  addButtonText: {
+    fontFamily: "Heebo-Bold",
+    fontSize: 26,
+    color: "white",
+    marginLeft: 10,
+  }
+  
 });
